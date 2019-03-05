@@ -25,9 +25,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
-        main.cpp
+        main.cpp \
+    player.cpp
 
-HEADERS +=
+HEADERS += \
+    player.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
