@@ -6,7 +6,7 @@
 class Player : public QGraphicsRectItem
 {
 public:
-  Player();
+  Player(QGraphicsItem* parent = nullptr);
 };
 
 #endif // PLAYER_H
