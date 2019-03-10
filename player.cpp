@@ -1,6 +1,8 @@
 #include "player.h"
 
 #include <QKeyEvent>
+#include <QGraphicsScene>
+#include <QGraphicsView>
 
 Player::Player(QGraphicsItem* parent) : QGraphicsRectItem(parent)
 {
@@ -21,6 +23,7 @@ void Player::advance(int phase)
 {
   if (phase == 0) return;
   move();
+  scene()->views().front()->centerOn(this);
 }
 
 void Player::move()
