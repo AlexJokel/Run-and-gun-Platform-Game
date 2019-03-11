@@ -4,19 +4,18 @@
 #include <QGraphicsRectItem>
 #include <QMap>
 
+#include "scene.h"
+
 class Player : public QGraphicsRectItem
 {
 public:
   Player(QGraphicsItem* = nullptr);
 
-  void keyPressEvent(QKeyEvent*) override;
-  void keyReleaseEvent(QKeyEvent*) override;
-
   void advance(int) override;
 
-private:
-  QMap<int, bool> keys;
+  Scene* Scene() const;
 
+private:
   void move();
 };
 

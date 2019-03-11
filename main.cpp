@@ -24,8 +24,6 @@ int main(int argc, char *argv[])
 
   // Player initialization
   auto player = new Player();
-  player->setFlag(QGraphicsItem::ItemIsFocusable);
-  player->setFocus();
   scene->addItem(player);
 
   // Draw dot grid
