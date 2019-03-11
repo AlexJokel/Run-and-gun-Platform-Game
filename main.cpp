@@ -18,6 +18,8 @@ int main(int argc, char *argv[])
 
 //  view->fitInView(scene->sceneRect(), Qt::KeepAspectRatio);
   view->setFixedSize(1280, 720);
+  view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+  view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
   auto player = new Player();
   scene->addItem(player);
