@@ -8,6 +8,8 @@
 
 #include <QTimer>
 
+#include <Box2D/Box2D.h>
+
 #include "scene.h"
 #include "player.h"
 
@@ -15,8 +17,11 @@ int main(int argc, char *argv[])
 {
   QApplication a(argc, argv);
 
+  /// World initialization
+  auto world = new b2World(b2Vec2(0, -9.8f));
+
   // Scene & view initialization
-  auto scene = new Scene(0, 0, 1920, 1080);
+  auto scene = new Scene(world, 0, 0, 1920, 1080);
   auto view = new QGraphicsView(scene);
   view->setFixedSize(1280, 720);
   view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);

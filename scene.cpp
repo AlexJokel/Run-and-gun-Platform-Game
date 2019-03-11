@@ -1,9 +1,9 @@
 #include "scene.h"
 
 
-Scene::Scene(qreal x, qreal y, qreal width, qreal height, QObject* parent)
-    : QGraphicsScene(x, y, width, height, parent) {
-
+Scene::Scene(b2World* world, qreal x, qreal y, qreal width, qreal height,
+             QObject* parent)
+    : QGraphicsScene(x, y, width, height, parent), world_(world) {
 }
 
 void Scene::advance() {
@@ -11,13 +11,13 @@ void Scene::advance() {
 }
 
 void Scene::keyPressEvent(QKeyEvent *event) {
-  keys[event->key()] = true;
+  keys_[event->key()] = true;
 }
 
 void Scene::keyReleaseEvent(QKeyEvent *event) {
-  keys[event->key()] = false;
+  keys_[event->key()] = false;
 }
 
 bool Scene::KeyPressed(qint32 key) const {
-  return keys.value(key, false);
+  return keys_.value(key, false);
 }
