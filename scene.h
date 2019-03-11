@@ -23,6 +23,9 @@ public slots:
 private:
   b2World* world_;
 
+  const qint32 kFramesPerSecond_ = 60;
+  const qreal kTimeStep_ = 1 / static_cast<qreal>(kFramesPerSecond_);
+
   QMap<qint32, bool> keys_;
 };
 

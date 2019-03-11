@@ -6,8 +6,6 @@
 
 #include <QtGlobal>
 
-#include <QTimer>
-
 #include <Box2D/Box2D.h>
 
 #include "scene.h"
@@ -18,7 +16,7 @@ int main(int argc, char *argv[])
   QApplication a(argc, argv);
 
   /// World initialization
-  auto world = new b2World(b2Vec2(0, -9.8f));
+  auto world = new b2World(b2Vec2(0, 9.8f));
 
   // Scene & view initialization
   auto scene = new Scene(world, 0, 0, 1920, 1080);
@@ -39,13 +37,6 @@ int main(int argc, char *argv[])
   }
 
   view->show();
-
-  // Frame timer initialization & start
-  const qint32 kFramesPerSecond = 60;
-  const qreal kTimeStep = 1 / static_cast<qreal>(kFramesPerSecond);
-  auto frame_timer = new QTimer();
-  QObject::connect(frame_timer, SIGNAL(timeout()), scene, SLOT(advance()));
-  frame_timer->start(static_cast<int>(1000 * kTimeStep));
 
   return a.exec();
 }
