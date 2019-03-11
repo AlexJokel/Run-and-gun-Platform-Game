@@ -26,10 +26,12 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-    player.cpp
+    player.cpp \
+    scene.cpp
 
 HEADERS += \
-    player.h
+    player.h \
+    scene.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
