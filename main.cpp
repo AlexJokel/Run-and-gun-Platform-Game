@@ -8,6 +8,7 @@
 
 #include <QTimer>
 
+#include "scene.h"
 #include "player.h"
 
 int main(int argc, char *argv[])
@@ -15,7 +16,7 @@ int main(int argc, char *argv[])
   QApplication a(argc, argv);
 
   // Scene & view initialization
-  auto scene = new QGraphicsScene(0, 0, 1920, 1080);
+  auto scene = new Scene(0, 0, 1920, 1080);
   auto view = new QGraphicsView(scene);
   view->setFixedSize(1280, 720);
   view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
