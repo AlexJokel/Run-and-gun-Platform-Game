@@ -27,3 +27,11 @@ void Scene::keyReleaseEvent(QKeyEvent *event) {
 bool Scene::KeyPressed(qint32 key) const {
   return keys_.value(key, false);
 }
+
+qreal Scene::MetersToPixels(float32 meters) {
+  return static_cast<qreal>(meters) * kMetersToPixelsRatio;
+}
+
+float32 Scene::PixelsToMeters(qreal pixels) {
+  return static_cast<float32>(pixels / kMetersToPixelsRatio);
+}

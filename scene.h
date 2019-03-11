@@ -17,6 +17,10 @@ public:
 
   bool KeyPressed(qint32) const;
 
+  constexpr static qreal kMetersToPixelsRatio = 100;
+  static qreal MetersToPixels(float32);
+  static float32 PixelsToMeters(qreal);
+
 public slots:
   void advance();
 
