@@ -3,7 +3,8 @@
 #include <QGraphicsScene>
 #include <QGraphicsItem>
 #include <QGraphicsView>
-#include <QPoint>
+
+#include <QtGlobal>
 
 #include <QTimer>
 
@@ -36,9 +37,11 @@ int main(int argc, char *argv[])
   view->show();
 
   // Frame timer initialization & start
+  const qint32 kFramesPerSecond = 60;
+  const qreal kTimeStep = 1 / static_cast<qreal>(kFramesPerSecond);
   auto frame_timer = new QTimer();
   QObject::connect(frame_timer, SIGNAL(timeout()), scene, SLOT(advance()));
-  frame_timer->start(static_cast<int>(1000 / 60.0));
+  frame_timer->start(static_cast<int>(1000 * kTimeStep));
 
   return a.exec();
 }
