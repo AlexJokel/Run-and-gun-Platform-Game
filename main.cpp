@@ -30,6 +30,17 @@ int main(int argc, char *argv[])
   auto player = new Player(world);
   scene->addItem(player);
 
+  /// Create floor
+  b2BodyDef floor_def;
+  floor_def.type = b2_staticBody;
+  floor_def.position.Set(0,
+                         Scene::PixelsToMeters(scene->height()));
+  b2EdgeShape floor_shape;
+  floor_shape.Set(b2Vec2(0, 0),
+                  b2Vec2(Scene::PixelsToMeters(scene->width()), 0));
+  b2Body* floor = world->CreateBody(&floor_def);
+  floor->CreateFixture(&floor_shape, 1);
+
   /// Draw dot grid
   for (size_t x = 0; x < scene->width(); x += 100) {
     for (size_t y = 0; y < scene->height(); y += 100) {
