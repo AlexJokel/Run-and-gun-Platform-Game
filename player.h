@@ -26,6 +26,7 @@ private:
   b2PolygonShape* body_shape_;
 
   constexpr static float32 kHorizontalSpeed = 5;
+  constexpr static float32 kVerticalSpeed = 7;
 
   void Draw();
   void Move();

@@ -19,6 +19,9 @@ Player::Player(b2World* world, QGraphicsItem* parent)
   body_ = world->CreateBody(body_def_);
   body_->CreateFixture(body_fixture_def_);
 
+  /// Disable rotation
+  body_->SetFixedRotation(true);
+
   Draw();
 }
 
@@ -55,13 +58,18 @@ void Player::Draw() {
 
 void Player::Move()
 {
-  float32 horizontal_velocity = 0;
+  b2Vec2 velocity(0, body_->GetLinearVelocity().y);
   if (Scene()->KeyPressed(Qt::Key_A)) {
-    horizontal_velocity -= kHorizontalSpeed;
+    velocity.x -= kHorizontalSpeed;
   }
   if (Scene()->KeyPressed(Qt::Key_D)) {
-    horizontal_velocity += kHorizontalSpeed;
+    velocity.x += kHorizontalSpeed;
   }
-  float32 vertical_velocity = body_->GetLinearVelocity().y;
-  body_->SetLinearVelocity(b2Vec2(horizontal_velocity, vertical_velocity));
+  if (Scene()->KeyPressed(Qt::Key_Space)) {
+    if (qAbs(velocity.y) < 1e-6f) {
+      velocity.y -= kVerticalSpeed;
+    }
+  }
+
+  body_->SetLinearVelocity(velocity);
 }
