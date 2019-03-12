@@ -44,10 +44,10 @@ Player::~Player() {
 
 void Player::Draw() {
   /// Get size and position (in Box2D coordinates)
-  float32 half_width = qAbs(body_shape_->m_vertices[0].x);
-  float32 half_height = qAbs(body_shape_->m_vertices[0].y);
-  float32 x = body_->GetPosition().x;
-  float32 y = body_->GetPosition().y;
+  float half_width = qAbs(body_shape_->m_vertices[0].x);
+  float half_height = qAbs(body_shape_->m_vertices[0].y);
+  float x = body_->GetPosition().x;
+  float y = body_->GetPosition().y;
 
   /// Convert into scene coordinates & draw
   setRect(Scene::MetersToPixels(x - half_width),
@@ -75,21 +75,21 @@ void Player::Move()
 }
 
 /// Copy-pasted this function
-float32 Player::CalcSpeedForHeight(b2World* world, float32 height) {
+float Player::CalcSpeedForHeight(b2World* world, float height) {
   if ( height <= 0 )
       return 0;
 
-  float32 t = 1 / 60.0f;
+  float t = 1 / 60.0f;
   b2Vec2 stepGravity = t * t * world->GetGravity();
 
-  float32 a = -0.5f / stepGravity.y;
-  float32 b = 0.5f;
-  float32 c = height;
+  float a = -0.5f / stepGravity.y;
+  float b = 0.5f;
+  float c = height;
 
-  float32 quadraticSolution1 = ( -b - b2Sqrt( b*b - 4*a*c ) ) / (2*a);
-  float32 quadraticSolution2 = ( -b + b2Sqrt( b*b - 4*a*c ) ) / (2*a);
+  float quadraticSolution1 = ( -b - b2Sqrt( b*b - 4*a*c ) ) / (2*a);
+  float quadraticSolution2 = ( -b + b2Sqrt( b*b - 4*a*c ) ) / (2*a);
 
-  float32 v = quadraticSolution1;
+  float v = quadraticSolution1;
   if ( v < 0 )
       v = quadraticSolution2;
 

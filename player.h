@@ -25,10 +25,10 @@ private:
   b2FixtureDef* body_fixture_def_;
   b2PolygonShape* body_shape_;
 
-  constexpr static float32 kJumpHeight = 3;
-  constexpr static float32 kHorizontalSpeed = 5;
-  const float32 kVerticalSpeed_;
-  static float32 CalcSpeedForHeight(b2World*, float32);
+  constexpr static float kJumpHeight = 3;
+  constexpr static float kHorizontalSpeed = 5;
+  const float kVerticalSpeed_;
+  static float CalcSpeedForHeight(b2World*, float);
 
   void Draw();
   void Move();

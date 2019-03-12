@@ -14,7 +14,7 @@ Scene::Scene(b2World* world, qreal x, qreal y, qreal width, qreal height,
 
 void Scene::advance() {
   /// Advance the world
-  world_->Step(static_cast<float32>(kTimeStep_), 8, 3);
+  world_->Step(static_cast<float>(kTimeStep_), 8, 3);
   /// Advance the scene
   QGraphicsScene::advance();
 }
@@ -31,10 +31,10 @@ bool Scene::KeyPressed(qint32 key) const {
   return keys_.value(key, false);
 }
 
-qreal Scene::MetersToPixels(float32 meters) {
+qreal Scene::MetersToPixels(float meters) {
   return static_cast<qreal>(meters) * kMetersToPixelsRatio_;
 }
 
-float32 Scene::PixelsToMeters(qreal pixels) {
-  return static_cast<float32>(pixels / kMetersToPixelsRatio_);
+float Scene::PixelsToMeters(qreal pixels) {
+  return static_cast<float>(pixels / kMetersToPixelsRatio_);
 }
