@@ -4,7 +4,7 @@
 #include <QDebug>
 
 Player::Player(b2World* world, QGraphicsItem* parent)
-    : QGraphicsRectItem(parent) {
+    : QGraphicsRectItem(parent), kVerticalSpeed_(CalcSpeedForHeight(world, kJumpHeight)) {
   /// Define player body
   body_def_ = new b2BodyDef;
   body_def_->type = b2_dynamicBody;
@@ -67,9 +67,31 @@ void Player::Move()
   }
   if (Scene()->KeyPressed(Qt::Key_Space)) {
     if (qAbs(velocity.y) < 1e-6f) {
-      velocity.y -= kVerticalSpeed;
+      velocity.y -= kVerticalSpeed_;
     }
   }
 
   body_->SetLinearVelocity(velocity);
+}
+
+/// Copy-pasted this function
+float32 Player::CalcSpeedForHeight(b2World* world, float32 height) {
+  if ( height <= 0 )
+      return 0;
+
+  float32 t = 1 / 60.0f;
+  b2Vec2 stepGravity = t * t * world->GetGravity();
+
+  float32 a = -0.5f / stepGravity.y;
+  float32 b = 0.5f;
+  float32 c = height;
+
+  float32 quadraticSolution1 = ( -b - b2Sqrt( b*b - 4*a*c ) ) / (2*a);
+  float32 quadraticSolution2 = ( -b + b2Sqrt( b*b - 4*a*c ) ) / (2*a);
+
+  float32 v = quadraticSolution1;
+  if ( v < 0 )
+      v = quadraticSolution2;
+
+  return v * 60.0f;
 }
