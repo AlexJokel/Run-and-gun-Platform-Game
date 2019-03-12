@@ -5,6 +5,7 @@
 #include <QGraphicsView>
 
 #include <QtGlobal>
+#include <QDebug>
 
 #include <Box2D/Box2D.h>
 
@@ -26,11 +27,11 @@ int main(int argc, char *argv[])
   view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
   // Player initialization
-  auto player = new Player();
+  auto player = new Player(world);
   scene->addItem(player);
 
   // Draw dot grid
-  for(size_t x = 0; x < scene->width(); x += 100) {
+  for (size_t x = 0; x < scene->width(); x += 100) {
     for (size_t y = 0; y < scene->height(); y += 100) {
       scene->addItem(new QGraphicsRectItem(x, y, 1, 1));
     }
