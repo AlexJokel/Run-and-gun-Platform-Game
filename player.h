@@ -25,8 +25,10 @@ private:
   b2FixtureDef* body_fixture_def_;
   b2PolygonShape* body_shape_;
 
+  constexpr static float32 kHorizontalSpeed = 5;
+
   void Draw();
-  void move();
+  void Move();
 };
 
 #endif // PLAYER_H

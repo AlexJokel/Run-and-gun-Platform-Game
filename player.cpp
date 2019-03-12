@@ -25,6 +25,7 @@ Player::Player(b2World* world, QGraphicsItem* parent)
 void Player::advance(int phase)
 {
   if (phase == 0) return;
+  Move();
   Draw();
   scene()->views().front()->centerOn(this);
 }
@@ -52,20 +53,15 @@ void Player::Draw() {
           Scene::MetersToPixels(2 * half_height));
 }
 
-void Player::move()
+void Player::Move()
 {
-  const qreal kSpeed = 250;
-  const qreal kShiftPerFrame = kSpeed / 60;
-  if (Scene()->KeyPressed(Qt::Key_W)) {
-    moveBy(0, - kShiftPerFrame);
-  }
-  if (Scene()->KeyPressed(Qt::Key_S)) {
-    moveBy(0, kShiftPerFrame);
-  }
+  float32 horizontal_velocity = 0;
   if (Scene()->KeyPressed(Qt::Key_A)) {
-    moveBy(- kShiftPerFrame, 0);
+    horizontal_velocity -= kHorizontalSpeed;
   }
   if (Scene()->KeyPressed(Qt::Key_D)) {
-    moveBy(kShiftPerFrame, 0);
+    horizontal_velocity += kHorizontalSpeed;
   }
+  float32 vertical_velocity = body_->GetLinearVelocity().y;
+  body_->SetLinearVelocity(b2Vec2(horizontal_velocity, vertical_velocity));
 }
