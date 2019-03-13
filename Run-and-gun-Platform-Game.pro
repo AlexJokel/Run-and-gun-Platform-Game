@@ -35,7 +35,8 @@ SOURCES += \
 HEADERS += \
 #    Box2D/Box2D.h
     src/player.h \
-    src/scene.h
+    src/scene.h \
+    src/physicalbody.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
