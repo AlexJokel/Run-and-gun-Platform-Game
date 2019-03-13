@@ -24,14 +24,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 CONFIG += c++11
 
+INCLUDEPATH += $$PWD/src
+DEPENDPATH += $$PWD/src
+
 SOURCES += \
-        main.cpp \
-    player.cpp \
-    scene.cpp
+    src/main.cpp \
+    src/player.cpp \
+    src/scene.cpp
 
 HEADERS += \
-    player.h \
-    scene.h \
+    src/player.h \
+    src/scene.h \
 #    Box2D/Box2D.h
 
 # Default rules for deployment.
@@ -39,10 +42,7 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-win32: LIBS += -L$$PWD/./ -lBox2D
+win32: LIBS += -L$$PWD/lib/ -lBox2D
 
-INCLUDEPATH += $$PWD/.
-DEPENDPATH += $$PWD/.
-
-win32:!win32-g++: PRE_TARGETDEPS += $$PWD/./Box2D.lib
-else:win32-g++: PRE_TARGETDEPS += $$PWD/./libBox2D.a
+win32:!win32-g++: PRE_TARGETDEPS += $$PWD/lib/Box2D.lib
+else:win32-g++: PRE_TARGETDEPS += $$PWD/lib/libBox2D.a
