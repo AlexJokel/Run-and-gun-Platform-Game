@@ -6,9 +6,9 @@
 
 class Object : public QGraphicsRectItem {
 public:
-  Object();
+  Object(QGraphicsItem* parent = nullptr);
 
-private:
+protected:
   PhysicalBody body_;
 };
 

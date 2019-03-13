@@ -5,7 +5,7 @@
 
 class Creature : public Object {
 public:
-  Creature();
+  Creature(QGraphicsItem* parent = nullptr);
 };
 
 #endif // CREATURE_H

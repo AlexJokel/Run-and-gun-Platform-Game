@@ -6,9 +6,10 @@
 
 #include <Box2D/Box2D.h>
 
+#include "creature.h"
 #include "scene.h"
 
-class Player : public QGraphicsRectItem {
+class Player : public Creature {
 public:
   Player(b2World*, QGraphicsItem* = nullptr);
 
@@ -19,11 +20,6 @@ public:
   ~Player() override;
 
 private:
-  b2Body* body_;
-  b2BodyDef* body_def_;
-  b2FixtureDef* body_fixture_def_;
-  b2PolygonShape* body_shape_;
-
   constexpr static float kJumpHeight = 3;
   constexpr static float kHorizontalSpeed = 5;
   const float kVerticalSpeed_;

@@ -1,5 +1,3 @@
 #include "creature.h"
 
-Creature::Creature() {
-
-}
+Creature::Creature(QGraphicsItem* parent) : Object(parent) {}

@@ -4,23 +4,24 @@
 #include <QDebug>
 
 Player::Player(b2World* world, QGraphicsItem* parent)
-    : QGraphicsRectItem(parent), kVerticalSpeed_(CalcSpeedForHeight(world, kJumpHeight)) {
+    : Creature(parent), kVerticalSpeed_(CalcSpeedForHeight(world, kJumpHeight)) {
   /// Define player body
-  body_def_ = new b2BodyDef;
-  body_def_->type = b2_dynamicBody;
-  body_def_->position.Set(3, 3);
-  body_shape_ = new b2PolygonShape;
-  body_shape_->SetAsBox(0.5f, 0.5f);
-  body_fixture_def_ = new b2FixtureDef;
-  body_fixture_def_->shape = body_shape_;
-  body_fixture_def_->density = 1;
+  body_.body_def = new b2BodyDef;
+  body_.body_def->type = b2_dynamicBody;
+  body_.body_def->position.Set(3, 3);
+  body_.shape = new b2PolygonShape;
+  auto shape = dynamic_cast<b2PolygonShape*>(body_.shape);
+  shape->SetAsBox(0.5f, 0.5f);
+  body_.fixture_def = new b2FixtureDef;
+  body_.fixture_def->shape = body_.shape;
+  body_.fixture_def->density = 1;
 
   /// Add body to the world
-  body_ = world->CreateBody(body_def_);
-  body_->CreateFixture(body_fixture_def_);
+  body_.body = world->CreateBody(body_.body_def);
+  body_.body->CreateFixture(body_.fixture_def);
 
   /// Disable rotation
-  body_->SetFixedRotation(true);
+  body_.body->SetFixedRotation(true);
 
   Draw();
 }
@@ -38,15 +39,16 @@ Scene* Player::Scene() const {
 
 Player::~Player() {
   /// Delete body from the world
-  body_->GetWorld()->DestroyBody(body_);
+  body_.body->GetWorld()->DestroyBody(body_.body);
 }
 
 void Player::Draw() {
   /// Get size and position (in Box2D coordinates)
-  float half_width = qAbs(body_shape_->m_vertices[0].x);
-  float half_height = qAbs(body_shape_->m_vertices[0].y);
-  float x = body_->GetPosition().x;
-  float y = body_->GetPosition().y;
+  auto shape = dynamic_cast<b2PolygonShape*>(body_.shape);
+  float half_width = qAbs(shape->m_vertices[0].x);
+  float half_height = qAbs(shape->m_vertices[0].y);
+  float x = body_.body->GetPosition().x;
+  float y = body_.body->GetPosition().y;
 
   /// Convert into scene coordinates & draw
   setRect(Scene::MetersToPixels(x - half_width),
@@ -56,7 +58,7 @@ void Player::Draw() {
 }
 
 void Player::Move() {
-  b2Vec2 velocity(0, body_->GetLinearVelocity().y);
+  b2Vec2 velocity(0, body_.body->GetLinearVelocity().y);
   if (Scene()->KeyPressed(Qt::Key_A)) {
     velocity.x -= kHorizontalSpeed;
   }
@@ -69,7 +71,7 @@ void Player::Move() {
     }
   }
 
-  body_->SetLinearVelocity(velocity);
+  body_.body->SetLinearVelocity(velocity);
 }
 
 /// Copy-pasted this function

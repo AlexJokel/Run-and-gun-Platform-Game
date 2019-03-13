@@ -1,5 +1,3 @@
 #include "object.h"
 
-Object::Object() {
-
-}
+Object::Object(QGraphicsItem* parent) : QGraphicsRectItem(parent) {}
