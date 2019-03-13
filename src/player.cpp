@@ -25,8 +25,7 @@ Player::Player(b2World* world, QGraphicsItem* parent)
   Draw();
 }
 
-void Player::advance(int phase)
-{
+void Player::advance(int phase) {
   if (phase == 0) return;
   Move();
   Draw();
@@ -56,8 +55,7 @@ void Player::Draw() {
           Scene::MetersToPixels(2 * half_height));
 }
 
-void Player::Move()
-{
+void Player::Move() {
   b2Vec2 velocity(0, body_->GetLinearVelocity().y);
   if (Scene()->KeyPressed(Qt::Key_A)) {
     velocity.x -= kHorizontalSpeed;

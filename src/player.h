@@ -8,8 +8,7 @@
 
 #include "scene.h"
 
-class Player : public QGraphicsRectItem
-{
+class Player : public QGraphicsRectItem {
 public:
   Player(b2World*, QGraphicsItem* = nullptr);
 
