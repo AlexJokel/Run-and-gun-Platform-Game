@@ -17,16 +17,12 @@ public:
          float density = 1,
          QGraphicsItem* = nullptr);
 
-  void advance(int) override;
-
 protected:
   constexpr static float kJumpHeight = 3;
-  constexpr static float kHorizontalSpeed = 5;
   const float kVerticalSpeed_ = 10;
   static float CalcSpeedForHeight(b2World*, float);
 
-  void Draw();
-  void Move();
+  void Move() override;
 };
 
 #endif // PLAYER_H
