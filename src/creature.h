@@ -5,7 +5,12 @@
 
 class Creature : public Object {
 public:
-  Creature(QGraphicsItem* parent = nullptr);
+  Creature(class Scene*,
+           float x, float y,
+           ShapeInit*,
+           BodyType = BodyType::kDynamic,
+           float density = 1,
+           QGraphicsItem* parent = nullptr);
 };
 
 #endif // CREATURE_H

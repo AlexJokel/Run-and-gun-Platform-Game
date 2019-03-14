@@ -7,6 +7,8 @@
 
 #include <Box2D/Box2D.h>
 
+class Object;
+
 class Scene : public QGraphicsScene {
 public:
   Scene(b2World* world, qreal x, qreal y, qreal width, qreal height,
@@ -14,6 +16,8 @@ public:
 
   void keyPressEvent(QKeyEvent*) override;
   void keyReleaseEvent(QKeyEvent*) override;
+
+  void AddObject(Object*);
 
   bool KeyPressed(qint32) const;
 

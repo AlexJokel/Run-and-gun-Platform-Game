@@ -3,23 +3,12 @@
 #include <QGraphicsView>
 #include <QDebug>
 
-Player::Player(b2World* world, QGraphicsItem* parent)
-    : Creature(parent), kVerticalSpeed_(CalcSpeedForHeight(world, kJumpHeight)) {
-  /// Define player body
-  body_.body_def = new b2BodyDef;
-  body_.body_def->type = b2_dynamicBody;
-  body_.body_def->position.Set(3, 3);
-  body_.shape = new b2PolygonShape;
-  auto shape = dynamic_cast<b2PolygonShape*>(body_.shape);
-  shape->SetAsBox(0.5f, 0.5f);
-  body_.fixture_def = new b2FixtureDef;
-  body_.fixture_def->shape = body_.shape;
-  body_.fixture_def->density = 1;
-
-  /// Add body to the world
-  body_.body = world->CreateBody(body_.body_def);
-  body_.body->CreateFixture(body_.fixture_def);
-
+Player::Player(class Scene* scene,
+               float x, float y,
+               ShapeInit* shape_init,
+               float density,
+               QGraphicsItem* parent)
+    : Creature(scene, x, y, shape_init, BodyType::kDynamic, density, parent) {
   /// Disable rotation
   body_.body->SetFixedRotation(true);
 
@@ -31,15 +20,6 @@ void Player::advance(int phase) {
   Move();
   Draw();
   scene()->views().front()->centerOn(this);
-}
-
-Scene* Player::Scene() const {
-  return dynamic_cast<class Scene*>(scene());
-}
-
-Player::~Player() {
-  /// Delete body from the world
-  body_.body->GetWorld()->DestroyBody(body_.body);
 }
 
 void Player::Draw() {

@@ -11,18 +11,18 @@
 
 class Player : public Creature {
 public:
-  Player(b2World*, QGraphicsItem* = nullptr);
+  Player(class Scene*,
+         float x, float y,
+         ShapeInit* = PassShapeInit(ShapeType::kPolygon, 0.5f, 0.5f),
+         float density = 1,
+         QGraphicsItem* = nullptr);
 
   void advance(int) override;
 
-  Scene* Scene() const;
-
-  ~Player() override;
-
-private:
+protected:
   constexpr static float kJumpHeight = 3;
   constexpr static float kHorizontalSpeed = 5;
-  const float kVerticalSpeed_;
+  const float kVerticalSpeed_ = 10;
   static float CalcSpeedForHeight(b2World*, float);
 
   void Draw();

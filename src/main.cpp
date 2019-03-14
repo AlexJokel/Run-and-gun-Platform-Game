@@ -26,8 +26,7 @@ int main(int argc, char *argv[]) {
   view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
   /// Player initialization
-  auto player = new Player(world);
-  scene->addItem(player);
+  auto player = new Player(scene, 3, 3);
 
   /// Create floor
   b2BodyDef floor_def;
