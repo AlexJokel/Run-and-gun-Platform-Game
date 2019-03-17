@@ -1,5 +1,7 @@
 #include "object.h"
 
+#include <QDebug>
+
 PolygonShapeInfo::PolygonShapeInfo(float half_width,
                                    float half_height)
     : ShapeInfo(),
@@ -67,6 +69,13 @@ void Object::Draw() {
           Scene::MetersToPixels(y - half_height),
           Scene::MetersToPixels(2 * half_width),
           Scene::MetersToPixels(2 * half_height));
+
+  /// Deal with rotation
+  auto angle = static_cast<qreal>(body_.body->GetAngle()); /// in radians
+  angle *= 180 / M_PI; /// to degress
+  angle *= -1; /// to clockwise
+  setRotation(angle);
+  qDebug() << angle;
 }
 
 Scene* Object::Scene() const {
