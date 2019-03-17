@@ -13,8 +13,7 @@ class Player : public Creature {
 public:
   Player(class Scene*,
          float x, float y,
-         ShapeInit* = PassShapeInit(ShapeType::kPolygon, 0.5f, 0.5f),
-         float density = 1,
+         ShapeInfo* = PassShapeInit(ShapeType::kPolygon, 0.5f, 0.5f),
          QGraphicsItem* = nullptr);
 
 protected:

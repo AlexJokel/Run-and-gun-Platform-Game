@@ -6,11 +6,8 @@
 class Creature : public Object {
 public:
   Creature(class Scene*,
-           float x, float y,
-           ShapeInit*,
-           float horizontal_speed = 5,
-           BodyType = BodyType::kDynamic,
-           float density = 1,
+           BodyInfo,
+           float horizontal_speed,
            QGraphicsItem* parent = nullptr);
 
   void advance(int) override;

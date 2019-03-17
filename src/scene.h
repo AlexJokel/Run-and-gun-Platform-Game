@@ -21,6 +21,8 @@ public:
 
   bool KeyPressed(qint32) const;
 
+  b2World* World() const;
+
   constexpr static qreal kMetersToPixelsRatio_ = 100;
   static qreal MetersToPixels(float);
   static float PixelsToMeters(qreal);
@@ -28,7 +30,7 @@ public:
 public slots:
   void advance();
 
-private:
+protected:
   b2World* world_;
 
   const qint32 kFramesPerSecond_ = 60;

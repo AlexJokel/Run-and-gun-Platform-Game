@@ -3,13 +3,10 @@
 #include <QGraphicsView>
 
 Creature::Creature(class Scene* scene,
-                   float x, float y,
-                   ShapeInit* shape_init,
+                   BodyInfo body_info,
                    float horizontal_speed,
-                   BodyType body_type,
-                   float density,
                    QGraphicsItem* parent)
-    : Object(scene, x, y, shape_init, body_type, density, parent),
+    : Object(scene, body_info, parent),
       kHorizontalSpeed(horizontal_speed) {}
 
 void Creature::advance(int phase) {

@@ -12,6 +12,10 @@ Scene::Scene(b2World* world, qreal x, qreal y, qreal width, qreal height,
   frame_timer->start(static_cast<int>(1000 * kTimeStep_));
 }
 
+b2World* Scene::World() const {
+  return world_;
+}
+
 void Scene::advance() {
   /// Advance the world
   world_->Step(static_cast<float>(kTimeStep_), 8, 3);

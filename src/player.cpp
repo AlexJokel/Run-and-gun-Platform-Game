@@ -5,10 +5,10 @@
 
 Player::Player(class Scene* scene,
                float x, float y,
-               ShapeInit* shape_init,
-               float density,
+               ShapeInfo* shape_init,
                QGraphicsItem* parent)
-    : Creature(scene, x, y, shape_init, 5, BodyType::kDynamic, density, parent) {
+    : Creature(scene, BodyInfo{x, y, shape_init, BodyType::kDynamic}, 5, parent),
+      kVerticalSpeed_(CalcSpeedForHeight(scene->World(), kJumpHeight)) {
   /// Disable rotation
   body_.body->SetFixedRotation(true);
 

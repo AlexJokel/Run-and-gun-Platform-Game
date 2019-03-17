@@ -15,16 +15,16 @@ enum class ShapeType {
   kPolygon
 };
 
-class ShapeInit {
+class ShapeInfo {
 public:
-  ShapeInit() = default;
+  ShapeInfo() = default;
   virtual b2Shape* Init() = 0;
-  virtual ~ShapeInit() = default;
+  virtual ~ShapeInfo() = default;
 };
 
-class PolygonShapeInit : public ShapeInit {
+class PolygonShapeInfo : public ShapeInfo {
 public:
-  PolygonShapeInit(float half_width, float half_height);
+  PolygonShapeInfo(float half_width, float half_height);
   b2Shape* Init() override;
 
 protected:
@@ -33,22 +33,29 @@ protected:
 };
 
 template<typename ...Args>
-ShapeInit* PassShapeInit(ShapeType shape_type, Args... args) {
+ShapeInfo* PassShapeInit(ShapeType shape_type, Args... args) {
   switch (shape_type) {
     case ShapeType::kPolygon : {
-      return new PolygonShapeInit(std::forward<Args>(args)...);
+      return new PolygonShapeInfo(std::forward<Args>(args)...);
     }
   }
   return nullptr;
 }
 
+struct BodyInfo {
+  float x;
+  float y;
+  ShapeInfo* shape_info;
+  BodyType body_type;
+  float density = 1;
+
+  BodyInfo(float x, float y, ShapeInfo*, BodyType);
+};
+
 class Object : public QGraphicsRectItem {
 public:
   Object(Scene*,
-         float x, float y,
-         ShapeInit*,
-         BodyType,
-         float density = 1,
+         BodyInfo body_info,
          QGraphicsItem* parent = nullptr);
 
   ~Object() override;
