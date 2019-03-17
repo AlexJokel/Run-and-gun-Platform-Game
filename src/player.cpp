@@ -11,6 +11,9 @@ Player::Player(class Scene* scene,
       kVerticalSpeed_(CalcSpeedForHeight(scene->World(), kJumpHeight)) {
   /// Disable rotation
   body_.body->SetFixedRotation(true);
+
+  /// Disable friction
+  body_.body->GetFixtureList()->SetFriction(0);
 }
 
 void Player::Move() {
