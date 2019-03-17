@@ -11,8 +11,6 @@ Player::Player(class Scene* scene,
       kVerticalSpeed_(CalcSpeedForHeight(scene->World(), kJumpHeight)) {
   /// Disable rotation
   body_.body->SetFixedRotation(true);
-
-  Draw();
 }
 
 void Player::Move() {

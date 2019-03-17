@@ -16,7 +16,6 @@ protected:
   const float kHorizontalSpeed;
 
   virtual void Move() = 0;
-  virtual void Draw();
 };
 
 #endif // CREATURE_H

@@ -33,7 +33,7 @@ protected:
 };
 
 template<typename ...Args>
-ShapeInfo* PassShapeInit(ShapeType shape_type, Args... args) {
+ShapeInfo* PassShapeInfo(ShapeType shape_type, Args... args) {
   switch (shape_type) {
     case ShapeType::kPolygon : {
       return new PolygonShapeInfo(std::forward<Args>(args)...);
@@ -59,6 +59,8 @@ public:
          QGraphicsItem* parent = nullptr);
 
   ~Object() override;
+
+  virtual void Draw();
 
   Scene* Scene() const;
 

@@ -44,11 +44,29 @@ Object::Object(class Scene* scene,
   body_.fixture_def->density = body_info.density;
 
   scene->AddObject(this);
+
+  Draw();
 }
 
 Object::~Object() {
   /// Delete body from the world
   body_.body->GetWorld()->DestroyBody(body_.body);
+}
+
+/// Works only for square objects!
+void Object::Draw() {
+  /// Get size and position (in Box2D coordinates)
+  auto shape = dynamic_cast<b2PolygonShape*>(body_.shape);
+  float half_width = qAbs(shape->m_vertices[0].x);
+  float half_height = qAbs(shape->m_vertices[0].y);
+  float x = body_.body->GetPosition().x;
+  float y = body_.body->GetPosition().y;
+
+  /// Convert into scene coordinates & draw
+  setRect(Scene::MetersToPixels(x - half_width),
+          Scene::MetersToPixels(y - half_height),
+          Scene::MetersToPixels(2 * half_width),
+          Scene::MetersToPixels(2 * half_height));
 }
 
 Scene* Object::Scene() const {
