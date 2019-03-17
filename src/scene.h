@@ -7,6 +7,8 @@
 
 #include <Box2D/Box2D.h>
 
+class Object;
+
 class Scene : public QGraphicsScene {
 public:
   Scene(b2World* world, qreal x, qreal y, qreal width, qreal height,
@@ -15,7 +17,11 @@ public:
   void keyPressEvent(QKeyEvent*) override;
   void keyReleaseEvent(QKeyEvent*) override;
 
+  void AddObject(Object*);
+
   bool KeyPressed(qint32) const;
+
+  b2World* World() const;
 
   constexpr static qreal kMetersToPixelsRatio_ = 100;
   static qreal MetersToPixels(float);
@@ -24,7 +30,7 @@ public:
 public slots:
   void advance();
 
-private:
+protected:
   b2World* world_;
 
   const qint32 kFramesPerSecond_ = 60;
