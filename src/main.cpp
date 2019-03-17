@@ -11,6 +11,7 @@
 
 #include "scene.h"
 #include "player.h"
+#include "ground.h"
 
 int main(int argc, char *argv[]) {
   QApplication a(argc, argv);
@@ -29,15 +30,23 @@ int main(int argc, char *argv[]) {
   auto player = new Player(scene, 3, 3);
 
   /// Create floor
-  b2BodyDef floor_def;
-  floor_def.type = b2_staticBody;
-  floor_def.position.Set(0,
-                         Scene::PixelsToMeters(scene->height()));
-  b2EdgeShape floor_shape;
-  floor_shape.Set(b2Vec2(0, 0),
-                  b2Vec2(Scene::PixelsToMeters(scene->width()), 0));
-  b2Body* floor = world->CreateBody(&floor_def);
-  floor->CreateFixture(&floor_shape, 1);
+  auto floor = new Ground(scene,
+                          0,
+                          Scene::PixelsToMeters(scene->height()) - 1,
+                          Scene::PixelsToMeters(scene->width()),
+                          1);
+
+  /// Create walls
+  auto left_wall = new Ground(scene,
+                              0,
+                              0,
+                              1,
+                              Scene::PixelsToMeters(scene->height()));
+  auto right_wall = new Ground(scene,
+                               Scene::PixelsToMeters(scene->width()) - 1,
+                               0,
+                               1,
+                               Scene::PixelsToMeters(scene->height()));
 
   /// Draw dot grid
   for (size_t x = 0; x < scene->width(); x += 100) {
