@@ -75,7 +75,6 @@ void Object::Draw() {
   angle *= 180 / M_PI; /// to degress
   angle *= -1; /// to clockwise
   setRotation(angle);
-  qDebug() << angle;
 }
 
 Scene* Object::Scene() const {
