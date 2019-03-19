@@ -67,10 +67,10 @@ void Object::Draw() {
   float y = body_.body->GetPosition().y;
 
   /// Convert into scene coordinates & draw
-  setRect(Scene::MetersToPixels(x - half_width),
-          Scene::MetersToPixels(y - half_height),
-          Scene::MetersToPixels(2 * half_width),
-          Scene::MetersToPixels(2 * half_height));
+  setRect(Scene()->MetersToPixels(x - half_width),
+          Scene()->MetersToPixels(y - half_height),
+          Scene()->MetersToPixels(2 * half_width),
+          Scene()->MetersToPixels(2 * half_height));
 
   /// Deal with rotation
   auto angle = static_cast<qreal>(body_.body->GetAngle()); /// in radians

@@ -23,9 +23,9 @@ public:
 
   b2World* World() const;
 
-  constexpr static qreal kMetersToPixelsRatio_ = 100;
-  static qreal MetersToPixels(float);
-  static float PixelsToMeters(qreal);
+  const qreal kMetersToPixelsRatio_ = 100;
+  qreal MetersToPixels(float) const;
+  float PixelsToMeters(qreal) const;
 
 public slots:
   void advance();

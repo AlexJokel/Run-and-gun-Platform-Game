@@ -41,8 +41,8 @@ int main(int argc, char *argv[]) {
   /// Create floor
   auto floor = new Ground(scene,
                           0,
-                          Scene::PixelsToMeters(scene->height()) - 1,
-                          Scene::PixelsToMeters(scene->width()),
+                          scene->PixelsToMeters(scene->height()) - 1,
+                          scene->PixelsToMeters(scene->width()),
                           1);
   floor->setBrush(Qt::darkGray);
   floor->setPen(Qt::NoPen);
@@ -52,14 +52,14 @@ int main(int argc, char *argv[]) {
                               0,
                               0,
                               1,
-                              Scene::PixelsToMeters(scene->height()));
+                              scene->PixelsToMeters(scene->height()));
   left_wall->setBrush(Qt::darkGray);
   left_wall->setPen(Qt::NoPen);
   auto right_wall = new Ground(scene,
-                               Scene::PixelsToMeters(scene->width()) - 1,
+                               scene->PixelsToMeters(scene->width()) - 1,
                                0,
                                1,
-                               Scene::PixelsToMeters(scene->height()));
+                               scene->PixelsToMeters(scene->height()));
   right_wall->setBrush(Qt::darkGray);
   right_wall->setPen(Qt::NoPen);
 

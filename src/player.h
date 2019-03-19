@@ -18,7 +18,7 @@ public:
   void advance(int) override;
 
 protected:
-  constexpr static float kJumpHeight = 3;
+  const float kJumpHeight = 3;
   const float kVerticalSpeed_ = 10;
   static float CalcSpeedForHeight(b2World*, float);
 

@@ -41,10 +41,10 @@ void Scene::AddObject(Object* object) {
   object->body_.body->CreateFixture(object->body_.fixture_def);
 }
 
-qreal Scene::MetersToPixels(float meters) {
+qreal Scene::MetersToPixels(float meters) const {
   return static_cast<qreal>(meters) * kMetersToPixelsRatio_;
 }
 
-float Scene::PixelsToMeters(qreal pixels) {
+float Scene::PixelsToMeters(qreal pixels) const {
   return static_cast<float>(pixels / kMetersToPixelsRatio_);
 }
