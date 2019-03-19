@@ -2,6 +2,8 @@
 
 #include <QDebug>
 
+#include "scene.h"
+
 PolygonShapeInfo::PolygonShapeInfo(float half_width,
                                    float half_height)
     : ShapeInfo(),
@@ -79,10 +81,4 @@ void Object::Draw() {
 
 Scene* Object::Scene() const {
   return dynamic_cast<class Scene*>(scene());
-}
-
-void Scene::AddObject(Object* object) {
-  addItem(object);
-  object->body_.body = world_->CreateBody(object->body_.body_def);
-  object->body_.body->CreateFixture(object->body_.fixture_def);
 }

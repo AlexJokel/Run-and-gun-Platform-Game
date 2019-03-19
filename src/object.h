@@ -3,7 +3,6 @@
 
 #include <QGraphicsRectItem>
 #include "physicalbody.h"
-#include "scene.h"
 
 enum class BodyType {
   kStatic,
@@ -52,6 +51,8 @@ struct BodyInfo {
   BodyInfo(float x, float y, ShapeInfo*, BodyType);
 };
 
+class Scene;
+
 class Object : public QGraphicsRectItem {
 public:
   Object(Scene*,
@@ -63,7 +64,6 @@ public:
   virtual void Draw();
 
   Scene* Scene() const;
-
   friend class Scene;
 
 protected:

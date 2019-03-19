@@ -2,6 +2,8 @@
 
 #include <QGraphicsView>
 
+#include "scene.h"
+
 Creature::Creature(class Scene* scene,
                    BodyInfo body_info,
                    float horizontal_speed,
@@ -13,5 +15,5 @@ void Creature::advance(int phase) {
   if (phase == 0) return;
   Move();
   Draw();
-  scene()->views().front()->centerOn(this);
+  Scene()->views().front()->centerOn(this);
 }

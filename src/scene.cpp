@@ -35,6 +35,12 @@ bool Scene::KeyPressed(qint32 key) const {
   return keys_.value(key, false);
 }
 
+void Scene::AddObject(Object* object) {
+  addItem(object);
+  object->body_.body = world_->CreateBody(object->body_.body_def);
+  object->body_.body->CreateFixture(object->body_.fixture_def);
+}
+
 qreal Scene::MetersToPixels(float meters) {
   return static_cast<qreal>(meters) * kMetersToPixelsRatio_;
 }

@@ -3,6 +3,8 @@
 #include <QGraphicsView>
 #include <QDebug>
 
+#include "scene.h"
+
 Player::Player(class Scene* scene,
                float x, float y,
                ShapeInfo* shape_init,

@@ -7,7 +7,6 @@
 #include <Box2D/Box2D.h>
 
 #include "creature.h"
-#include "scene.h"
 
 class Player : public Creature {
 public:

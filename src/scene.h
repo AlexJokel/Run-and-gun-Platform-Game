@@ -7,7 +7,7 @@
 
 #include <Box2D/Box2D.h>
 
-class Object;
+#include "object.h"
 
 class Scene : public QGraphicsScene {
 public:
@@ -17,9 +17,9 @@ public:
   void keyPressEvent(QKeyEvent*) override;
   void keyReleaseEvent(QKeyEvent*) override;
 
-  void AddObject(Object*);
-
   bool KeyPressed(qint32) const;
+
+  void AddObject(Object*);
 
   b2World* World() const;
 
