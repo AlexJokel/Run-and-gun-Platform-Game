@@ -9,13 +9,7 @@ Player::Player(class Scene* scene,
                float x, float y,
                ShapeInfo* shape_init)
     : Creature(scene, BodyInfo{x, y, shape_init, BodyType::kDynamic}, 5),
-      kVerticalSpeed_(CalcSpeedForHeight(scene->World(), kJumpHeight)) {
-  /// Disable rotation
-  body_.body->SetFixedRotation(true);
-
-  /// Disable friction
-  body_.body->GetFixtureList()->SetFriction(0);
-}
+      kVerticalSpeed_(CalcSpeedForHeight(scene->World(), kJumpHeight)) {}
 
 void Player::advance(int phase) {
   Creature::advance(phase);

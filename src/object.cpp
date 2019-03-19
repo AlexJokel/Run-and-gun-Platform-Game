@@ -25,6 +25,7 @@ Object::Object(class Scene* scene,
 
   body_.body_def = new b2BodyDef();
   body_.body_def->position.Set(body_info.x, body_info.y);
+  body_.body_def->fixedRotation = true;
   switch (body_info.body_type) {
     case BodyType::kStatic : {
       body_.body_def->type = b2_staticBody;
@@ -45,6 +46,8 @@ Object::Object(class Scene* scene,
   body_.fixture_def = new b2FixtureDef();
   body_.fixture_def->shape = body_.shape;
   body_.fixture_def->density = body_info.density;
+  body_.fixture_def->friction = 0;
+  body_.fixture_def->restitution = 0;
 
   scene->AddObject(this);
 
