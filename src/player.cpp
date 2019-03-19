@@ -18,6 +18,11 @@ Player::Player(class Scene* scene,
   body_.body->GetFixtureList()->SetFriction(0);
 }
 
+void Player::advance(int phase) {
+  Creature::advance(phase);
+  Scene()->views().front()->centerOn(this);
+}
+
 void Player::Move() {
   b2Vec2 velocity(0, body_.body->GetLinearVelocity().y);
   if (Scene()->KeyPressed(Qt::Key_A)) {

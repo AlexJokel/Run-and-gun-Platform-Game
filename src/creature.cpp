@@ -15,5 +15,4 @@ void Creature::advance(int phase) {
   if (phase == 0) return;
   Move();
   Draw();
-  Scene()->views().front()->centerOn(this);
 }
