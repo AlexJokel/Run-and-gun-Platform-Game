@@ -11,7 +11,7 @@ PolygonShapeInfo::PolygonShapeInfo(float half_width,
       half_height_(half_height) {}
 
 b2Shape* PolygonShapeInfo::Init() {
-  auto polygon_shape = new b2PolygonShape;
+  auto polygon_shape = new b2PolygonShape();
   polygon_shape->SetAsBox(half_width_, half_height_);
   return polygon_shape;
 }
@@ -24,7 +24,7 @@ Object::Object(class Scene* scene,
                QGraphicsItem* parent) : QGraphicsRectItem(parent) {
   body_.body = nullptr;
 
-  body_.body_def = new b2BodyDef;
+  body_.body_def = new b2BodyDef();
   body_.body_def->position.Set(body_info.x, body_info.y);
   switch (body_info.body_type) {
     case BodyType::kStatic : {
@@ -43,7 +43,7 @@ Object::Object(class Scene* scene,
 
   body_.shape = body_info.shape_info->Init();
 
-  body_.fixture_def = new b2FixtureDef;
+  body_.fixture_def = new b2FixtureDef();
   body_.fixture_def->shape = body_.shape;
   body_.fixture_def->density = body_info.density;
 
