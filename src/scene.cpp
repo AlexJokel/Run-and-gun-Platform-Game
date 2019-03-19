@@ -6,6 +6,36 @@
 Scene::Scene(b2World* world, qreal x, qreal y, qreal width, qreal height,
              QObject* parent)
     : QGraphicsScene(x, y, width, height, parent), world_(world) {
+  /// Player initialization
+  objects_.player = new Player(this, 3, 3);
+  objects_.player->setBrush(Qt::darkGreen);
+  objects_.player->setPen(Qt::NoPen);
+
+  /// Create floor
+  objects_.ground.append(new Ground(this,
+                        0,
+                        PixelsToMeters(this->height()) - 1,
+                        PixelsToMeters(this->width()),
+                        1));
+
+  /// Create walls
+  objects_.ground.append(new Ground(this,
+                         0,
+                         0,
+                         1,
+                         PixelsToMeters(this->height())));
+  objects_.ground.append(new Ground(this,
+                         PixelsToMeters(this->width()) - 1,
+                         0,
+                         1,
+                         PixelsToMeters(this->height())));
+
+  /// Paint the ground
+  for (const auto& ground : objects_.ground) {
+    ground->setBrush(Qt::darkGray);
+    ground->setPen(Qt::NoPen);
+  }
+
   /// Frame timer initialization & start
   auto frame_timer = new QTimer();
   QObject::connect(frame_timer, &QTimer::timeout, this, &Scene::advance);

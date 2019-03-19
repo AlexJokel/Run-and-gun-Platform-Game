@@ -7,7 +7,8 @@
 
 #include <Box2D/Box2D.h>
 
-#include "object.h"
+#include "player.h"
+#include "ground.h"
 
 class Scene : public QGraphicsScene {
 public:
@@ -37,6 +38,13 @@ protected:
   const qreal kTimeStep_ = 1 / static_cast<qreal>(kFramesPerSecond_);
 
   QMap<qint32, bool> keys_;
+
+  struct SceneObjects {
+    Player* player;
+    QList<Ground*> ground;
+  };
+
+  SceneObjects objects_;
 };
 
 #endif // SCENE_H

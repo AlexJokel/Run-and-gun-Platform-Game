@@ -33,36 +33,6 @@ int main(int argc, char *argv[]) {
     }
   }
 
-  /// Player initialization
-  auto player = new Player(scene, 3, 3);
-  player->setBrush(Qt::darkGreen);
-  player->setPen(Qt::NoPen);
-
-  /// Create floor
-  auto floor = new Ground(scene,
-                          0,
-                          scene->PixelsToMeters(scene->height()) - 1,
-                          scene->PixelsToMeters(scene->width()),
-                          1);
-  floor->setBrush(Qt::darkGray);
-  floor->setPen(Qt::NoPen);
-
-  /// Create walls
-  auto left_wall = new Ground(scene,
-                              0,
-                              0,
-                              1,
-                              scene->PixelsToMeters(scene->height()));
-  left_wall->setBrush(Qt::darkGray);
-  left_wall->setPen(Qt::NoPen);
-  auto right_wall = new Ground(scene,
-                               scene->PixelsToMeters(scene->width()) - 1,
-                               0,
-                               1,
-                               scene->PixelsToMeters(scene->height()));
-  right_wall->setBrush(Qt::darkGray);
-  right_wall->setPen(Qt::NoPen);
-
   view->show();
 
   return a.exec();
