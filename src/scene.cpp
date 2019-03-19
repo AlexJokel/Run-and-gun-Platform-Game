@@ -2,6 +2,7 @@
 
 #include <QTimer>
 #include <QDebug>
+#include <QGraphicsSceneMouseEvent>
 
 Scene::Scene(b2World* world, qreal x, qreal y, qreal width, qreal height,
              QObject* parent)
@@ -59,6 +60,15 @@ void Scene::keyPressEvent(QKeyEvent *event) {
 
 void Scene::keyReleaseEvent(QKeyEvent *event) {
   keys_[event->key()] = false;
+}
+
+void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
+  if (event->button() != Qt::LeftButton) return;
+  new Arrow(this,
+            objects_.player->body_.body->GetPosition().x,
+            objects_.player->body_.body->GetPosition().y,
+            PixelsToMeters(event->scenePos().x()),
+            PixelsToMeters(event->scenePos().y()));
 }
 
 bool Scene::KeyPressed(qint32 key) const {

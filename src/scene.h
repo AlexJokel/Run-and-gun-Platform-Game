@@ -9,6 +9,7 @@
 
 #include "player.h"
 #include "ground.h"
+#include "arrow.h"
 
 class Scene : public QGraphicsScene {
 public:
@@ -17,6 +18,7 @@ public:
 
   void keyPressEvent(QKeyEvent*) override;
   void keyReleaseEvent(QKeyEvent*) override;
+  void mouseReleaseEvent(QGraphicsSceneMouseEvent*) override;
 
   bool KeyPressed(qint32) const;
 
