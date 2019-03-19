@@ -50,6 +50,7 @@ Object::Object(class Scene* scene,
   body_.fixture_def->restitution = 0;
 
   scene->AddObject(this);
+  body_.body->SetUserData(this);
 
   /// Prepare for drawing
   auto rect_shape = dynamic_cast<b2PolygonShape*>(body_.shape);

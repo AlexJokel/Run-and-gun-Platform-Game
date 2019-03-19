@@ -10,8 +10,13 @@ public:
         float mouse_x, float mouse_y,
         ShapeInfo* = PassShapeInfo(ShapeType::kRectangle, 0.5f, 0.1f));
 
+  void SetOutOfPlayer();
+  bool IsOutOfPlayer() const;
+
 protected:
   const float kSpeed = 10;
+
+  bool out_of_player = false;
 };
 
 #endif // ARROW_H

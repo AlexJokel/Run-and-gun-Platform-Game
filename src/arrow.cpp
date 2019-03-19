@@ -13,3 +13,11 @@ Arrow::Arrow(class Scene* scene,
   velocity *= kSpeed / velocity.Length(); /// Scale to desired length
   body_.body->SetLinearVelocity(velocity);
 }
+
+void Arrow::SetOutOfPlayer() {
+  out_of_player = true;
+}
+
+bool Arrow::IsOutOfPlayer() const {
+  return out_of_player;
+}
