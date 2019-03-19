@@ -7,8 +7,7 @@ class Creature : public Object {
 public:
   Creature(class Scene*,
            BodyInfo,
-           float horizontal_speed,
-           QGraphicsItem* parent = nullptr);
+           float horizontal_speed);
 
   void advance(int) override;
 

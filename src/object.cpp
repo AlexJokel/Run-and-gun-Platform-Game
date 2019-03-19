@@ -20,8 +20,7 @@ BodyInfo::BodyInfo(float x, float y, ShapeInfo* shape_info, BodyType body_type)
   : x(x), y(y), shape_info(shape_info), body_type(body_type) {}
 
 Object::Object(class Scene* scene,
-               BodyInfo body_info,
-               QGraphicsItem* parent) : QGraphicsRectItem(parent) {
+               BodyInfo body_info) : QGraphicsRectItem(nullptr) {
   body_.body = nullptr;
 
   body_.body_def = new b2BodyDef();

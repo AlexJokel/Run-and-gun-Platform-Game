@@ -6,9 +6,8 @@
 
 Creature::Creature(class Scene* scene,
                    BodyInfo body_info,
-                   float horizontal_speed,
-                   QGraphicsItem* parent)
-    : Object(scene, body_info, parent),
+                   float horizontal_speed)
+    : Object(scene, body_info),
       kHorizontalSpeed(horizontal_speed) {}
 
 void Creature::advance(int phase) {

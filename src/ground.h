@@ -8,8 +8,7 @@ public:
   /// x, y --- top left corner Box2D coordinates
   Ground(class Scene*,
          float x, float y,
-         float width, float height,
-         QGraphicsItem* parent = nullptr);
+         float width, float height);
 };
 
 #endif // GROUND_H

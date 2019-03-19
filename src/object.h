@@ -56,8 +56,7 @@ class Scene;
 class Object : public QGraphicsRectItem {
 public:
   Object(Scene*,
-         BodyInfo body_info,
-         QGraphicsItem* parent = nullptr);
+         BodyInfo body_info);
 
   ~Object() override;
 
