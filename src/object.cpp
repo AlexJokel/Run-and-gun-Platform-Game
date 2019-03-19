@@ -53,8 +53,11 @@ Object::Object(class Scene* scene,
 }
 
 Object::~Object() {
-  /// Delete body from the world
+  /// Delete object from the world
   body_.body->GetWorld()->DestroyBody(body_.body);
+
+  /// Delete object from the scene
+  Scene()->removeItem(this);
 }
 
 /// Works only for square objects!
