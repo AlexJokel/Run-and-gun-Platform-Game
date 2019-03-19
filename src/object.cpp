@@ -4,13 +4,13 @@
 
 #include "scene.h"
 
-PolygonShapeInfo::PolygonShapeInfo(float half_width,
+RectangleShapeInfo::RectangleShapeInfo(float half_width,
                                    float half_height)
     : ShapeInfo(),
       half_width_(half_width),
       half_height_(half_height) {}
 
-b2Shape* PolygonShapeInfo::Init() {
+b2Shape* RectangleShapeInfo::Init() {
   auto polygon_shape = new b2PolygonShape();
   polygon_shape->SetAsBox(half_width_, half_height_);
   return polygon_shape;

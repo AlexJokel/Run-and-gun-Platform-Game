@@ -11,7 +11,7 @@ enum class BodyType {
 };
 
 enum class ShapeType {
-  kPolygon
+  kRectangle
 };
 
 class ShapeInfo {
@@ -21,9 +21,9 @@ public:
   virtual ~ShapeInfo() = default;
 };
 
-class PolygonShapeInfo : public ShapeInfo {
+class RectangleShapeInfo : public ShapeInfo {
 public:
-  PolygonShapeInfo(float half_width, float half_height);
+  RectangleShapeInfo(float half_width, float half_height);
   b2Shape* Init() override;
 
 protected:
@@ -34,8 +34,8 @@ protected:
 template<typename ...Args>
 ShapeInfo* PassShapeInfo(ShapeType shape_type, Args... args) {
   switch (shape_type) {
-    case ShapeType::kPolygon : {
-      return new PolygonShapeInfo(std::forward<Args>(args)...);
+    case ShapeType::kRectangle : {
+      return new RectangleShapeInfo(std::forward<Args>(args)...);
     }
   }
   return nullptr;

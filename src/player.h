@@ -12,7 +12,7 @@ class Player : public Creature {
 public:
   Player(class Scene*,
          float x, float y,
-         ShapeInfo* = PassShapeInfo(ShapeType::kPolygon, 0.5f, 0.5f),
+         ShapeInfo* = PassShapeInfo(ShapeType::kRectangle, 0.5f, 0.5f),
          QGraphicsItem* = nullptr);
 
   void advance(int) override;
