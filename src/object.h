@@ -60,6 +60,7 @@ public:
 
   ~Object() override;
 
+  void advance(int) override;
   virtual void Draw();
 
   Scene* Scene() const;
