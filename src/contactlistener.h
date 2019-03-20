@@ -34,4 +34,9 @@ QPair<T1*, T2*> CheckContactedTypes(b2Contact* contact) {
   return {nullptr, nullptr};
 }
 
+template<typename T>
+T* CheckContactedTypes(b2Contact* contact) {
+  return CheckContactedTypes<T, Object>(contact).first;
+}
+
 #endif // CONTACTLISTENER_H

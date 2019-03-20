@@ -12,6 +12,11 @@ Arrow::Arrow(class Scene* scene,
   b2Vec2 velocity(mouse_x - x, mouse_y - y); /// Difference in coordinates
   velocity *= kSpeed / velocity.Length(); /// Scale to desired length
   body_.body->SetLinearVelocity(velocity);
+
+  /// Disable arrow-arrow collision
+  b2Filter arrow_filter;
+  arrow_filter.groupIndex = -2;
+  body_.body->GetFixtureList()->SetFilterData(arrow_filter);
 }
 
 void Arrow::SetOutOfPlayer() {

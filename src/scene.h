@@ -23,6 +23,7 @@ public:
   bool KeyPressed(qint32) const;
 
   void AddObject(Object*);
+  void RemoveObject(Object*);
 
   b2World* World() const;
 
@@ -47,6 +48,8 @@ protected:
   };
 
   SceneObjects objects_;
+
+  QSet<Object*> objects_for_removal;
 };
 
 #endif // SCENE_H
