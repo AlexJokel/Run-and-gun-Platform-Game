@@ -15,6 +15,8 @@ Player::Player(class Scene* scene,
 
   /// Disable friction
   body_.body->GetFixtureList()->SetFriction(0);
+
+  setBrush(Qt::darkGreen);
 }
 
 void Player::advance(int phase) {

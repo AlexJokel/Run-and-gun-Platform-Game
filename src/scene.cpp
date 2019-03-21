@@ -9,7 +9,6 @@ Scene::Scene(b2World* world, qreal x, qreal y, qreal width, qreal height,
     : QGraphicsScene(x, y, width, height, parent), world_(world) {
   /// Player initialization
   objects_.player = new Player(this, 3, 3);
-  objects_.player->setBrush(Qt::darkGreen);
 
   /// Create floor
   objects_.ground.append(new Ground(this,
@@ -29,11 +28,6 @@ Scene::Scene(b2World* world, qreal x, qreal y, qreal width, qreal height,
                          0,
                          1,
                          PixelsToMeters(this->height())));
-
-  /// Paint the ground
-  for (const auto& ground : objects_.ground) {
-    ground->setBrush(Qt::darkGray);
-  }
 
   /// Frame timer initialization & start
   auto frame_timer = new QTimer();

@@ -1,5 +1,7 @@
 #include "ground.h"
 
+#include <QGraphicsView>
+
 Ground::Ground(class Scene* scene,
                float x, float y,
                float width, float height)
@@ -7,4 +9,7 @@ Ground::Ground(class Scene* scene,
              BodyInfo{x + width / 2,
                       y + height / 2,
                       PassShapeInfo(ShapeType::kRectangle, width / 2, height / 2),
-                      BodyType::kStatic}) {}
+                      BodyType::kStatic}) {
+  setBrush(Qt::darkGray);
+  setPen(Qt::NoPen);
+}
