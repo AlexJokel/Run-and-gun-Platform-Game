@@ -27,6 +27,7 @@ int main(int argc, char *argv[]) {
   view->setFixedSize(1280, 720);
   view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+  view->setViewportUpdateMode(QGraphicsView::NoViewportUpdate);
 
   /// Draw dot grid
   for (size_t x = 0; x < scene->width(); x += 100) {

@@ -15,6 +15,9 @@ Player::Player(class Scene* scene,
   player_filter.categoryBits = CollisionMask::kPlayer;
   player_filter.maskBits ^= CollisionMask::kArrow;
   body_.body->GetFixtureList()->SetFilterData(player_filter);
+
+  /// Add color
+  setBrush(Qt::darkGreen);
 }
 
 void Player::advance(int phase) {
