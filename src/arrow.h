@@ -8,15 +8,14 @@ public:
   Arrow(class Scene*,
         float x, float y,
         float mouse_x, float mouse_y,
-        ShapeInfo* = PassShapeInfo(ShapeType::kRectangle, 0.5f, 0.1f));
+        ShapeInfo* = PassShapeInfo(ShapeType::kRectangle, 0.4f, 0.1f));
 
-  void SetOutOfPlayer();
-  bool IsOutOfPlayer() const;
+  void advance(int) override;
 
 protected:
   const float kSpeed = 10;
 
-  bool out_of_player = false;
+  void SetAngle(b2Vec2 velocity);
 };
 
 #endif // ARROW_H

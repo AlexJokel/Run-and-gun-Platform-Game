@@ -13,6 +13,9 @@ Arrow::Arrow(class Scene* scene,
   velocity *= kSpeed / velocity.Length(); /// Scale to desired length
   body_.body->SetLinearVelocity(velocity);
 
+  /// Set angle
+  SetAngle(velocity);
+
   /// Disable arrow-arrow & arrow-player collision
   b2Filter arrow_filter;
   arrow_filter.categoryBits = CollisionMask::kArrow;
@@ -20,10 +23,12 @@ Arrow::Arrow(class Scene* scene,
   body_.body->GetFixtureList()->SetFilterData(arrow_filter);
 }
 
-void Arrow::SetOutOfPlayer() {
-  out_of_player = true;
+void Arrow::advance(int phase) {
+  SetAngle(body_.body->GetLinearVelocity());
+  Object::advance(phase);
 }
 
-bool Arrow::IsOutOfPlayer() const {
-  return out_of_player;
+void Arrow::SetAngle(b2Vec2 velocity) {
+  float angle = -atan(velocity.y / velocity.x);
+  body_.body->SetTransform(body_.body->GetWorldPoint({0, 0}), angle);
 }
