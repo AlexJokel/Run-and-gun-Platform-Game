@@ -9,7 +9,13 @@ Player::Player(class Scene* scene,
                float x, float y,
                ShapeInfo* shape_init)
     : Creature(scene, BodyInfo{x, y, shape_init, BodyType::kDynamic}, 5),
-      kVerticalSpeed_(CalcSpeedForHeight(scene->World(), kJumpHeight)) {}
+      kVerticalSpeed_(CalcSpeedForHeight(scene->World(), kJumpHeight)) {
+  /// Set player collision mask
+  b2Filter player_filter;
+  player_filter.categoryBits = CollisionMask::kPlayer;
+  player_filter.maskBits ^= CollisionMask::kArrow;
+  body_.body->GetFixtureList()->SetFilterData(player_filter);
+}
 
 void Player::advance(int phase) {
   Creature::advance(phase);

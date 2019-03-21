@@ -9,8 +9,7 @@
 
 class ContactListener : public b2ContactListener {
 public:
-  void EndContact(b2Contact*) override;
-  void PreSolve(b2Contact*, const b2Manifold*) override;
+  void BeginContact(b2Contact*) override;
 };
 
 template<typename T1, typename T2>

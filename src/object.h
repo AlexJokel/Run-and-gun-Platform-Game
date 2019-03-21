@@ -4,6 +4,14 @@
 #include <QGraphicsRectItem>
 #include "physicalbody.h"
 
+namespace CollisionMask {
+  enum {
+    kDefault = 0x0001,
+    kPlayer = 0x0002,
+    kArrow = 0x0004
+  };
+}
+
 enum class BodyType {
   kStatic,
   kDynamic,

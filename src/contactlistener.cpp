@@ -4,24 +4,9 @@
 #include "arrow.h"
 #include "scene.h"
 
-void ContactListener::EndContact(b2Contact* contact) {
-  auto player_arrow = CheckContactedTypes<Player, Arrow>(contact);
-  if (player_arrow.first != nullptr) {
-    player_arrow.second->SetOutOfPlayer();
-  }
-}
-
-void ContactListener::PreSolve(b2Contact* contact, const b2Manifold*) {
-  auto player_arrow = CheckContactedTypes<Player, Arrow>(contact);
-  if (player_arrow.first != nullptr) {
-    if (!player_arrow.second->IsOutOfPlayer()) {
-      contact->SetEnabled(false);
-      return;
-    }
-  }
-
+void ContactListener::BeginContact(b2Contact* contact) {
   auto arrow = CheckContactedTypes<Arrow>(contact);
   if (arrow != nullptr) {
-      arrow->Scene()->RemoveObject(arrow);
+    arrow->Scene()->RemoveObject(arrow);
   }
 }

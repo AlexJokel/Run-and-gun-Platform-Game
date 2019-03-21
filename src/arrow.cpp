@@ -13,9 +13,10 @@ Arrow::Arrow(class Scene* scene,
   velocity *= kSpeed / velocity.Length(); /// Scale to desired length
   body_.body->SetLinearVelocity(velocity);
 
-  /// Disable arrow-arrow collision
+  /// Disable arrow-arrow & arrow-player collision
   b2Filter arrow_filter;
-  arrow_filter.groupIndex = -2;
+  arrow_filter.categoryBits = CollisionMask::kArrow;
+  arrow_filter.maskBits ^= CollisionMask::kArrow | CollisionMask::kPlayer;
   body_.body->GetFixtureList()->SetFilterData(arrow_filter);
 }
 
