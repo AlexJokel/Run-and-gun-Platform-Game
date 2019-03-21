@@ -2,6 +2,7 @@
 
 #include <QTimer>
 #include <QDebug>
+#include <QGraphicsView>
 
 Scene::Scene(b2World* world, qreal x, qreal y, qreal width, qreal height,
              QObject* parent)
@@ -9,7 +10,6 @@ Scene::Scene(b2World* world, qreal x, qreal y, qreal width, qreal height,
   /// Player initialization
   objects_.player = new Player(this, 3, 3);
   objects_.player->setBrush(Qt::darkGreen);
-  objects_.player->setPen(Qt::NoPen);
 
   /// Create floor
   objects_.ground.append(new Ground(this,
@@ -33,7 +33,6 @@ Scene::Scene(b2World* world, qreal x, qreal y, qreal width, qreal height,
   /// Paint the ground
   for (const auto& ground : objects_.ground) {
     ground->setBrush(Qt::darkGray);
-    ground->setPen(Qt::NoPen);
   }
 
   /// Frame timer initialization & start
@@ -51,6 +50,9 @@ void Scene::advance() {
   world_->Step(static_cast<float>(kTimeStep_), 8, 3);
   /// Advance the scene
   QGraphicsScene::advance();
+
+  /// Repaint the view
+  views().front()->viewport()->repaint();
 }
 
 void Scene::keyPressEvent(QKeyEvent *event) {
