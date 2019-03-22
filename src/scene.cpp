@@ -3,6 +3,7 @@
 #include <QTimer>
 #include <QDebug>
 #include <QGraphicsView>
+#include <QGraphicsSceneMouseEvent>
 
 Scene::Scene(b2World* world, qreal x, qreal y, qreal width, qreal height,
              QObject* parent)
@@ -42,6 +43,13 @@ b2World* Scene::World() const {
 void Scene::advance() {
   /// Advance the world
   world_->Step(static_cast<float>(kTimeStep_), 8, 3);
+
+  /// Delete scheduled objects
+  for (const auto& object : objects_for_removal) {
+    delete object;
+  }
+  objects_for_removal.clear();
+
   /// Advance the scene
   QGraphicsScene::advance();
 
@@ -57,6 +65,15 @@ void Scene::keyReleaseEvent(QKeyEvent *event) {
   keys_[event->key()] = false;
 }
 
+void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
+  if (event->button() != Qt::LeftButton) return;
+  new Arrow(this,
+            objects_.player->body_.body->GetPosition().x,
+            objects_.player->body_.body->GetPosition().y,
+            PixelsToMeters(event->scenePos().x()),
+            PixelsToMeters(event->scenePos().y()));
+}
+
 bool Scene::KeyPressed(qint32 key) const {
   return keys_.value(key, false);
 }
@@ -65,6 +82,10 @@ void Scene::AddObject(Object* object) {
   addItem(object);
   object->body_.body = world_->CreateBody(object->body_.body_def);
   object->body_.body->CreateFixture(object->body_.fixture_def);
+}
+
+void Scene::RemoveObject(Object* object) {
+  objects_for_removal.insert(object);
 }
 
 qreal Scene::MetersToPixels(float meters) const {

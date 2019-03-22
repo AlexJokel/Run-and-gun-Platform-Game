@@ -25,6 +25,7 @@ Object::Object(class Scene* scene,
 
   body_.body_def = new b2BodyDef();
   body_.body_def->position.Set(body_info.x, body_info.y);
+  body_.body_def->fixedRotation = true;
   switch (body_info.body_type) {
     case BodyType::kStatic : {
       body_.body_def->type = b2_staticBody;
@@ -45,8 +46,21 @@ Object::Object(class Scene* scene,
   body_.fixture_def = new b2FixtureDef();
   body_.fixture_def->shape = body_.shape;
   body_.fixture_def->density = body_info.density;
+  body_.fixture_def->friction = 0;
+  body_.fixture_def->restitution = 0;
 
   scene->AddObject(this);
+  body_.body->SetUserData(this);
+
+  /// Prepare for drawing
+  auto rect_shape = dynamic_cast<b2PolygonShape*>(body_.shape);
+  float half_width = qAbs(rect_shape->m_vertices[0].x);
+  float half_height = qAbs(rect_shape->m_vertices[0].y);
+  setRect(0,
+          0,
+          Scene()->MetersToPixels(2 * half_width),
+          Scene()->MetersToPixels(2 * half_height));
+  setTransformOriginPoint(rect().center());
 
   Draw();
 }
@@ -59,20 +73,19 @@ Object::~Object() {
   Scene()->removeItem(this);
 }
 
+void Object::advance(int phase) {
+  if (phase == 0) return;
+  if (body_.body->GetType() == b2_staticBody) return;
+  Draw();
+}
+
 /// Works only for square objects!
 void Object::Draw() {
-  /// Get size and position (in Box2D coordinates)
-  auto shape = dynamic_cast<b2PolygonShape*>(body_.shape);
-  float half_width = qAbs(shape->m_vertices[0].x);
-  float half_height = qAbs(shape->m_vertices[0].y);
-  float x = body_.body->GetPosition().x;
-  float y = body_.body->GetPosition().y;
-
-  /// Convert into scene coordinates & draw
-  setRect(Scene()->MetersToPixels(x - half_width),
-          Scene()->MetersToPixels(y - half_height),
-          Scene()->MetersToPixels(2 * half_width),
-          Scene()->MetersToPixels(2 * half_height));
+  /// Set position
+  b2Vec2 top_left_corner = body_.body->GetPosition()
+      + dynamic_cast<b2PolygonShape*>(body_.shape)->m_vertices[0];
+  setPos(Scene()->MetersToPixels(top_left_corner.x),
+          Scene()->MetersToPixels(top_left_corner.y));
 
   /// Deal with rotation
   auto angle = static_cast<qreal>(body_.body->GetAngle()); /// in radians

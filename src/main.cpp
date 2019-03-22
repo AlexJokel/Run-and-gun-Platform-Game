@@ -12,12 +12,14 @@
 #include "scene.h"
 #include "player.h"
 #include "ground.h"
+#include "contactlistener.h"
 
 int main(int argc, char *argv[]) {
   QApplication a(argc, argv);
 
   /// World initialization
   auto world = new b2World(b2Vec2(0, 9.8f));
+  world->SetContactListener(new ContactListener);
 
   /// Scene & view initialization
   auto scene = new Scene(world, 0, 0, 1920, 1080);

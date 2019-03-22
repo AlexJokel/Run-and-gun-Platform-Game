@@ -8,6 +8,8 @@ struct PhysicalBody {
   b2BodyDef* body_def;
   b2Shape* shape;
   b2FixtureDef* fixture_def;
+
+  ~PhysicalBody();
 };
 
 #endif // PHYSICALBODY_H

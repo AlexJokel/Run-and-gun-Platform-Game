@@ -10,12 +10,13 @@ Player::Player(class Scene* scene,
                ShapeInfo* shape_init)
     : Creature(scene, BodyInfo{x, y, shape_init, BodyType::kDynamic}, 5),
       kVerticalSpeed_(CalcSpeedForHeight(scene->World(), kJumpHeight)) {
-  /// Disable rotation
-  body_.body->SetFixedRotation(true);
+  /// Set player collision mask
+  b2Filter player_filter;
+  player_filter.categoryBits = CollisionMask::kPlayer;
+  player_filter.maskBits ^= CollisionMask::kArrow;
+  body_.body->GetFixtureList()->SetFilterData(player_filter);
 
-  /// Disable friction
-  body_.body->GetFixtureList()->SetFriction(0);
-
+  /// Add color
   setBrush(Qt::darkGreen);
 }
 
