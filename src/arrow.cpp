@@ -6,12 +6,12 @@ Arrow::Arrow(class Scene* scene,
              ShapeInfo* shape_info)
     : Object(scene, BodyInfo{x, y, shape_info, BodyType::kDynamic}) {
   ///Enable rotation
-  body_.body->SetFixedRotation(false);
+  body_->SetFixedRotation(false);
 
   /// Set starting velocity
   b2Vec2 velocity(mouse_x - x, mouse_y - y); /// Difference in coordinates
   velocity *= kSpeed / velocity.Length(); /// Scale to desired length
-  body_.body->SetLinearVelocity(velocity);
+  body_->SetLinearVelocity(velocity);
 
   /// Set angle
   SetAngle(velocity);
@@ -20,15 +20,15 @@ Arrow::Arrow(class Scene* scene,
   b2Filter arrow_filter;
   arrow_filter.categoryBits = CollisionMask::kArrow;
   arrow_filter.maskBits ^= CollisionMask::kArrow | CollisionMask::kPlayer;
-  body_.body->GetFixtureList()->SetFilterData(arrow_filter);
+  body_->GetFixtureList()->SetFilterData(arrow_filter);
 }
 
 void Arrow::advance(int phase) {
-  SetAngle(body_.body->GetLinearVelocity());
+  SetAngle(body_->GetLinearVelocity());
   Object::advance(phase);
 }
 
 void Arrow::SetAngle(b2Vec2 velocity) {
   float angle = -atan(velocity.y / velocity.x);
-  body_.body->SetTransform(body_.body->GetWorldPoint({0, 0}), angle);
+  body_->SetTransform(body_->GetWorldPoint({0, 0}), angle);
 }

@@ -2,7 +2,7 @@
 #define OBJECT_H
 
 #include <QGraphicsRectItem>
-#include "physicalbody.h"
+#include <Box2D/Box2D.h>
 
 namespace CollisionMask {
   enum {
@@ -75,7 +75,7 @@ public:
   friend class Scene;
 
 protected:
-  PhysicalBody body_;
+  b2Body* body_;
 };
 
 #endif // OBJECT_H

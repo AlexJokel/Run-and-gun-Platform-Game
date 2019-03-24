@@ -21,39 +21,39 @@ BodyInfo::BodyInfo(float x, float y, ShapeInfo* shape_info, BodyType body_type)
 
 Object::Object(class Scene* scene,
                BodyInfo body_info) : QGraphicsRectItem(nullptr) {
-  body_.body = nullptr;
-
-  body_.body_def = new b2BodyDef();
-  body_.body_def->position.Set(body_info.x, body_info.y);
-  body_.body_def->fixedRotation = true;
+  b2BodyDef body_def;
+  body_def.position.Set(body_info.x, body_info.y);
+  body_def.fixedRotation = true;
   switch (body_info.body_type) {
     case BodyType::kStatic : {
-      body_.body_def->type = b2_staticBody;
+      body_def.type = b2_staticBody;
       break;
     }
     case BodyType::kDynamic : {
-      body_.body_def->type = b2_dynamicBody;
+      body_def.type = b2_dynamicBody;
       break;
     }
     case BodyType::kKinematic : {
-      body_.body_def->type = b2_kinematicBody;
+      body_def.type = b2_kinematicBody;
       break;
     }
   }
 
-  body_.shape = body_info.shape_info->Init();
+  b2FixtureDef fixture_def;
+  fixture_def.shape = body_info.shape_info->Init();
+  fixture_def.density = body_info.density;
+  fixture_def.friction = 0;
+  fixture_def.restitution = 0;
 
-  body_.fixture_def = new b2FixtureDef();
-  body_.fixture_def->shape = body_.shape;
-  body_.fixture_def->density = body_info.density;
-  body_.fixture_def->friction = 0;
-  body_.fixture_def->restitution = 0;
-
-  scene->AddObject(this);
-  body_.body->SetUserData(this);
+  /// Add object to the scene
+  scene->addItem(this);
+  body_ = scene->World()->CreateBody(&body_def);
+  body_->CreateFixture(&fixture_def);
+  body_->SetUserData(this);
 
   /// Prepare for drawing
-  auto rect_shape = dynamic_cast<b2PolygonShape*>(body_.shape);
+  auto rect_shape = dynamic_cast<b2PolygonShape*>(
+      body_->GetFixtureList()->GetShape());
   float half_width = qAbs(rect_shape->m_vertices[0].x);
   float half_height = qAbs(rect_shape->m_vertices[0].y);
   setRect(0,
@@ -67,7 +67,7 @@ Object::Object(class Scene* scene,
 
 Object::~Object() {
   /// Delete object from the world
-  body_.body->GetWorld()->DestroyBody(body_.body);
+  body_->GetWorld()->DestroyBody(body_);
 
   /// Delete object from the scene
   Scene()->removeItem(this);
@@ -75,20 +75,21 @@ Object::~Object() {
 
 void Object::advance(int phase) {
   if (phase == 0) return;
-  if (body_.body->GetType() == b2_staticBody) return;
+  if (body_->GetType() == b2_staticBody) return;
   Draw();
 }
 
 /// Works only for square objects!
 void Object::Draw() {
   /// Set position
-  b2Vec2 top_left_corner = body_.body->GetPosition()
-      + dynamic_cast<b2PolygonShape*>(body_.shape)->m_vertices[0];
+  b2Vec2 top_left_corner = body_->GetPosition()
+      + dynamic_cast<b2PolygonShape*>(
+          body_->GetFixtureList()->GetShape())->m_vertices[0];
   setPos(Scene()->MetersToPixels(top_left_corner.x),
           Scene()->MetersToPixels(top_left_corner.y));
 
   /// Deal with rotation
-  auto angle = static_cast<qreal>(body_.body->GetAngle()); /// in radians
+  auto angle = static_cast<qreal>(body_->GetAngle()); /// in radians
   angle *= 180 / M_PI; /// to degress
   angle *= -1; /// to clockwise
   setRotation(angle);

@@ -35,14 +35,12 @@ SOURCES += \
     src/creature.cpp \
     src/ground.cpp \
     src/arrow.cpp \
-    src/contactlistener.cpp \
-    src/physicalbody.cpp
+    src/contactlistener.cpp
 
 HEADERS += \
 #    Box2D/Box2D.h
     src/player.h \
     src/scene.h \
-    src/physicalbody.h \
     src/object.h \
     src/creature.h \
     src/ground.h \

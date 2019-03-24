@@ -14,7 +14,7 @@ Player::Player(class Scene* scene,
   b2Filter player_filter;
   player_filter.categoryBits = CollisionMask::kPlayer;
   player_filter.maskBits ^= CollisionMask::kArrow;
-  body_.body->GetFixtureList()->SetFilterData(player_filter);
+  body_->GetFixtureList()->SetFilterData(player_filter);
 
   /// Add color
   setBrush(Qt::darkGreen);
@@ -26,7 +26,7 @@ void Player::advance(int phase) {
 }
 
 void Player::Move() {
-  b2Vec2 velocity(0, body_.body->GetLinearVelocity().y);
+  b2Vec2 velocity(0, body_->GetLinearVelocity().y);
   if (Scene()->KeyPressed(Qt::Key_A)) {
     velocity.x -= kHorizontalSpeed;
   }
@@ -39,7 +39,7 @@ void Player::Move() {
     }
   }
 
-  body_.body->SetLinearVelocity(velocity);
+  body_->SetLinearVelocity(velocity);
 }
 
 /// Copy-pasted this function

@@ -22,7 +22,6 @@ public:
 
   bool KeyPressed(qint32) const;
 
-  void AddObject(Object*);
   void RemoveObject(Object*);
 
   b2World* World() const;

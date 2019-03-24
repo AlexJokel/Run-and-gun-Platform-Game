@@ -68,20 +68,14 @@ void Scene::keyReleaseEvent(QKeyEvent *event) {
 void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
   if (event->button() != Qt::LeftButton) return;
   new Arrow(this,
-            objects_.player->body_.body->GetPosition().x,
-            objects_.player->body_.body->GetPosition().y,
+            objects_.player->body_->GetPosition().x,
+            objects_.player->body_->GetPosition().y,
             PixelsToMeters(event->scenePos().x()),
             PixelsToMeters(event->scenePos().y()));
 }
 
 bool Scene::KeyPressed(qint32 key) const {
   return keys_.value(key, false);
-}
-
-void Scene::AddObject(Object* object) {
-  addItem(object);
-  object->body_.body = world_->CreateBody(object->body_.body_def);
-  object->body_.body->CreateFixture(object->body_.fixture_def);
 }
 
 void Scene::RemoveObject(Object* object) {
