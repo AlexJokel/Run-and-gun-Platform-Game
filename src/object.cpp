@@ -2,7 +2,7 @@
 
 #include <QDebug>
 
-#include "scene.h"
+#include "level.h"
 
 RectangleShapeInfo::RectangleShapeInfo(float half_width,
                                    float half_height)
@@ -19,7 +19,7 @@ b2Shape* RectangleShapeInfo::Init() {
 BodyInfo::BodyInfo(float x, float y, ShapeInfo* shape_info, BodyType body_type)
   : x(x), y(y), shape_info(shape_info), body_type(body_type) {}
 
-Object::Object(class Scene* scene,
+Object::Object(class Level* scene,
                BodyInfo body_info) : QGraphicsRectItem(nullptr) {
   b2BodyDef body_def;
   body_def.position.Set(body_info.x, body_info.y);
@@ -58,8 +58,8 @@ Object::Object(class Scene* scene,
   float half_height = qAbs(rect_shape->m_vertices[0].y);
   setRect(0,
           0,
-          Scene()->MetersToPixels(2 * half_width),
-          Scene()->MetersToPixels(2 * half_height));
+          Level()->MetersToPixels(2 * half_width),
+          Level()->MetersToPixels(2 * half_height));
   setTransformOriginPoint(rect().center());
 
   Draw();
@@ -70,7 +70,7 @@ Object::~Object() {
   body_->GetWorld()->DestroyBody(body_);
 
   /// Delete object from the scene
-  Scene()->removeItem(this);
+  Level()->removeItem(this);
 }
 
 void Object::advance(int phase) {
@@ -85,8 +85,8 @@ void Object::Draw() {
   b2Vec2 top_left_corner = body_->GetPosition()
       + dynamic_cast<b2PolygonShape*>(
           body_->GetFixtureList()->GetShape())->m_vertices[0];
-  setPos(Scene()->MetersToPixels(top_left_corner.x),
-          Scene()->MetersToPixels(top_left_corner.y));
+  setPos(Level()->MetersToPixels(top_left_corner.x),
+          Level()->MetersToPixels(top_left_corner.y));
 
   /// Deal with rotation
   auto angle = static_cast<qreal>(body_->GetAngle()); /// in radians
@@ -95,6 +95,6 @@ void Object::Draw() {
   setRotation(angle);
 }
 
-Scene* Object::Scene() const {
-  return dynamic_cast<class Scene*>(scene());
+Level* Object::Level() const {
+  return dynamic_cast<class Level*>(scene());
 }

@@ -2,9 +2,9 @@
 
 #include <QGraphicsView>
 
-#include "scene.h"
+#include "level.h"
 
-Creature::Creature(class Scene* scene,
+Creature::Creature(class Level* scene,
                    BodyInfo body_info,
                    float horizontal_speed)
     : Object(scene, body_info),

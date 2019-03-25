@@ -30,22 +30,22 @@ DEPENDPATH += $$PWD/src
 SOURCES += \
     src/main.cpp \
     src/player.cpp \
-    src/scene.cpp \
     src/object.cpp \
     src/creature.cpp \
     src/ground.cpp \
     src/arrow.cpp \
-    src/contactlistener.cpp
+    src/contactlistener.cpp \
+    src/level.cpp
 
 HEADERS += \
 #    Box2D/Box2D.h
     src/player.h \
-    src/scene.h \
     src/object.h \
     src/creature.h \
     src/ground.h \
     src/arrow.h \
-    src/contactlistener.h
+    src/contactlistener.h \
+    src/level.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

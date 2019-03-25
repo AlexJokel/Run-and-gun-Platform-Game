@@ -1,5 +1,5 @@
-#ifndef SCENE_H
-#define SCENE_H
+#ifndef LEVEL_H
+#define LEVEL_H
 
 #include <QGraphicsScene>
 #include <QKeyEvent>
@@ -11,9 +11,9 @@
 #include "ground.h"
 #include "arrow.h"
 
-class Scene : public QGraphicsScene {
+class Level : public QGraphicsScene {
 public:
-  Scene(b2World* world, qreal x, qreal y, qreal width, qreal height,
+  Level(b2World* world, qreal x, qreal y, qreal width, qreal height,
         QObject* parent = nullptr);
 
   void keyPressEvent(QKeyEvent*) override;
@@ -26,7 +26,6 @@ public:
 
   b2World* World() const;
 
-  const qreal kMetersToPixelsRatio_ = 100;
   qreal MetersToPixels(float) const;
   float PixelsToMeters(qreal) const;
 
@@ -35,6 +34,8 @@ public slots:
 
 protected:
   b2World* world_;
+
+  const qreal kMetersToPixelsRatio_ = 100;
 
   const qint32 kFramesPerSecond_ = 60;
   const qreal kTimeStep_ = 1 / static_cast<qreal>(kFramesPerSecond_);
@@ -51,4 +52,4 @@ protected:
   QSet<Object*> objects_for_removal;
 };
 
-#endif // SCENE_H
+#endif // LEVEL_H

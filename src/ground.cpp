@@ -2,7 +2,7 @@
 
 #include <QGraphicsView>
 
-Ground::Ground(class Scene* scene,
+Ground::Ground(class Level* scene,
                float x, float y,
                float width, float height)
     : Object(scene,

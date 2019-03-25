@@ -3,9 +3,9 @@
 #include <QGraphicsView>
 #include <QDebug>
 
-#include "scene.h"
+#include "level.h"
 
-Player::Player(class Scene* scene,
+Player::Player(class Level* scene,
                float x, float y,
                ShapeInfo* shape_init)
     : Creature(scene, BodyInfo{x, y, shape_init, BodyType::kDynamic}, 5),
@@ -22,18 +22,18 @@ Player::Player(class Scene* scene,
 
 void Player::advance(int phase) {
   Creature::advance(phase);
-  Scene()->views().front()->centerOn(this);
+  Level()->views().front()->centerOn(this);
 }
 
 void Player::Move() {
   b2Vec2 velocity(0, body_->GetLinearVelocity().y);
-  if (Scene()->KeyPressed(Qt::Key_A)) {
+  if (Level()->KeyPressed(Qt::Key_A)) {
     velocity.x -= kHorizontalSpeed;
   }
-  if (Scene()->KeyPressed(Qt::Key_D)) {
+  if (Level()->KeyPressed(Qt::Key_D)) {
     velocity.x += kHorizontalSpeed;
   }
-  if (Scene()->KeyPressed(Qt::Key_Space)) {
+  if (Level()->KeyPressed(Qt::Key_Space)) {
     if (qAbs(velocity.y) < 1e-6f) {
       velocity.y -= kVerticalSpeed_;
     }

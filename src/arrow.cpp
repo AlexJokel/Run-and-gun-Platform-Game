@@ -1,6 +1,6 @@
 #include "arrow.h"
 
-Arrow::Arrow(class Scene* scene,
+Arrow::Arrow(class Level* scene,
              float x, float y,
              float mouse_x, float mouse_y,
              ShapeInfo* shape_info)

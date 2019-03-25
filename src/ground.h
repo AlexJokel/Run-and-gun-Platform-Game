@@ -6,7 +6,7 @@
 class Ground : public Object {
 public:
   /// x, y --- top left corner Box2D coordinates
-  Ground(class Scene*,
+  Ground(class Level*,
          float x, float y,
          float width, float height);
 };

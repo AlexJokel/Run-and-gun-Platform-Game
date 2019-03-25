@@ -10,7 +10,7 @@
 
 class Player : public Creature {
 public:
-  Player(class Scene*,
+  Player(class Level*,
          float x, float y,
          ShapeInfo* = PassShapeInfo(ShapeType::kRectangle, 0.5f, 0.5f));
 

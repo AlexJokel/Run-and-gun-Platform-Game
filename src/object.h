@@ -59,11 +59,11 @@ struct BodyInfo {
   BodyInfo(float x, float y, ShapeInfo*, BodyType);
 };
 
-class Scene;
+class Level;
 
 class Object : public QGraphicsRectItem {
 public:
-  Object(Scene*,
+  Object(Level*,
          BodyInfo body_info);
 
   ~Object() override;
@@ -71,8 +71,8 @@ public:
   void advance(int) override;
   virtual void Draw();
 
-  Scene* Scene() const;
-  friend class Scene;
+  Level* Level() const;
+  friend class Level;
 
 protected:
   b2Body* body_;

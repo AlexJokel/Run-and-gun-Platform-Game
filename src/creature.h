@@ -5,7 +5,7 @@
 
 class Creature : public Object {
 public:
-  Creature(class Scene*,
+  Creature(class Level*,
            BodyInfo,
            float horizontal_speed);
 

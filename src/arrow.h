@@ -5,7 +5,7 @@
 
 class Arrow : public Object {
 public:
-  Arrow(class Scene*,
+  Arrow(class Level*,
         float x, float y,
         float mouse_x, float mouse_y,
         ShapeInfo* = PassShapeInfo(ShapeType::kRectangle, 0.4f, 0.1f));

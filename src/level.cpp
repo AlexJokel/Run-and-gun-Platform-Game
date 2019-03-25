@@ -1,11 +1,11 @@
-#include "scene.h"
+#include "level.h"
 
 #include <QTimer>
 #include <QDebug>
 #include <QGraphicsView>
 #include <QGraphicsSceneMouseEvent>
 
-Scene::Scene(b2World* world, qreal x, qreal y, qreal width, qreal height,
+Level::Level(b2World* world, qreal x, qreal y, qreal width, qreal height,
              QObject* parent)
     : QGraphicsScene(x, y, width, height, parent), world_(world) {
   /// Player initialization
@@ -32,15 +32,15 @@ Scene::Scene(b2World* world, qreal x, qreal y, qreal width, qreal height,
 
   /// Frame timer initialization & start
   auto frame_timer = new QTimer();
-  QObject::connect(frame_timer, &QTimer::timeout, this, &Scene::advance);
+  QObject::connect(frame_timer, &QTimer::timeout, this, &Level::advance);
   frame_timer->start(static_cast<int>(1000 * kTimeStep_));
 }
 
-b2World* Scene::World() const {
+b2World* Level::World() const {
   return world_;
 }
 
-void Scene::advance() {
+void Level::advance() {
   /// Advance the world
   world_->Step(static_cast<float>(kTimeStep_), 8, 3);
 
@@ -57,15 +57,15 @@ void Scene::advance() {
   views().front()->viewport()->repaint();
 }
 
-void Scene::keyPressEvent(QKeyEvent *event) {
+void Level::keyPressEvent(QKeyEvent *event) {
   keys_[event->key()] = true;
 }
 
-void Scene::keyReleaseEvent(QKeyEvent *event) {
+void Level::keyReleaseEvent(QKeyEvent *event) {
   keys_[event->key()] = false;
 }
 
-void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
+void Level::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
   if (event->button() != Qt::LeftButton) return;
   new Arrow(this,
             objects_.player->body_->GetPosition().x,
@@ -74,18 +74,18 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
             PixelsToMeters(event->scenePos().y()));
 }
 
-bool Scene::KeyPressed(qint32 key) const {
+bool Level::KeyPressed(qint32 key) const {
   return keys_.value(key, false);
 }
 
-void Scene::RemoveObject(Object* object) {
+void Level::RemoveObject(Object* object) {
   objects_for_removal.insert(object);
 }
 
-qreal Scene::MetersToPixels(float meters) const {
+qreal Level::MetersToPixels(float meters) const {
   return static_cast<qreal>(meters) * kMetersToPixelsRatio_;
 }
 
-float Scene::PixelsToMeters(qreal pixels) const {
+float Level::PixelsToMeters(qreal pixels) const {
   return static_cast<float>(pixels / kMetersToPixelsRatio_);
 }
