@@ -7,8 +7,8 @@
 
 #include "contactlistener.h"
 
-Level::Level(qreal width, qreal height)
-    : Scene(width, height),
+Level::Level(class Game* game, qreal width, qreal height)
+    : Scene(game, width, height),
       world_(new b2World({0, 9.8f})) {
   /// World initialization
   world_->SetContactListener(new ContactListener());

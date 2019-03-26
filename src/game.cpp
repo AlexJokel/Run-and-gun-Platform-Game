@@ -7,7 +7,7 @@ Game::Game() : QGraphicsView() {
   setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-  SetScene(new Level(1920, 1080));
+  SetScene(new Level(this, 1920, 1080));
 
   show();
 }

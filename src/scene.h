@@ -7,7 +7,7 @@ class Game;
 
 class Scene : public QGraphicsScene {
 public:
-  Scene(qreal width, qreal height);
+  Scene(Game*, qreal width, qreal height);
 
   Game* Game() const;
 protected:
