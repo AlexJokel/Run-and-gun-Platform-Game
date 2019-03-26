@@ -19,7 +19,6 @@ int main(int argc, char *argv[]) {
 
   /// Scene & view initialization
   auto game = new Game();
-  game->setViewportUpdateMode(QGraphicsView::NoViewportUpdate);
 
   return a.exec();
 }

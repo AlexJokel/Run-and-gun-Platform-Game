@@ -15,6 +15,7 @@
 class Level : public Scene {
 public:
   Level(class Game*, qreal width, qreal height);
+  ~Level() override;
 
   void keyPressEvent(QKeyEvent*) override;
   void keyReleaseEvent(QKeyEvent*) override;

@@ -5,11 +5,15 @@
 #include <QGraphicsView>
 #include <QGraphicsSceneMouseEvent>
 
+#include "game.h"
 #include "contactlistener.h"
 
 Level::Level(class Game* game, qreal width, qreal height)
     : Scene(game, width, height),
       world_(new b2World({0, 9.8f})) {
+  /// Set custom view update
+  Game()->setViewportUpdateMode(QGraphicsView::NoViewportUpdate);
+
   /// World initialization
   world_->SetContactListener(new ContactListener());
 
@@ -46,6 +50,11 @@ Level::Level(class Game* game, qreal width, qreal height)
   auto frame_timer = new QTimer();
   QObject::connect(frame_timer, &QTimer::timeout, this, &Level::advance);
   frame_timer->start(static_cast<int>(1000 * kTimeStep_));
+}
+
+Level::~Level() {
+  /// Return game view to defaults
+  Game()->setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
 }
 
 b2World* Level::World() const {
