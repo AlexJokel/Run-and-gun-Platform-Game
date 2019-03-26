@@ -24,13 +24,6 @@ int main(int argc, char *argv[]) {
   view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   view->setViewportUpdateMode(QGraphicsView::NoViewportUpdate);
 
-  /// Draw dot grid
-  for (size_t x = 0; x < level->width(); x += 100) {
-    for (size_t y = 0; y < level->height(); y += 100) {
-      level->addItem(new QGraphicsRectItem(x, y, 1, 1));
-    }
-  }
-
   view->show();
 
   return a.exec();
