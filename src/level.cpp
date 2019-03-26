@@ -8,6 +8,8 @@
 #include "game.h"
 #include "contactlistener.h"
 
+#include "staticenemy.h"
+
 Level::Level(class Game* game, qreal width, qreal height)
     : Scene(game, width, height),
       world_(new b2World({0, 9.8f})) {
@@ -38,6 +40,9 @@ Level::Level(class Game* game, qreal width, qreal height)
                          0,
                          1,
                          PixelsToMeters(this->height())));
+
+  /// Enemy initialization
+  objects_.enemies.append(new StaticEnemy(this, 7, 3));
 
   /// Draw dot grid
   for (size_t x = 0; x < this->width(); x += 100) {
