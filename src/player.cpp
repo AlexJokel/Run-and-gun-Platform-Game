@@ -20,6 +20,10 @@ Player::Player(class Level* scene,
   setBrush(Qt::darkGreen);
 }
 
+Player::~Player() {
+  Level()->Exit();
+}
+
 void Player::advance(int phase) {
   Creature::advance(phase);
   Level()->views().front()->centerOn(this);

@@ -10,6 +10,10 @@ public:
   Scene(Game*, qreal width, qreal height);
 
   Game* Game() const;
+
+public slots:
+  void Exit();
+
 protected:
   class Game* game_;
 };

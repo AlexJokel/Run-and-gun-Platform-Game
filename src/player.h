@@ -13,6 +13,7 @@ public:
   Player(class Level*,
          float x, float y,
          ShapeInfo* = PassShapeInfo(ShapeType::kRectangle, 0.5f, 0.5f));
+  ~Player() override;
 
   void advance(int) override;
 

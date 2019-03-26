@@ -9,3 +9,7 @@ Scene::Scene(class Game* game, qreal width, qreal height)
 Game* Scene::Game() const {
   return game_;
 }
+
+void Scene::Exit() {
+  Game()->Exit();
+}
