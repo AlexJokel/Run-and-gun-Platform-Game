@@ -16,3 +16,7 @@ void Game::SetScene(Scene* scene) {
   delete current_scene;
   setScene(scene);
 }
+
+void Game::Exit() {
+  close();
+}

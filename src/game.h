@@ -11,6 +11,9 @@ public:
 
   void SetScene(Scene*);
 
+public slots:
+  void Exit();
+
 protected:
   Scene* current_scene = nullptr;
 };
