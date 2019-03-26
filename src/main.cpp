@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
   QApplication a(argc, argv);
 
   /// Scene & view initialization
-  auto level = new Level(0, 0, 1920, 1080);
+  auto level = new Level(1920, 1080);
   auto view = new QGraphicsView(level);
   view->setFixedSize(1280, 720);
   view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);

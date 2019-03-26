@@ -7,9 +7,8 @@
 
 #include "contactlistener.h"
 
-Level::Level(qreal x, qreal y, qreal width, qreal height,
-             QObject* parent)
-    : QGraphicsScene(x, y, width, height, parent),
+Level::Level(qreal width, qreal height)
+    : Scene(width, height),
       world_(new b2World({0, 9.8f})) {
   /// World initialization
   world_->SetContactListener(new ContactListener());
