@@ -7,14 +7,15 @@
 
 #include <Box2D/Box2D.h>
 
+#include "scene.h"
 #include "player.h"
 #include "ground.h"
 #include "arrow.h"
 
-class Level : public QGraphicsScene {
+class Level : public Scene {
 public:
-  Level(b2World* world, qreal x, qreal y, qreal width, qreal height,
-        QObject* parent = nullptr);
+  Level(class Game*, qreal width, qreal height);
+  ~Level() override;
 
   void keyPressEvent(QKeyEvent*) override;
   void keyReleaseEvent(QKeyEvent*) override;

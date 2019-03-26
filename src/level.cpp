@@ -5,9 +5,18 @@
 #include <QGraphicsView>
 #include <QGraphicsSceneMouseEvent>
 
-Level::Level(b2World* world, qreal x, qreal y, qreal width, qreal height,
-             QObject* parent)
-    : QGraphicsScene(x, y, width, height, parent), world_(world) {
+#include "game.h"
+#include "contactlistener.h"
+
+Level::Level(class Game* game, qreal width, qreal height)
+    : Scene(game, width, height),
+      world_(new b2World({0, 9.8f})) {
+  /// Set custom view update
+  Game()->setViewportUpdateMode(QGraphicsView::NoViewportUpdate);
+
+  /// World initialization
+  world_->SetContactListener(new ContactListener());
+
   /// Player initialization
   objects_.player = new Player(this, 3, 3);
 
@@ -30,10 +39,22 @@ Level::Level(b2World* world, qreal x, qreal y, qreal width, qreal height,
                          1,
                          PixelsToMeters(this->height())));
 
+  /// Draw dot grid
+  for (size_t x = 0; x < this->width(); x += 100) {
+    for (size_t y = 0; y < this->height(); y += 100) {
+      addItem(new QGraphicsRectItem(x, y, 1, 1));
+    }
+  }
+
   /// Frame timer initialization & start
   auto frame_timer = new QTimer();
   QObject::connect(frame_timer, &QTimer::timeout, this, &Level::advance);
   frame_timer->start(static_cast<int>(1000 * kTimeStep_));
+}
+
+Level::~Level() {
+  /// Return game view to defaults
+  Game()->setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
 }
 
 b2World* Level::World() const {
@@ -66,6 +87,7 @@ void Level::keyReleaseEvent(QKeyEvent *event) {
 }
 
 void Level::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
+  if (event->button() == Qt::RightButton) Game()->Exit();
   if (event->button() != Qt::LeftButton) return;
   new Arrow(this,
             objects_.player->body_->GetPosition().x,
