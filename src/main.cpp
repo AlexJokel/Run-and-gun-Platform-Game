@@ -9,7 +9,7 @@
 
 #include <Box2D/Box2D.h>
 
-#include "scene.h"
+#include "level.h"
 #include "player.h"
 #include "ground.h"
 #include "contactlistener.h"
