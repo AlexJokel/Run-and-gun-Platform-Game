@@ -5,9 +5,10 @@
 #include "level.h"
 
 Creature::Creature(class Level* scene,
-                   BodyInfo body_info,
-                   float horizontal_speed)
-    : Object(scene, body_info),
+                   float x, float y,
+                   float horizontal_speed,
+                   ShapeInfo* shape_info)
+    : Object(scene, {x, y, shape_info, BodyType::kDynamic}),
       kHorizontalSpeed(horizontal_speed) {}
 
 void Creature::advance(int phase) {

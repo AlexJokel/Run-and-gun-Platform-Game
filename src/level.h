@@ -11,6 +11,7 @@
 #include "player.h"
 #include "ground.h"
 #include "arrow.h"
+#include "enemy.h"
 
 class Level : public Scene {
 public:
@@ -46,6 +47,7 @@ protected:
   struct SceneObjects {
     Player* player;
     QList<Ground*> ground;
+    QList<Enemy*> enemies;
   };
 
   SceneObjects objects_;

@@ -8,7 +8,8 @@ namespace CollisionMask {
   enum {
     kDefault = 0x0001,
     kPlayer = 0x0002,
-    kArrow = 0x0004
+    kArrow = 0x0004,
+    kEnemy = 0x0008
   };
 }
 

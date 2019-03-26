@@ -6,8 +6,9 @@
 class Creature : public Object {
 public:
   Creature(class Level*,
-           BodyInfo,
-           float horizontal_speed);
+           float x, float y,
+           float horizontal_speed,
+           ShapeInfo* = PassShapeInfo(ShapeType::kRectangle, 0.5f, 0.5f));
 
   void advance(int) override;
 
