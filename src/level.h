@@ -13,7 +13,7 @@
 
 class Level : public QGraphicsScene {
 public:
-  Level(b2World* world, qreal x, qreal y, qreal width, qreal height,
+  Level(qreal x, qreal y, qreal width, qreal height,
         QObject* parent = nullptr);
 
   void keyPressEvent(QKeyEvent*) override;

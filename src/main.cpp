@@ -12,17 +12,12 @@
 #include "level.h"
 #include "player.h"
 #include "ground.h"
-#include "contactlistener.h"
 
 int main(int argc, char *argv[]) {
   QApplication a(argc, argv);
 
-  /// World initialization
-  auto world = new b2World(b2Vec2(0, 9.8f));
-  world->SetContactListener(new ContactListener());
-
   /// Scene & view initialization
-  auto level = new Level(world, 0, 0, 1920, 1080);
+  auto level = new Level(0, 0, 1920, 1080);
   auto view = new QGraphicsView(level);
   view->setFixedSize(1280, 720);
   view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);

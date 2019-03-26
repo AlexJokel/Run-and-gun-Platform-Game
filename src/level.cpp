@@ -5,9 +5,15 @@
 #include <QGraphicsView>
 #include <QGraphicsSceneMouseEvent>
 
-Level::Level(b2World* world, qreal x, qreal y, qreal width, qreal height,
+#include "contactlistener.h"
+
+Level::Level(qreal x, qreal y, qreal width, qreal height,
              QObject* parent)
-    : QGraphicsScene(x, y, width, height, parent), world_(world) {
+    : QGraphicsScene(x, y, width, height, parent),
+      world_(new b2World({0, 9.8f})) {
+  /// World initialization
+  world_->SetContactListener(new ContactListener());
+
   /// Player initialization
   objects_.player = new Player(this, 3, 3);
 
