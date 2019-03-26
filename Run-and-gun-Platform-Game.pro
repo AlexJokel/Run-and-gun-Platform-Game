@@ -36,7 +36,8 @@ SOURCES += \
     src/arrow.cpp \
     src/contactlistener.cpp \
     src/level.cpp \
-    src/scene.cpp
+    src/scene.cpp \
+    src/game.cpp \
 
 HEADERS += \
 #    Box2D/Box2D.h
@@ -47,7 +48,8 @@ HEADERS += \
     src/arrow.h \
     src/contactlistener.h \
     src/level.h \
-    src/scene.h
+    src/scene.h \
+    src/game.h \
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
