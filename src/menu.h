@@ -11,7 +11,7 @@ public:
 
 protected:
     QString title_text_;
-    std::list<Button> buttons_;
+    std::list<Button*> buttons_;
 };
 
 #endif // MENU_H

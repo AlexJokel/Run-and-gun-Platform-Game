@@ -87,8 +87,8 @@ void Level::keyReleaseEvent(QKeyEvent *event) {
 }
 
 void Level::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
-  if (event->button() == Qt::RightButton) Game()->Exit();
-  if (event->button() != Qt::LeftButton) return;
+  if (event->button() == Player::controls_.exit) Game()->Exit();
+  if (event->button() != Player::controls_.shoot) return;
   new Arrow(this,
             objects_.player->body_->GetPosition().x,
             objects_.player->body_->GetPosition().y,

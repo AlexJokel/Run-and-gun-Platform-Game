@@ -53,7 +53,8 @@ HEADERS += \
     src/scene.h \
     src/game.h \
     src/button.h \
-    src/menu.h
+    src/menu.h \
+    src/settings.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

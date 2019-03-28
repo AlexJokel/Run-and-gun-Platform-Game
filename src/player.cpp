@@ -5,6 +5,8 @@
 
 #include "level.h"
 
+Player::Controls Player::controls_;
+
 Player::Player(class Level* scene,
                float x, float y,
                ShapeInfo* shape_init)
@@ -27,13 +29,13 @@ void Player::advance(int phase) {
 
 void Player::Move() {
   b2Vec2 velocity(0, body_->GetLinearVelocity().y);
-  if (Level()->KeyPressed(Qt::Key_A)) {
+  if (Level()->KeyPressed(controls_.left)) {
     velocity.x -= kHorizontalSpeed;
   }
-  if (Level()->KeyPressed(Qt::Key_D)) {
+  if (Level()->KeyPressed(controls_.right)) {
     velocity.x += kHorizontalSpeed;
   }
-  if (Level()->KeyPressed(Qt::Key_Space)) {
+  if (Level()->KeyPressed(controls_.jump)) {
     if (qAbs(velocity.y) < 1e-6f) {
       velocity.y -= kVerticalSpeed_;
     }
