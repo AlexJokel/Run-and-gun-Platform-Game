@@ -22,18 +22,12 @@ void Button::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void Button::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
-    QBrush brush;
-    brush.setStyle(Qt::SolidPattern);
-    brush.setColor(Qt::blue);
-    setBrush(brush);
+    setBrush(Qt::blue);
 }
 
 void Button::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
-    QBrush brush;
-    brush.setStyle(Qt::SolidPattern);
-    brush.setColor(Qt::darkBlue);
-    setBrush(brush);
+    setBrush(Qt::darkBlue);
 }
 
 void Button::clicked() {}
