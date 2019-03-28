@@ -17,7 +17,7 @@ signals:
     void clicked();
 
 private:
-    QString text_;
+    QGraphicsTextItem* text_;
 };
 
 #endif // BUTTON_H
