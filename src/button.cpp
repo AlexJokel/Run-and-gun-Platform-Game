@@ -36,3 +36,5 @@ void Button::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
     setBrush(brush);
 }
 
+void Button::clicked() {}
+
