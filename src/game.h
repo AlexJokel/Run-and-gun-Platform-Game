@@ -6,13 +6,13 @@
 #include "scene.h"
 
 class Game : public QGraphicsView {
+    Q_OBJECT
 public:
   Game();
 
-  void SetScene(Scene*);
-
 public slots:
   void Exit();
+  void SetScene(Scene*);
 
 protected:
   Scene* current_scene = nullptr;
