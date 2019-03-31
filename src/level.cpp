@@ -9,6 +9,7 @@
 #include "contactlistener.h"
 
 #include "staticenemy.h"
+#include "roamingenemy.h"
 
 Level::Level(class Game* game, qreal width, qreal height)
     : Scene(game, width, height),
@@ -43,6 +44,7 @@ Level::Level(class Game* game, qreal width, qreal height)
 
   /// Enemy initialization
   objects_.enemies.append(new StaticEnemy(this, 7, 3));
+  objects_.enemies.append(new RoamingEnemy(this, 10, 3, 8, 12));
 
   /// Draw dot grid
   for (size_t x = 0; x < this->width(); x += 100) {
