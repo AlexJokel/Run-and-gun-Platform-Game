@@ -2,10 +2,7 @@
 #include <QGraphicsTextItem>
 Button::Button(QString name, QGraphicsItem* parent) : QGraphicsRectItem (parent) {
     setRect(0,0,200,50);
-    QBrush brush;
-    brush.setStyle(Qt::SolidPattern);
-    brush.setColor(Qt::darkBlue);
-    setBrush(brush);
+    setBrush(Qt::cyan);
 
     text_ = new QGraphicsTextItem(name, this);
     int xPos = rect().width() / 2 - text_->boundingRect().width() / 2;
@@ -22,13 +19,10 @@ void Button::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void Button::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
-    setBrush(Qt::blue);
+    setBrush(Qt::darkCyan);
 }
 
 void Button::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
-    setBrush(Qt::darkBlue);
+    setBrush(Qt::cyan);
 }
-
-void Button::clicked() {}
-

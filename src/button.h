@@ -4,8 +4,8 @@
 #include <QGraphicsRectItem>
 #include <QGraphicsSceneMouseEvent>
 #include <QBrush>
-class Button : public QGraphicsRectItem
-{
+class Button : public QObject, public QGraphicsRectItem {
+    Q_OBJECT
 public:
     Button(QString name, QGraphicsItem* parent = nullptr);
 
