@@ -2,6 +2,7 @@
 #include "game.h"
 #include "level.h"
 #include "scene.h"
+#include "settings.h"
 #include <QBrush>
 #include <QSignalMapper>
 MainMenu::MainMenu(class Game* game, qreal width, qreal height, QColor color) : Menu(game, width, height, color)
@@ -31,6 +32,9 @@ MainMenu::MainMenu(class Game* game, qreal width, qreal height, QColor color) : 
     bxPos = this->width() / 2 - settings_button_->boundingRect().width() / 2;
     byPos = 600;
     settings_button_->setPos(bxPos, byPos);
+    QObject::connect(settings_button_, &Button::clicked, this->Game(),
+                     [this]{Game()->SetScene(new Settings(this->Game(), 1920, 1080, Qt::gray));}
+    );
     addItem(settings_button_);
     buttons_.push_back(settings_button_);
 

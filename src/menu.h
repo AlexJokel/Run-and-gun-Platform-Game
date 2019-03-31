@@ -10,7 +10,7 @@ public:
     Menu(class Game*, qreal width, qreal height, QColor);
 
 protected:
-    QString title_text_;
+    QGraphicsTextItem* title_text_;
     std::list<Button*> buttons_;
 };
 

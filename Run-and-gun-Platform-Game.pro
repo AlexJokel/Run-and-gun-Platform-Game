@@ -40,7 +40,8 @@ SOURCES += \
     src/game.cpp \
     src/button.cpp \
     src/menu.cpp \
-    src/main_menu.cpp
+    src/main_menu.cpp \
+    src/settings.cpp
 
 HEADERS += \
 #    Box2D/Box2D.h
