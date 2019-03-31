@@ -26,16 +26,15 @@ Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
     addItem(quit_button_);
     buttons_.push_back(quit_button_);
 
-    //creating text for controls buttons
-    qreal h = AddText("Left", this->width()/3, this->height()/4, QFont("arial", this->width()/80), Qt::white);
-    h = AddText("Right", this->width()/3, h+this->height()/15, QFont("arial", this->width()/80), Qt::white);
-    h = AddText("Jump", this->width()/3, h+this->height()/15, QFont("arial", this->width()/80), Qt::white);
-    h = AddText("Shoot", this->width()/3, h+this->height()/15, QFont("arial", this->width()/80), Qt::white);
-    h = AddText("Exit", this->width()/3, h+this->height()/15, QFont("arial", this->width()/80), Qt::white);
-    h = AddText("Full screen", this->width()/3, h+this->height()/15, QFont("arial", this->width()/80), Qt::white);
-    h = AddText("Resolution", this->width()/3, h+this->height()/15, QFont("arial", this->width()/80), Qt::white);
+    // creating text for controls buttons
+    QVector<QString> vec = {"Left", "Right", "Shoot", "Exit", "Full screen", "Resolution"};
+    QFont font("arial", this->width()/80);
+    for (int i = 0; i < vec.size(); ++i) {
+        AddText(vec[i], this->width()/3, this->height()/4 + i * this->height()/15, font, Qt::white);
+    }
 
     //creating buttons for controls
+    qreal h = this->height()/4;
     h = AddButton(static_cast<QString>(Player::controls_.left), 4 * this->width()/7, this->height()/4);
     h = AddButton(static_cast<QString>(Player::controls_.right), 4 * this->width()/7, h+this->height()/15);
     h = AddButton(static_cast<QString>(Player::controls_.shoot), 4 * this->width()/7, h+this->height()/15);
@@ -44,13 +43,12 @@ Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
     //creating button for full screen
 }
 
-qreal Settings::AddText(QString text, qreal width, qreal height, QFont font, QColor color) {
+void Settings::AddText(QString text, qreal width, qreal height, QFont font, QColor color) {
     QGraphicsTextItem* text_ = new QGraphicsTextItem(text);
     text_->setPos(width, height);
     text_->setFont(font);
     text_->setDefaultTextColor(color);
     addItem(text_);
-    return height;
 }
 
 qreal Settings::AddButton(QString name, qreal width, qreal height) {

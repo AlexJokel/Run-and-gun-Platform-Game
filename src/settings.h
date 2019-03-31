@@ -6,7 +6,7 @@
 class Settings : public Menu {
 public:
     Settings(class Game*, qreal width, qreal height, QColor);
-    qreal AddText(QString, qreal width, qreal height, QFont, QColor);
+    void AddText(QString, qreal width, qreal height, QFont, QColor);
     qreal AddButton(QString, qreal width, qreal height);
 };
 
