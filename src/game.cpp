@@ -2,7 +2,6 @@
 #include "level.h"
 #include "button.h"
 #include "main_menu.h"
-#include <QGraphicsTextItem>
 
 Game::Game() : QGraphicsView() {
   setFixedSize(1280, 720);

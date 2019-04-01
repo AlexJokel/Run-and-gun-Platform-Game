@@ -2,8 +2,6 @@
 #include "game.h"
 #include "level.h"
 #include "scene.h"
-#include <QBrush>
-#include <QSignalMapper>
 
 MainMenu::MainMenu(class Game* game, qreal width, qreal height, QColor color)
     : Menu(game, width, height, color) {
