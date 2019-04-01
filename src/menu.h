@@ -3,7 +3,7 @@
 
 #include "scene.h"
 #include "button.h"
-#include <list>
+#include <QList>
 
 class Menu : public Scene {
 public:
@@ -11,7 +11,7 @@ public:
 
 protected:
   QGraphicsTextItem* title_text_;
-  std::list<Button*> buttons_;
+  QList<Button*> buttons_;
 };
 
 #endif // MENU_H

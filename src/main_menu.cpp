@@ -23,7 +23,7 @@ MainMenu::MainMenu(class Game* game, qreal width, qreal height, QColor color)
                    [this]{Game()->SetScene(new Level(this->Game(), 1920, 1080));}
   );
   addItem(play_button_);
-  buttons_.push_back(play_button_);
+  buttons_.append(play_button_);
 
   /// creating Settings button
   Button* settings_button_ = new Button(QString("SETTINGS"));
@@ -31,7 +31,7 @@ MainMenu::MainMenu(class Game* game, qreal width, qreal height, QColor color)
   byPos = 600;
   settings_button_->setPos(bxPos, byPos);
   addItem(settings_button_);
-  buttons_.push_back(settings_button_);
+  buttons_.append(settings_button_);
 
   /// creating Quit button
   Button* quit_button_ = new Button(QString("QUIT"));
@@ -40,5 +40,5 @@ MainMenu::MainMenu(class Game* game, qreal width, qreal height, QColor color)
   quit_button_->setPos(bxPos, byPos);
   QObject::connect(quit_button_, &Button::clicked, this->Game(), &Game::Exit);
   addItem(quit_button_);
-  buttons_.push_back(quit_button_);
+  buttons_.append(quit_button_);
 }
