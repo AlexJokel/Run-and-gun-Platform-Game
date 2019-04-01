@@ -6,39 +6,37 @@
 MainMenu::MainMenu(class Game* game, qreal width, qreal height, QColor color)
     : Menu(game, width, height, color) {
   /// writing title
-  title_text_ = new QGraphicsTextItem(QString("DOKA 2"));
-  QFont titleFont("comic sans", 200);
-  title_text_->setFont(titleFont);
-  int txPos = this->width() / 2 - title_text_->boundingRect().width() / 2;
-  int tyPos = 150;
-  title_text_->setPos(txPos, tyPos);
+  title_text_ = new QGraphicsTextItem("DOKA 2");
+  QFont title_font("comic sans", 200);
+  title_text_->setFont(title_font);
+  auto title_x = this->width() / 2 - title_text_->boundingRect().width() / 2;
+  auto title_y = 150;
+  title_text_->setPos(title_x, title_y);
   addItem(title_text_);
 
   /// creating Play button
-  Button* play_button_ = new Button(QString("PLAY"));
-  int bxPos = this->width() / 2 - play_button_->boundingRect().width() / 2;
-  int byPos = 500;
-  play_button_->setPos(bxPos, byPos);
-  QObject::connect(play_button_, &Button::clicked, this->Game(),
-                   [this]{Game()->SetScene(new Level(this->Game(), 1920, 1080));}
-  );
-  addItem(play_button_);
-  buttons_.append(play_button_);
+  auto play_button = new Button("PLAY");
+  auto button_x = this->width() / 2 - play_button->boundingRect().width() / 2;
+  auto button_y = 500;
+  play_button->setPos(button_x, button_y);
+  QObject::connect(play_button, &Button::clicked, [this]{
+      Game()->SetScene(new Level(Game(), 1920, 1080));
+    });
+  addItem(play_button);
+  buttons_.append(play_button);
 
   /// creating Settings button
-  Button* settings_button_ = new Button(QString("SETTINGS"));
-  bxPos = this->width() / 2 - settings_button_->boundingRect().width() / 2;
-  byPos = 600;
-  settings_button_->setPos(bxPos, byPos);
-  addItem(settings_button_);
-  buttons_.append(settings_button_);
+  auto settings_button = new Button("SETTINGS");
+  button_y = 600;
+  settings_button->setPos(button_x, button_y);
+  addItem(settings_button);
+  buttons_.append(settings_button);
 
   /// creating Quit button
-  Button* quit_button_ = new Button(QString("QUIT"));
-  bxPos = this->width() / 2 - quit_button_->boundingRect().width() / 2;
-  byPos = 700;
-  quit_button_->setPos(bxPos, byPos);
-  QObject::connect(quit_button_, &Button::clicked, this->Game(), &Game::Exit);
-  addItem(quit_button_);
-  buttons_.append(quit_button_);
+  auto quit_button = new Button("QUIT");
+  button_y = 700;
+  quit_button->setPos(button_x, button_y);
+  QObject::connect(quit_button, &Button::clicked, Game(), &Game::Exit);
+  addItem(quit_button);
+  buttons_.append(quit_button);
 }

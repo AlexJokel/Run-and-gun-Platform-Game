@@ -10,9 +10,9 @@ class Button : public QObject, public QGraphicsRectItem {
 public:
   Button(QString name, QGraphicsItem* parent = nullptr);
 
-  void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
-  void hoverEnterEvent(QGraphicsSceneHoverEvent* event) override;
-  void hoverLeaveEvent(QGraphicsSceneHoverEvent* event) override;
+  void mousePressEvent(QGraphicsSceneMouseEvent*) override;
+  void hoverEnterEvent(QGraphicsSceneHoverEvent*) override;
+  void hoverLeaveEvent(QGraphicsSceneHoverEvent*) override;
 
 signals:
   void clicked();
