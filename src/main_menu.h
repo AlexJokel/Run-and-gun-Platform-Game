@@ -3,11 +3,9 @@
 
 #include "menu.h"
 
-class MainMenu : public Menu
-{
+class MainMenu : public Menu {
 public:
-    MainMenu(class Game*, qreal width, qreal height, QColor);
-
+  MainMenu(class Game*, qreal width, qreal height, QColor);
 };
 
 #endif // MAIN_MENU_H

@@ -6,7 +6,7 @@
 #include "scene.h"
 
 class Game : public QGraphicsView {
-    Q_OBJECT
+  Q_OBJECT
 public:
   Game();
 

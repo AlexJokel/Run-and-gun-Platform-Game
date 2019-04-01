@@ -15,7 +15,7 @@ Game::Game() : QGraphicsView() {
 
 void Game::SetScene(Scene* scene) {
   delete current_scene;
-    setScene(scene);
+  setScene(scene);
 }
 
 void Game::Exit() {
