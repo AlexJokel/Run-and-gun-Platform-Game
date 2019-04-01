@@ -9,6 +9,8 @@ public:
   Ground(class Level*,
          float x, float y,
          float width, float height);
+
+  ObjectType Type() const override;
 };
 
 #endif // GROUND_H

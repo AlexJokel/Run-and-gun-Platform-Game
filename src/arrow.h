@@ -12,6 +12,8 @@ public:
 
   void advance(int) override;
 
+  ObjectType Type() const override;
+
 protected:
   const float kSpeed = 10;
 

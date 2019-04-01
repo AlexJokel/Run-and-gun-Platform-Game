@@ -60,6 +60,13 @@ struct BodyInfo {
   BodyInfo(float x, float y, ShapeInfo*, BodyType);
 };
 
+enum class ObjectType {
+  kGround,
+  kPlayer,
+  kEnemy,
+  kArrow,
+};
+
 class Level;
 
 class Object : public QGraphicsRectItem {
@@ -74,6 +81,8 @@ public:
 
   Level* Level() const;
   friend class Level;
+
+  virtual ObjectType Type() const = 0;
 
 protected:
   b2Body* body_;

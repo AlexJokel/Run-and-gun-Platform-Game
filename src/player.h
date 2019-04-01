@@ -17,6 +17,8 @@ public:
 
   void advance(int) override;
 
+  ObjectType Type() const override;
+
 protected:
   const float kJumpHeight = 3;
   const float kVerticalSpeed_ = 10;

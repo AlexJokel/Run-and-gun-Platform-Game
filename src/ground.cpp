@@ -13,3 +13,7 @@ Ground::Ground(class Level* scene,
   setBrush(Qt::darkGray);
   setPen(Qt::NoPen);
 }
+
+ObjectType Ground::Type() const {
+  return ObjectType::kGround;
+}

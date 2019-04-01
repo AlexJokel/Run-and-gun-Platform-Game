@@ -28,6 +28,10 @@ void Arrow::advance(int phase) {
   Object::advance(phase);
 }
 
+ObjectType Arrow::Type() const {
+  return ObjectType::kArrow;
+}
+
 void Arrow::SetAngle(b2Vec2 velocity) {
   float angle = -atan(velocity.y / velocity.x);
   body_->SetTransform(body_->GetWorldPoint({0, 0}), angle);

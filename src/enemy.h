@@ -9,6 +9,8 @@ public:
         float x, float y,
         float horizontal_speed,
         ShapeInfo* = PassShapeInfo(ShapeType::kRectangle, 0.5f, 0.5f));
+
+  ObjectType Type() const override;
 };
 
 #endif // ENEMY_H

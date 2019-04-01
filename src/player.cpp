@@ -29,6 +29,10 @@ void Player::advance(int phase) {
   Level()->views().front()->centerOn(this);
 }
 
+ObjectType Player::Type() const {
+  return ObjectType::kPlayer;
+}
+
 void Player::Move() {
   b2Vec2 velocity(0, body_->GetLinearVelocity().y);
   if (Level()->KeyPressed(Qt::Key_A)) {

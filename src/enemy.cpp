@@ -17,3 +17,7 @@ Enemy::Enemy(class Level* level,
   setBrush(Qt::red);
   setPen(Qt::NoPen);
 }
+
+ObjectType Enemy::Type() const {
+  return ObjectType::kEnemy;
+}
