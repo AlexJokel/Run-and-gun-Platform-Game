@@ -7,14 +7,31 @@ Game::Game() : QGraphicsView() {
   setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-  SetScene(new Level(this, 1920, 1080));
+  PushScene(new Level(this, 1920, 1080));
 
   show();
 }
 
-void Game::SetScene(Scene* scene) {
-  delete current_scene;
+void Game::PushScene(Scene* scene) {
   setScene(scene);
+  scenes_.push(scene);
+}
+
+void Game::PopScene(bool exit_on_empty_stack) {
+  delete scenes_.top();
+  scenes_.pop();
+  setScene(scenes_.top());
+
+  if (exit_on_empty_stack && scenes_.empty()) {
+    close();
+  }
+}
+
+void Game::SetScene(Scene* scene) {
+  while (!scenes_.empty()) {
+    PopScene(false);
+  }
+  PushScene(scene);
 }
 
 void Game::Exit() {
