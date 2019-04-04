@@ -55,6 +55,10 @@ Level::Level(class Game* game, qreal width, qreal height)
 Level::~Level() {
   /// Return game view to defaults
   Game()->setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
+
+  for (auto& object : this->items()) {
+      delete object;
+  }
 }
 
 b2World* Level::World() const {
@@ -87,7 +91,7 @@ void Level::keyReleaseEvent(QKeyEvent *event) {
 }
 
 void Level::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
-  if (event->button() == Qt::RightButton) Game()->Exit();
+  if (event->button() == Qt::RightButton) Game()->PopScene();
   if (event->button() != Qt::LeftButton) return;
   new Arrow(this,
             objects_.player->body_->GetPosition().x,

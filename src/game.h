@@ -7,18 +7,13 @@
 #include "scene.h"
 
 class Game : public QGraphicsView {
+  Q_OBJECT
 public:
   Game();
 
-  void PushScene(Scene*);
-  void PopScene(bool exit_on_empty_stack = true);
-
-  /// Deprecated
-  void SetScene(Scene*);
-
 public slots:
-  /// Deprecated
-  void Exit();
+  void PushScene(Scene*);
+  void PopScene();
 
 protected:
   QStack<Scene*> scenes_;

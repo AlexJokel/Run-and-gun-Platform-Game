@@ -1,13 +1,14 @@
 #include "game.h"
-
 #include "level.h"
+#include "button.h"
+#include "main_menu.h"
 
 Game::Game() : QGraphicsView() {
   setFixedSize(1280, 720);
   setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-  PushScene(new Level(this, 1920, 1080));
+  PushScene(new MainMenu(this, 1920, 1080, Qt::lightGray));
 
   show();
 }
@@ -17,23 +18,11 @@ void Game::PushScene(Scene* scene) {
   scenes_.push(scene);
 }
 
-void Game::PopScene(bool exit_on_empty_stack) {
+void Game::PopScene() {
   delete scenes_.top();
   scenes_.pop();
-  setScene(scenes_.top());
-
-  if (exit_on_empty_stack && scenes_.empty()) {
+  if (scenes_.empty()) {
     close();
   }
-}
-
-void Game::SetScene(Scene* scene) {
-  while (!scenes_.empty()) {
-    PopScene(false);
-  }
-  PushScene(scene);
-}
-
-void Game::Exit() {
-  close();
+  setScene(scenes_.top());
 }
