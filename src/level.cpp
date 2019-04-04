@@ -55,6 +55,10 @@ Level::Level(class Game* game, qreal width, qreal height)
 Level::~Level() {
   /// Return game view to defaults
   Game()->setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
+
+  for (auto& object : this->items()) {
+      delete object;
+  }
 }
 
 b2World* Level::World() const {
