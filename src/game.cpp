@@ -21,9 +21,8 @@ void Game::PushScene(Scene* scene) {
 void Game::PopScene() {
   delete scenes_.top();
   scenes_.pop();
-  setScene(scenes_.top());
-
   if (scenes_.empty()) {
     close();
   }
+  setScene(scenes_.top());
 }
