@@ -20,7 +20,7 @@ MainMenu::MainMenu(class Game* game, qreal width, qreal height, QColor color)
   auto button_y = 500;
   play_button->setPos(button_x, button_y);
   QObject::connect(play_button, &Button::clicked, [this]{
-      Game()->SetScene(new Level(Game(), 1920, 1080));
+      Game()->PushScene(new Level(Game(), 1920, 1080));
     });
   addItem(play_button);
   buttons_.append(play_button);
@@ -36,7 +36,7 @@ MainMenu::MainMenu(class Game* game, qreal width, qreal height, QColor color)
   auto quit_button = new Button("QUIT");
   button_y = 700;
   quit_button->setPos(button_x, button_y);
-  QObject::connect(quit_button, &Button::clicked, Game(), &Game::Exit);
+  QObject::connect(quit_button, &Button::clicked, Game(), &Game::PopScene);
   addItem(quit_button);
   buttons_.append(quit_button);
 }

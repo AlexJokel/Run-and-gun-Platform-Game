@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include <QGraphicsView>
+#include <QStack>
 
 #include "scene.h"
 
@@ -11,11 +12,11 @@ public:
   Game();
 
 public slots:
-  void Exit();
-  void SetScene(Scene*);
+  void PushScene(Scene*);
+  void PopScene();
 
 protected:
-  Scene* current_scene = nullptr;
+  QStack<Scene*> scenes_;
 };
 
 #endif // GAME_H
