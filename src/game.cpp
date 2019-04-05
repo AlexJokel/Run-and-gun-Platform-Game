@@ -23,6 +23,7 @@ void Game::PopScene() {
   scenes_.pop();
   if (scenes_.empty()) {
     close();
+    return;
   }
   setScene(scenes_.top());
 }
