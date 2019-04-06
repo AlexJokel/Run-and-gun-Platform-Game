@@ -3,19 +3,22 @@
 
 #include <QGraphicsView>
 #include <QStack>
+#include <QApplication>
 
 #include "scene.h"
 
 class Game : public QGraphicsView {
   Q_OBJECT
 public:
-  Game();
+  Game(QApplication*);
 
 public slots:
   void PushScene(Scene*);
   void PopScene();
 
 protected:
+  QApplication* application_;
+
   QStack<Scene*> scenes_;
 };
 

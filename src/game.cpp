@@ -3,7 +3,8 @@
 #include "button.h"
 #include "main_menu.h"
 
-Game::Game() : QGraphicsView() {
+Game::Game(QApplication* application) : QGraphicsView(),
+                                        application_(application) {
   setFixedSize(1280, 720);
   setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -22,7 +23,7 @@ void Game::PopScene() {
   delete scenes_.top();
   scenes_.pop();
   if (scenes_.empty()) {
-    close();
+    application_->quit();
     return;
   }
   setScene(scenes_.top());
