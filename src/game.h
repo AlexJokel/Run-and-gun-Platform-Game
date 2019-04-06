@@ -20,6 +20,11 @@ protected:
   QApplication* application_;
 
   QStack<Scene*> scenes_;
+
+  class ScrollDisabler : public QObject {
+  protected:
+    bool eventFilter(QObject *obj, QEvent *event) override;
+  };
 };
 
 #endif // GAME_H
