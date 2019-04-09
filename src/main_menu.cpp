@@ -18,27 +18,27 @@ MainMenu::MainMenu(class Game* game, qreal width, qreal height, QColor color)
 
   /// creating Play button
   auto play_button = new Button("PLAY");
-  auto button_x = this->width() / 2 - play_button->boundingRect().width() / 2;
-  auto button_y = 500;
-  play_button->setPos(button_x, button_y);
+  qint32 button_x = static_cast<qint32>(this->width() / 2 - play_button->size().width() / 2);
+  qint32 button_y = 500;
+  play_button->move(button_x, button_y);
   QObject::connect(play_button, &Button::clicked, this, [&]{
       Game()->PushScene(new PickLevelMenu(Game(), 1920, 1080, kPickLevelMenuColor));
     });
-  addItem(play_button);
+  addWidget(play_button);
   buttons_.append(play_button);
 
   /// creating Settings button
   auto settings_button = new Button("SETTINGS");
   button_y = 600;
-  settings_button->setPos(button_x, button_y);
-  addItem(settings_button);
+  settings_button->move(button_x, button_y);
+  addWidget(settings_button);
   buttons_.append(settings_button);
 
   /// creating Quit button
   auto quit_button = new Button("QUIT");
   button_y = 700;
-  quit_button->setPos(button_x, button_y);
+  quit_button->move(button_x, button_y);
   QObject::connect(quit_button, &Button::clicked, Game(), &Game::PopScene);
-  addItem(quit_button);
+  addWidget(quit_button);
   buttons_.append(quit_button);
 }
