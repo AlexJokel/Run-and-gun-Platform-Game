@@ -40,7 +40,8 @@ SOURCES += \
     src/game.cpp \
     src/button.cpp \
     src/menu.cpp \
-    src/main_menu.cpp
+    src/main_menu.cpp \
+    src/picklevelmenu.cpp
 
 HEADERS += \
 #    Box2D/Box2D.h
@@ -55,7 +56,8 @@ HEADERS += \
     src/game.h \
     src/button.h \
     src/menu.h \
-    src/main_menu.h
+    src/main_menu.h \
+    src/picklevelmenu.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

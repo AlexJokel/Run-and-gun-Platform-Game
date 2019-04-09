@@ -1,10 +1,12 @@
 #include "main_menu.h"
+#include "picklevelmenu.h"
 #include "game.h"
 #include "level.h"
 #include "scene.h"
 
 MainMenu::MainMenu(class Game* game, qreal width, qreal height, QColor color)
-    : Menu(game, width, height, color) {
+    : Menu(game, width, height, color),
+      kPickLevelMenuColor(QColor(0, 255, 180)) {
   /// writing title
   title_text_ = new QGraphicsTextItem("DOKA 2");
   QFont title_font("comic sans", 200);
@@ -19,8 +21,8 @@ MainMenu::MainMenu(class Game* game, qreal width, qreal height, QColor color)
   auto button_x = this->width() / 2 - play_button->boundingRect().width() / 2;
   auto button_y = 500;
   play_button->setPos(button_x, button_y);
-  QObject::connect(play_button, &Button::clicked, [this]{
-      Game()->PushScene(new Level(Game(), 1920, 1080));
+  QObject::connect(play_button, &Button::clicked, this, [&]{
+      Game()->PushScene(new PickLevelMenu(Game(), 1920, 1080, kPickLevelMenuColor));
     });
   addItem(play_button);
   buttons_.append(play_button);
