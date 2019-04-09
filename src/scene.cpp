@@ -10,6 +10,4 @@ Game* Scene::Game() const {
   return game_;
 }
 
-void Scene::Exit() {
-  Game()->Exit();
-}
+void Scene::keyPressEvent(QKeyEvent*) {}

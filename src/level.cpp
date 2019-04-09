@@ -78,6 +78,10 @@ void Level::advance() {
 
   /// Delete scheduled objects
   for (const auto& object : objects_for_removal) {
+    if (object->Type() == ObjectType::kPlayer) {
+      Game()->PopScene();
+      return;
+    }
     delete object;
   }
   objects_for_removal.clear();

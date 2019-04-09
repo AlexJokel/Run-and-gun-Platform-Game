@@ -11,8 +11,7 @@ public:
 
   Game* Game() const;
 
-public slots:
-  void Exit();
+  void keyPressEvent(QKeyEvent*) override;
 
 protected:
   class Game* game_;
