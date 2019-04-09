@@ -9,7 +9,8 @@ namespace CollisionMask {
     kDefault = 0x0001,
     kPlayer = 0x0002,
     kArrow = 0x0004,
-    kEnemy = 0x0008
+    kEnemy = 0x0008,
+    kBullet = 0x0010,
   };
 }
 
@@ -65,6 +66,7 @@ enum class ObjectType {
   kPlayer,
   kEnemy,
   kArrow,
+  kBullet,
 };
 
 class Level;

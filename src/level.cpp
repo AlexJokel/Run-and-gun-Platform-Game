@@ -11,6 +11,8 @@
 #include "staticenemy.h"
 #include "roamingenemy.h"
 
+#include "bullet.h"
+
 Level::Level(class Game* game, qreal width, qreal height)
     : Scene(game, width, height),
       world_(new b2World({0, 9.8f})) {
@@ -45,6 +47,8 @@ Level::Level(class Game* game, qreal width, qreal height)
   /// Enemy initialization
   objects_.enemies.append(new StaticEnemy(this, 7, 3));
   objects_.enemies.append(new RoamingEnemy(this, 10, 3, 8, 12));
+
+  new Bullet(this, 7.5f, 9.5f);
 
   /// Draw dot grid
   for (size_t x = 0; x < this->width(); x += 100) {
