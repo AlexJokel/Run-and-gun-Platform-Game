@@ -20,7 +20,7 @@ BodyInfo::BodyInfo(float x, float y, ShapeInfo* shape_info, BodyType body_type)
   : x(x), y(y), shape_info(shape_info), body_type(body_type) {}
 
 Object::Object(class Level* scene,
-               BodyInfo body_info) : QGraphicsRectItem(nullptr) {
+               BodyInfo body_info) : QGraphicsPixmapItem(nullptr) {
   b2BodyDef body_def;
   body_def.position.Set(body_info.x, body_info.y);
   body_def.fixedRotation = true;
@@ -52,16 +52,8 @@ Object::Object(class Level* scene,
   body_->SetUserData(this);
 
   /// Prepare for drawing
-  auto rect_shape = dynamic_cast<b2PolygonShape*>(
-      body_->GetFixtureList()->GetShape());
-  float half_width = qAbs(rect_shape->m_vertices[0].x);
-  float half_height = qAbs(rect_shape->m_vertices[0].y);
-  setRect(0,
-          0,
-          Level()->MetersToPixels(2 * half_width),
-          Level()->MetersToPixels(2 * half_height));
-  setTransformOriginPoint(rect().center());
-
+  setPos(0,0);
+  setTransformOriginPoint(pos());
   Draw();
 }
 
@@ -93,6 +85,19 @@ void Object::Draw() {
   angle *= 180 / M_PI; /// to degress
   angle *= -1; /// to clockwise
   setRotation(angle);
+}
+
+  /// Sets pixmap of an object
+void Object::SetPixmap(QString path, Qt::AspectRatioMode aspect_ratio_mode) {
+    QPixmap pm(path);
+    auto rect_shape = dynamic_cast<b2PolygonShape*>(
+              body_->GetFixtureList()->GetShape());
+    float half_width = qAbs(rect_shape->m_vertices[0].x);
+    float half_height = qAbs(rect_shape->m_vertices[0].y);
+    QPixmap pm_scaled = pm.scaled(Level()->MetersToPixels(2 * half_width),
+                             Level()->MetersToPixels(2 * half_height),
+                             aspect_ratio_mode);
+    setPixmap(pm_scaled);
 }
 
 Level* Object::Level() const {

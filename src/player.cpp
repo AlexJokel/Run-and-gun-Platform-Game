@@ -16,8 +16,8 @@ Player::Player(class Level* scene,
   player_filter.maskBits ^= CollisionMask::kArrow;
   body_->GetFixtureList()->SetFilterData(player_filter);
 
-  /// Add color
-  setBrush(Qt::darkGreen);
+  /// Set pixmap
+  SetPixmap(":/images/images/player.png", Qt::IgnoreAspectRatio);
 }
 
 void Player::advance(int phase) {

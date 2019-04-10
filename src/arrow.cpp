@@ -1,4 +1,5 @@
 #include "arrow.h"
+#include "level.h"
 
 Arrow::Arrow(class Level* scene,
              float x, float y,
@@ -15,6 +16,9 @@ Arrow::Arrow(class Level* scene,
 
   /// Set angle
   SetAngle(velocity);
+
+  /// Set pixmap
+  SetPixmap(":/images/images/arrow2.png", Qt::IgnoreAspectRatio);
 
   /// Disable arrow-arrow & arrow-player collision
   b2Filter arrow_filter;
