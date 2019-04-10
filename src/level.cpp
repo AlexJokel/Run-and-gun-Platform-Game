@@ -127,6 +127,14 @@ qreal Level::MetersToPixels(float meters) const {
   return static_cast<qreal>(meters) * kMetersToPixelsRatio_;
 }
 
+QPointF Level::MetersToPixels(b2Vec2 point) const {
+  return {MetersToPixels(point.x), MetersToPixels(point.y)};
+}
+
 float Level::PixelsToMeters(qreal pixels) const {
   return static_cast<float>(pixels / kMetersToPixelsRatio_);
+}
+
+b2Vec2 Level::PixelsToMeters(QPointF point) const {
+  return {PixelsToMeters(point.x()), PixelsToMeters(point.y())};
 }

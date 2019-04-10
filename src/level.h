@@ -29,7 +29,9 @@ public:
   b2World* World() const;
 
   qreal MetersToPixels(float) const;
+  QPointF MetersToPixels(b2Vec2) const;
   float PixelsToMeters(qreal) const;
+  b2Vec2 PixelsToMeters(QPointF) const;
 
 public slots:
   void advance();
