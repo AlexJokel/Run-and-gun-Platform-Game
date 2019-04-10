@@ -94,9 +94,10 @@ void Object::SetPixmap(QString path, Qt::AspectRatioMode aspect_ratio_mode) {
               body_->GetFixtureList()->GetShape());
     float half_width = qAbs(rect_shape->m_vertices[0].x);
     float half_height = qAbs(rect_shape->m_vertices[0].y);
-    QPixmap pm_scaled = pm.scaled(Level()->MetersToPixels(2 * half_width),
-                             Level()->MetersToPixels(2 * half_height),
-                             aspect_ratio_mode);
+    QPixmap pm_scaled = pm.scaled(
+                static_cast<int>(Level()->MetersToPixels(2 * half_width)),
+                static_cast<int>(Level()->MetersToPixels(2 * half_height)),
+                aspect_ratio_mode);
     setPixmap(pm_scaled);
 }
 

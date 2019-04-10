@@ -11,10 +11,5 @@ Ground::Ground(class Level* scene,
                       PassShapeInfo(ShapeType::kRectangle, width / 2, height / 2),
                       BodyType::kStatic}) {
     /// Set pixmap
-    QPixmap pm1(":/images/images/black_wall.jpg");
-    QPixmap pm2 = pm1.scaled(static_cast<int>(Level()->MetersToPixels(width)),
-                             static_cast<int>(Level()->MetersToPixels(height)),
-                             Qt::IgnoreAspectRatio);
-    setPixmap(pm2);
     SetPixmap(":/images/images/black_wall.jpg", Qt::IgnoreAspectRatio);
 }
