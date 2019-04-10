@@ -67,6 +67,7 @@ enum class ObjectType {
   kArrow,
   kBullet,
 };
+uint qHash(ObjectType);
 
 class Level;
 

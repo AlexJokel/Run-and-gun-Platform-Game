@@ -19,6 +19,10 @@ b2Shape* RectangleShapeInfo::Init() {
 BodyInfo::BodyInfo(b2Vec2 position, ShapeInfo* shape_info, BodyType body_type)
   : position(position), shape_info(shape_info), body_type(body_type) {}
 
+uint qHash(ObjectType type) {
+  return static_cast<uint>(type);
+}
+
 Object::Object(class Level* scene,
                BodyInfo body_info) : QGraphicsRectItem(nullptr) {
   b2BodyDef body_def;
