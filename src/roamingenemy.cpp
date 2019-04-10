@@ -3,11 +3,11 @@
 #include <QDebug>
 
 RoamingEnemy::RoamingEnemy(class Level* level,
-                           float x, float y,
+                           b2Vec2 position,
                            float left_border, float right_border,
                            float horizontal_speed,
                            ShapeInfo* shape_info)
-    : Enemy(level, x, y, horizontal_speed, shape_info),
+    : Enemy(level, position, horizontal_speed, shape_info),
       left_border_(left_border),
       right_border_(right_border) {}
 

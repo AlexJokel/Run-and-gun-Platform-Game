@@ -3,10 +3,10 @@
 #include "level.h"
 
 Enemy::Enemy(class Level* level,
-             float x, float y,
+             b2Vec2 position,
              float horizontal_speed,
              ShapeInfo* shape_info)
-    : Creature(level, x, y, horizontal_speed, shape_info) {
+    : Creature(level, position, horizontal_speed, shape_info) {
   /// Set enemy collision mask
   b2Filter enemy_filter;
   enemy_filter.categoryBits = CollisionMask::kEnemy;

@@ -52,13 +52,12 @@ ShapeInfo* PassShapeInfo(ShapeType shape_type, Args... args) {
 }
 
 struct BodyInfo {
-  float x;
-  float y;
+  b2Vec2 position;
   ShapeInfo* shape_info;
   BodyType body_type;
   float density = 1;
 
-  BodyInfo(float x, float y, ShapeInfo*, BodyType);
+  BodyInfo(b2Vec2, ShapeInfo*, BodyType);
 };
 
 enum class ObjectType {

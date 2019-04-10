@@ -1,8 +1,8 @@
 #include "staticenemy.h"
 
 StaticEnemy::StaticEnemy(class Level* level,
-                         float x, float y,
+                         b2Vec2 position,
                          ShapeInfo* shape_info)
-    : Enemy(level, x, y, 0, shape_info) {}
+    : Enemy(level, position, 0, shape_info) {}
 
 void StaticEnemy::Move() {}

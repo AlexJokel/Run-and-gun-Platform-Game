@@ -6,7 +6,7 @@
 class StaticEnemy : public Enemy {
 public:
   StaticEnemy(class Level*,
-              float x, float y,
+              b2Vec2 position,
               ShapeInfo* = PassShapeInfo(ShapeType::kRectangle, 0.5f, 0.5f));
 
 protected:

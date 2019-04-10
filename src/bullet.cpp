@@ -3,9 +3,9 @@
 #include "level.h"
 
 Bullet::Bullet(class Level* level,
-               float x, float y,
+               b2Vec2 position,
                ShapeInfo* shape_info)
-    : Object(level, {x, y, shape_info, BodyType::kDynamic}) {
+    : Object(level, {position, shape_info, BodyType::kDynamic}) {
   /// Set bullet collision mask
   b2Filter bullet_filter;
   bullet_filter.categoryBits = CollisionMask::kBullet;

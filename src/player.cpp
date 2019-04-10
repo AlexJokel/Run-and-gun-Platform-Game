@@ -6,9 +6,9 @@
 #include "level.h"
 
 Player::Player(class Level* scene,
-               float x, float y,
+               b2Vec2 position,
                ShapeInfo* shape_info)
-    : Creature(scene, x, y, 5, shape_info),
+    : Creature(scene, position, 5, shape_info),
       kVerticalSpeed_(CalcSpeedForHeight(scene->World(), kJumpHeight)) {
   /// Set player collision mask
   b2Filter player_filter;

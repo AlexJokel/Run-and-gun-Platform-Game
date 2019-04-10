@@ -23,32 +23,26 @@ Level::Level(class Game* game, qreal width, qreal height)
   world_->SetContactListener(new ContactListener());
 
   /// Player initialization
-  objects_.player = new Player(this, 3, 3);
+  objects_.player = new Player(this, {3, 3});
 
   /// Create floor
   objects_.ground.append(new Ground(this,
-                        0,
-                        PixelsToMeters(this->height()) - 1,
-                        PixelsToMeters(this->width()),
-                        1));
+      {0, PixelsToMeters(this->height()) - 1},
+      {PixelsToMeters(this->width()), 1}));
 
   /// Create walls
   objects_.ground.append(new Ground(this,
-                         0,
-                         0,
-                         1,
-                         PixelsToMeters(this->height())));
+      {0, 0},
+      {1, PixelsToMeters(this->height())}));
   objects_.ground.append(new Ground(this,
-                         PixelsToMeters(this->width()) - 1,
-                         0,
-                         1,
-                         PixelsToMeters(this->height())));
+      {PixelsToMeters(this->width()) - 1, 0},
+      {1, PixelsToMeters(this->height())}));
 
   /// Enemy initialization
-  objects_.enemies.append(new StaticEnemy(this, 7, 3));
-  objects_.enemies.append(new RoamingEnemy(this, 10, 3, 8, 12));
+  objects_.enemies.append(new StaticEnemy(this, {7, 3}));
+  objects_.enemies.append(new RoamingEnemy(this, {10, 3}, 8, 12));
 
-  new Bullet(this, 7.5f, 9.5f);
+  new Bullet(this, {7.5f, 9.5f});
 
   /// Draw dot grid
   for (size_t x = 0; x < this->width(); x += 100) {
@@ -109,10 +103,8 @@ void Level::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
   if (event->button() == Qt::RightButton) Game()->PopScene();
   if (event->button() != Qt::LeftButton) return;
   new Arrow(this,
-            objects_.player->body_->GetPosition().x,
-            objects_.player->body_->GetPosition().y,
-            PixelsToMeters(event->scenePos().x()),
-            PixelsToMeters(event->scenePos().y()));
+            objects_.player->body_->GetPosition(),
+            PixelsToMeters(event->scenePos()));
 }
 
 bool Level::KeyPressed(qint32 key) const {

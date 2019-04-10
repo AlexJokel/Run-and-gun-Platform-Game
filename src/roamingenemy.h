@@ -6,7 +6,7 @@
 class RoamingEnemy : public Enemy {
 public:
   RoamingEnemy(class Level*,
-               float x, float y,
+               b2Vec2 position,
                float left_border, float right_border,
                float horizontal_speed = 2,
                ShapeInfo* = PassShapeInfo(ShapeType::kRectangle, 0.5f, 0.5f));

@@ -6,7 +6,7 @@
 class Creature : public Object {
 public:
   Creature(class Level*,
-           float x, float y,
+           b2Vec2 position,
            float horizontal_speed,
            ShapeInfo* = PassShapeInfo(ShapeType::kRectangle, 0.5f, 0.5f));
 
