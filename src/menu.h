@@ -9,6 +9,8 @@ class Menu : public Scene {
 public:
   Menu(class Game*, qreal width, qreal height, QColor);
 
+  const static QColor kGreenDefaultBackground_;
+
 protected:
   QGraphicsTextItem* title_text_;
   QList<Button*> buttons_;

@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/style">
+        <file>styles/main_menu_button.css</file>
+    </qresource>
+</RCC>

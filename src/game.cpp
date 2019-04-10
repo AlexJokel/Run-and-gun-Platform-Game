@@ -1,3 +1,4 @@
+#include "menu.h"
 #include "game.h"
 #include "level.h"
 #include "button.h"
@@ -17,7 +18,7 @@ Game::Game(QApplication* application) : QGraphicsView(),
   verticalScrollBar()->installEventFilter(scroll_disabler);
   installEventFilter(scroll_disabler);
 
-  PushScene(new MainMenu(this, 1920, 1080, Qt::lightGray));
+  PushScene(new MainMenu(this, 1920, 1080, Menu::kGreenDefaultBackground_));
 
   show();
 }

@@ -41,7 +41,8 @@ SOURCES += \
     src/button.cpp \
     src/menu.cpp \
     src/main_menu.cpp \
-    src/picklevelmenu.cpp
+    src/picklevelmenu.cpp \
+    src/cssstylestorage.cpp
 
 HEADERS += \
 #    Box2D/Box2D.h
@@ -57,7 +58,8 @@ HEADERS += \
     src/button.h \
     src/menu.h \
     src/main_menu.h \
-    src/picklevelmenu.h
+    src/picklevelmenu.h \
+    src/cssstylestorage.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -68,3 +70,10 @@ win32: LIBS += -L$$PWD/lib/ -lBox2D
 
 win32:!win32-g++: PRE_TARGETDEPS += $$PWD/lib/Box2D.lib
 else:win32-g++: PRE_TARGETDEPS += $$PWD/lib/libBox2D.a
+
+DISTFILES += \
+    res/css/button_style.css
+
+RESOURCES += \
+    resources/res.qrc \
+    resources/res.qrc
