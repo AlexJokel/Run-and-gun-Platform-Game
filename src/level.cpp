@@ -102,9 +102,7 @@ void Level::keyReleaseEvent(QKeyEvent *event) {
 void Level::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
   if (event->button() == Qt::RightButton) Game()->PopScene();
   if (event->button() != Qt::LeftButton) return;
-  new Arrow(this,
-            objects_.player->body_->GetPosition(),
-            PixelsToMeters(event->scenePos()));
+  objects_.player->ScheduleShot(PixelsToMeters(event->scenePos()));
 }
 
 bool Level::KeyPressed(qint32 key) const {

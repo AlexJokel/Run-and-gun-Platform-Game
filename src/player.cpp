@@ -20,6 +20,11 @@ Player::Player(class Level* scene,
   setBrush(Qt::darkGreen);
 }
 
+void Player::ScheduleShot(b2Vec2 direction) {
+  shot_.scheduled = true;
+  shot_.direction = direction;
+}
+
 void Player::advance(int phase) {
   Creature::advance(phase);
   Level()->views().front()->centerOn(this);
@@ -44,6 +49,12 @@ void Player::Move() {
   }
 
   body_->SetLinearVelocity(velocity);
+}
+
+void Player::Shoot() {
+  if (!shot_.scheduled) return;
+  shot_.scheduled = false;
+  new Arrow(Level(), body_->GetWorldCenter(), shot_.direction);
 }
 
 /// Copy-pasted this function

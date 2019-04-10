@@ -13,6 +13,9 @@ Creature::Creature(class Level* scene,
 
 void Creature::advance(int phase) {
   if (phase == 0) return;
+  Shoot();
   Move();
   Draw();
 }
+
+void Creature::Shoot() {}

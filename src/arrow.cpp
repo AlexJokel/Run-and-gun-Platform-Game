@@ -15,6 +15,7 @@ Arrow::Arrow(class Level* scene,
 
   /// Set angle
   SetAngle(velocity);
+  Draw();
 
   /// Disable arrow-arrow & arrow-player collision
   b2Filter arrow_filter;
