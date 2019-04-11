@@ -1,5 +1,4 @@
 #include <QFile>
-#include <QDebug>
 
 #include "cssstylestorage.h"
 
@@ -17,7 +16,6 @@ CssStyleStorage::CssStyleStorage() {
   if (input_file.open(QIODevice::ReadOnly)) {
     menu_button_style_ = input_file.readAll();
     input_file.close();
-    qDebug() << "loaded!\n";
   }
 }
 

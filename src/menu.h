@@ -11,9 +11,14 @@ public:
 
   const static QColor kGreenDefaultBackground_;
 
+  /// It is used for accessing scene's widgets
+  QList<QGraphicsProxyWidget*> GetProxyWidgetList();
+
 protected:
   QGraphicsTextItem* title_text_;
-  QList<Button*> buttons_;
+  /// "The QGraphicsProxyWidget class provides a proxy layer
+  /// for embedding a QWidget in a QGraphicsScene"
+  QList<QGraphicsProxyWidget*> widgets_;
 };
 
 #endif // MENU_H

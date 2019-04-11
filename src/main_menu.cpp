@@ -28,8 +28,7 @@ MainMenu::MainMenu(class Game* game, qreal width, qreal height, QColor color)
   QObject::connect(play_button, &Button::clicked, this, [&]{
       Game()->PushScene(new PickLevelMenu(Game(), 1920, 1080, kGreenDefaultBackground_));
     });
-  addWidget(play_button);
-  buttons_.append(play_button);
+  widgets_.append(addWidget(play_button));
 
   /// creating Settings button
   auto settings_button = new Button("SETTINGS");
@@ -37,8 +36,7 @@ MainMenu::MainMenu(class Game* game, qreal width, qreal height, QColor color)
       (CssStyleStorage::GetInstance().GetMenuButtonStyle());
   button_y = 600;
   settings_button->move(button_x, button_y);
-  addWidget(settings_button);
-  buttons_.append(settings_button);
+  widgets_.append(addWidget(settings_button));
 
   /// creating Quit button
   auto quit_button = new Button("QUIT");
@@ -47,6 +45,5 @@ MainMenu::MainMenu(class Game* game, qreal width, qreal height, QColor color)
   button_y = 700;
   quit_button->move(button_x, button_y);
   QObject::connect(quit_button, &Button::clicked, Game(), &Game::PopScene);
-  addWidget(quit_button);
-  buttons_.append(quit_button);
+  widgets_.append(addWidget(quit_button));
 }

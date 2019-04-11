@@ -6,3 +6,7 @@ Menu::Menu(class Game* game, qreal width, qreal height, QColor color)
     : Scene(game, width, height) {
   setBackgroundBrush(color);
 }
+
+QList<QGraphicsProxyWidget*> Menu::GetProxyWidgetList() {
+  return widgets_;
+}

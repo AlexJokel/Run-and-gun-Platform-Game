@@ -5,6 +5,7 @@
 #include "main_menu.h"
 
 #include <QScrollBar>
+#include <QDebug>
 
 Game::Game(QApplication* application) : QGraphicsView(),
                                         application_(application) {
@@ -29,12 +30,12 @@ void Game::PushScene(Scene* scene) {
 }
 
 void Game::PopScene() {
-  delete scenes_.top();
-  scenes_.pop();
-  if (scenes_.empty()) {
+  if (scenes_.size() == 1) {
     application_->quit();
     return;
   }
+  delete scenes_.top();
+  scenes_.pop();
   setScene(scenes_.top());
   centerOn(sceneRect().center());
 }
