@@ -57,7 +57,7 @@ void Enemy::Shoot() {
   if ((nearest_object_callback.GetNearestObject()->Type() ==
       ObjectType::kPlayer) &&
       (shot_->TryShooting())) {
-    new Bullet(Level(), body_->GetWorldCenter());
+    new Bullet(Level(), body_->GetWorldCenter(), direction_);
   }
 }
 

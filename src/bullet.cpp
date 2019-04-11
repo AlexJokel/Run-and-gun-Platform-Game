@@ -4,6 +4,7 @@
 
 Bullet::Bullet(class Level* level,
                b2Vec2 position,
+               float direction,
                ShapeInfo* shape_info)
     : Object(level, {position, shape_info, BodyType::kDynamic}) {
   /// Set bullet collision mask
@@ -18,8 +19,9 @@ Bullet::Bullet(class Level* level,
 
   body_->SetGravityScale(0);
 
-  body_->ApplyLinearImpulse({kHorizontalSpeed_ * body_->GetMass(), 0},
-                            body_->GetWorldCenter(), true);
+  body_->ApplyLinearImpulse(
+      {direction * kHorizontalSpeed_ * body_->GetMass(), 0},
+      body_->GetWorldCenter(), true);
 
   /// Add color
   setBrush(Qt::black);
