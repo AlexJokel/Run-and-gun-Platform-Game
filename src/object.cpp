@@ -52,8 +52,11 @@ Object::Object(class Level* scene,
   body_->SetUserData(this);
 
   /// Prepare for drawing
-  setPos(0,0);
-  setTransformOriginPoint(pos());
+  auto rect_shape = dynamic_cast<b2PolygonShape*>(
+        body_->GetFixtureList()->GetShape());
+  auto half_width = Level()->MetersToPixels(qAbs(rect_shape->m_vertices[0].x));
+  auto half_height = Level()->MetersToPixels(qAbs(rect_shape->m_vertices[0].y));
+  setTransformOriginPoint(half_width, half_height);
   Draw();
 }
 
