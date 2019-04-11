@@ -71,7 +71,7 @@ uint qHash(ObjectType);
 
 class Level;
 
-class Object : public QGraphicsRectItem {
+class Object : public QObject, public QGraphicsRectItem {
 public:
   Object(Level*,
          BodyInfo body_info);

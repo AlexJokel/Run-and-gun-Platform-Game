@@ -4,6 +4,7 @@
 #include "object.h"
 
 class Creature : public Object {
+  Q_OBJECT
 public:
   Creature(class Level*,
            b2Vec2 position,
@@ -12,11 +13,19 @@ public:
 
   void advance(int) override;
 
+public slots:
+  /// Invert the direction
+  void ChangeDirection();
+
 protected:
   const float kHorizontalSpeed;
 
   virtual void Move() = 0;
   virtual void Shoot();
+
+  /// Direction by x-axis coefficient.
+  /// By default everybody "looks" to the right
+  float direction_ = 1;
 };
 
 #endif // CREATURE_H

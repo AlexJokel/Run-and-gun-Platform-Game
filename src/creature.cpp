@@ -18,4 +18,8 @@ void Creature::advance(int phase) {
   Draw();
 }
 
+void Creature::ChangeDirection() {
+  direction_ *= -1;
+}
+
 void Creature::Shoot() {}

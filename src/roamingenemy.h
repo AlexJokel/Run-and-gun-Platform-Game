@@ -15,14 +15,6 @@ protected:
   float left_border_;
   float right_border_;
 
-  enum class Direction {
-    kLeft,
-    kRight,
-  };
-  bool ChangeDirection();
-  b2Vec2 GetDesiredSpeed();
-  Direction direction_ = Direction::kLeft;
-
   void Move() override;
 };
 
