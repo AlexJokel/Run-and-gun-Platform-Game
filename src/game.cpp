@@ -13,11 +13,9 @@ Game::Game(QApplication* application) : QGraphicsView(),
   setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-  /// Disable scroll events of scrollbars
+  /// Disable scroll events
   auto scroll_disabler = new ScrollDisabler();
-  horizontalScrollBar()->installEventFilter(scroll_disabler);
   verticalScrollBar()->installEventFilter(scroll_disabler);
-  installEventFilter(scroll_disabler);
 
   PushScene(new MainMenu(this, 1920, 1080, Menu::kOrangeDefaultBackground_));
 
@@ -37,14 +35,9 @@ void Game::PopScene() {
   delete scenes_.top();
   scenes_.pop();
   setScene(scenes_.top());
-  centerOn(sceneRect().center());
 }
 
 bool Game::ScrollDisabler::eventFilter(QObject*, QEvent* event) {
-  for (const auto& type : {QEvent::KeyPress,
-                           QEvent::KeyRelease,
-                           QEvent::Wheel}) {
-    if (event->type() == type) return true;
-  }
+  if (event->type() == QEvent::Wheel) return true;
   return false;
 }

@@ -36,6 +36,7 @@ MainMenu::MainMenu(class Game* game, qreal width, qreal height, QColor color)
   auto quit_button = new Button("QUIT", 400, 100);
   quit_button->setStyleSheet
       (CssStyleStorage::GetInstance().GetMenuButtonStyle());
+
   QObject::connect(quit_button, &Button::clicked, Game(), &Game::PopScene);
   layout->addWidget(quit_button);
 
