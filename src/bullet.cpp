@@ -18,6 +18,9 @@ Bullet::Bullet(class Level* level,
 
   body_->SetGravityScale(0);
 
+  body_->ApplyLinearImpulse({kHorizontalSpeed_ * body_->GetMass(), 0},
+                            body_->GetWorldCenter(), true);
+
   /// Add color
   setBrush(Qt::black);
   setPen(Qt::NoPen);
