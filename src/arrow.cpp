@@ -18,7 +18,12 @@ Arrow::Arrow(class Level* scene,
   SetAngle(velocity);
 
   /// Set pixmap
-  SetPixmap(":/images/images/arrow2.png", Qt::IgnoreAspectRatio);
+  if (velocity.x >= 0) {
+    SetPixmap(":/images/images/arrow2.png", Qt::IgnoreAspectRatio);
+  }
+  else {
+    SetPixmap(":/images/images/reverse_arrow2.png", Qt::IgnoreAspectRatio);
+  }
 
   /// Disable arrow-arrow & arrow-player collision
   b2Filter arrow_filter;
