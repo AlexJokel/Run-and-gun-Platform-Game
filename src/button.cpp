@@ -2,8 +2,9 @@
 
 #include <QRect>
 
-Button::Button(const QString& title, const QSize& size,
+Button::Button(const QString& title, qint32 width, qint32 height,
                QWidget* parent)
     : QPushButton(title, parent) {
-  resize(size);
+  setMinimumWidth(width);
+  setMinimumHeight(height);
 }

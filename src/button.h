@@ -8,7 +8,7 @@
 
 class Button : public QPushButton {
 public:
-  Button(const QString& title, const QSize& size = {400, 50},
+  Button(const QString& title, qint32 width, qint32 height,
          QWidget* parent = nullptr);
 };
 

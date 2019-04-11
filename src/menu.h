@@ -7,18 +7,17 @@
 
 class Menu : public Scene {
 public:
-  Menu(class Game*, qreal width, qreal height, QColor);
+  Menu(class Game*, qreal scene_width, qreal scene_height, QColor color);
 
-  const static QColor kGreenDefaultBackground_;
+  void MoveMenuBlock(qint32 x, qint32 y);
 
-  /// It is used for accessing scene's widgets
-  QList<QGraphicsProxyWidget*> GetProxyWidgetList();
+  const static QColor kOrangeDefaultBackground_;
 
 protected:
   QGraphicsTextItem* title_text_;
-  /// "The QGraphicsProxyWidget class provides a proxy layer
-  /// for embedding a QWidget in a QGraphicsScene"
-  QList<QGraphicsProxyWidget*> widgets_;
+  /// Subclasses should specify QLayout manager
+  /// And fill menu_button_block_ with buttons in constuctor
+  QWidget* menu_button_block_;
 };
 
 #endif // MENU_H

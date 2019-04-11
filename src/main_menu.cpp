@@ -1,5 +1,3 @@
-#include <QVBoxLayout>
-
 #include "main_menu.h"
 #include "picklevelmenu.h"
 #include "game.h"
@@ -9,41 +7,39 @@
 
 MainMenu::MainMenu(class Game* game, qreal width, qreal height, QColor color)
     : Menu(game, width, height, color) {
+  auto layout = new QVBoxLayout();
+
   /// writing title
   title_text_ = new QGraphicsTextItem("DOKA 2");
-  QFont title_font("comic sans", 200);
-  title_text_->setFont(title_font);
-  auto title_x = this->width() / 2 - title_text_->boundingRect().width() / 2;
-  auto title_y = 150;
-  title_text_->setPos(title_x, title_y);
+  title_text_->setFont(QFont("Times", 150));
+  title_text_->setPos(this->width() / 2 -
+                      title_text_->boundingRect().width() / 2, 150);
   addItem(title_text_);
 
   /// creating Play button
-  auto play_button = new Button("PLAY");
+  auto play_button = new Button("PLAY", 400, 100);
   play_button->setStyleSheet
       (CssStyleStorage::GetInstance().GetMenuButtonStyle());
-  qint32 button_x = static_cast<qint32>(this->width() / 2 - play_button->size().width() / 2);
-  qint32 button_y = 500;
-  play_button->move(button_x, button_y);
-  QObject::connect(play_button, &Button::clicked, this, [&]{
-      Game()->PushScene(new PickLevelMenu(Game(), 1920, 1080, kGreenDefaultBackground_));
-    });
-  widgets_.append(addWidget(play_button));
+  QObject::connect(play_button, &Button::clicked, this, [&] {
+      Game()->PushScene(new PickLevelMenu(Game(), 1920, 1080,
+                                          kOrangeDefaultBackground_, 3, 5));
+  });
+  layout->addWidget(play_button);
 
   /// creating Settings button
-  auto settings_button = new Button("SETTINGS");
+  auto settings_button = new Button("SETTINGS", 400, 100);
   settings_button->setStyleSheet
       (CssStyleStorage::GetInstance().GetMenuButtonStyle());
-  button_y = 600;
-  settings_button->move(button_x, button_y);
-  widgets_.append(addWidget(settings_button));
+  layout->addWidget(settings_button);
 
   /// creating Quit button
-  auto quit_button = new Button("QUIT");
+  auto quit_button = new Button("QUIT", 400, 100);
   quit_button->setStyleSheet
       (CssStyleStorage::GetInstance().GetMenuButtonStyle());
-  button_y = 700;
-  quit_button->move(button_x, button_y);
   QObject::connect(quit_button, &Button::clicked, Game(), &Game::PopScene);
-  widgets_.append(addWidget(quit_button));
+  layout->addWidget(quit_button);
+
+  menu_button_block_->setLayout(layout);
+  MoveMenuBlock(750, 400);
+  addWidget(menu_button_block_);
 }
