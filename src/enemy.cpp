@@ -3,11 +3,14 @@
 #include "level.h"
 #include "bullet.h"
 
+#include <QTimer>
+
 Enemy::Enemy(class Level* level,
              b2Vec2 position,
              float horizontal_speed,
              ShapeInfo* shape_info)
-    : Creature(level, position, horizontal_speed, shape_info) {
+    : Creature(level, position, horizontal_speed, shape_info),
+      shot_(new Shot()) {
   /// Set enemy collision mask
   b2Filter enemy_filter;
   enemy_filter.categoryBits = CollisionMask::kEnemy;
@@ -42,6 +45,7 @@ Object* Enemy::NearestObjectCallback::GetNearestObject() const {
 }
 
 void Enemy::Shoot() {
+
   /// Check if the enemy sees the player
   NearestObjectCallback nearest_object_callback({ObjectType::kGround,
                                                  ObjectType::kPlayer});
@@ -50,8 +54,21 @@ void Enemy::Shoot() {
   Level()->World()->RayCast(&nearest_object_callback,
                             body_->GetWorldCenter(),
                             ray_end_point);
-  if (nearest_object_callback.GetNearestObject()->Type() ==
-      ObjectType::kPlayer) {
+  if ((nearest_object_callback.GetNearestObject()->Type() ==
+      ObjectType::kPlayer) &&
+      (shot_->TryShooting())) {
     new Bullet(Level(), body_->GetWorldCenter());
   }
+}
+
+bool Enemy::Shot::TryShooting() {
+  if (!ready_) return false;
+
+  ready_ = false;
+  QTimer::singleShot(kCooldownTime, this, &Shot::Ready);
+  return true;
+}
+
+void Enemy::Shot::Ready() {
+  ready_ = true;
 }

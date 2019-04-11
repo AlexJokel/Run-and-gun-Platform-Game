@@ -29,7 +29,28 @@ protected:
     QSet<ObjectType> opaque_types_;
   };
 
+  class Shot;
+  Shot* shot_;
   void Shoot() override;
+};
+
+class Enemy::Shot : public QObject {
+// This macro doesn't work in nested classes
+  Q_OBJECT
+public slots:
+  /// If ready to shoot, then
+  /// sets ready_ to false and launches a single-shot timer.
+  /// Returns whether the shot was fired.
+  bool TryShooting();
+
+  /// Slot for the timer
+  void Ready();
+
+protected:
+  bool ready_ = true;
+
+  /// Cooldown in msec
+  const int kCooldownTime = 1000;
 };
 
 #endif // ENEMY_H
