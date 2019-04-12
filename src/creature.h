@@ -18,10 +18,16 @@ public slots:
   void ChangeDirection();
 
 protected:
-  const float kHorizontalSpeed;
+  const float kHorizontalSpeed_;
 
-  virtual void Move() = 0;
+  /// Handles horizontal movement.
+  /// Uses impulses.
+  virtual void Move();
+
   virtual void Shoot();
+
+  /// Calculate necessary horizontal speed.
+  virtual float GetDesiredSpeed() const = 0;
 
   /// Direction by x-axis coefficient.
   /// By default everybody "looks" to the right

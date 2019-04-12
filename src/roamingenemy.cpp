@@ -21,19 +21,15 @@ RoamingEnemy::RoamingEnemy(class Level* level,
       borders_(borders) {}
 
 void RoamingEnemy::Move() {
-  b2Vec2 impulse(GetDesiredSpeed() - body_->GetLinearVelocity().x, 0);
-  impulse *= body_->GetMass();
-  if (impulse.LengthSquared() < 1e-3f) return;
-  body_->ApplyLinearImpulse(impulse, body_->GetWorldCenter(), true);
-}
-
-float RoamingEnemy::GetDesiredSpeed() {
-  if (player_visible_) return 0;
-
   /// The product is positive --> direction and position are
   /// to the same side --> direction must be changed.
   if (direction_ * borders_.RelativePosition(body_->GetWorldCenter().x) > 0) {
     ChangeDirection();
   }
-  return kHorizontalSpeed * direction_;
+  Enemy::Move();
+}
+
+float RoamingEnemy::GetDesiredSpeed() const {
+  if (player_visible_) return 0;
+  return kHorizontalSpeed_ * direction_;
 }

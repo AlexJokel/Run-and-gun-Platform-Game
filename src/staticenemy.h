@@ -14,6 +14,7 @@ public:
 
 protected:
   void Move() override;
+  float GetDesiredSpeed() const override;
 
   QTimer* direction_change_timer_ = new QTimer();
   const int kDirectionChangeInterval_ = 5000; /// In msec

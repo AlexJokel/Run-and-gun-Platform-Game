@@ -26,11 +26,7 @@ protected:
   Borders borders_;
 
   void Move() override;
-
-  /// Calculate necessary speed in the current state.
-  /// 0 if the player is visible.
-  /// kHorizontalSpeed in appropriate direction otherwise.
-  float GetDesiredSpeed();
+  float GetDesiredSpeed() const override;
 };
 
 #endif // ROAMINGENEMY_H

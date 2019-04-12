@@ -18,4 +18,9 @@ void StaticEnemy::Move() {
       direction_change_timer_->start();
     }
   }
+  Enemy::Move();
+}
+
+float StaticEnemy::GetDesiredSpeed() const {
+  return 0;
 }

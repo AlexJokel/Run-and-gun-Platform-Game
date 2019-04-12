@@ -20,7 +20,7 @@ public:
   ObjectType Type() const override;
 
 protected:
-  const float kJumpHeight = 3;
+  const float kJumpHeight_ = 3;
   const float kVerticalSpeed_ = 10;
   static float CalcSpeedForHeight(b2World*, float);
 
@@ -30,6 +30,7 @@ protected:
   };
   Shot shot_;
 
+  float GetDesiredSpeed() const override;
   void Move() override;
   void Shoot() override;
 };
