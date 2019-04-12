@@ -53,10 +53,16 @@ void Enemy::Shoot() {
   Level()->World()->RayCast(&nearest_object_callback,
                             body_->GetWorldCenter(),
                             ray_end_point);
-  if ((nearest_object_callback.GetNearestObject()->Type() ==
-      ObjectType::kPlayer) &&
-      (shot_->TryShooting())) {
-    new Bullet(Level(), body_->GetWorldCenter(), direction_);
+
+  /// Shoot if necessary
+  if (nearest_object_callback.GetNearestObject()->Type() ==
+      ObjectType::kPlayer) {
+    player_visible_ = true;
+    if (shot_->TryShooting()) {
+      new Bullet(Level(), body_->GetWorldCenter(), direction_);
+    }
+  } else {
+    player_visible_ = false;
   }
 }
 

@@ -12,21 +12,16 @@ RoamingEnemy::RoamingEnemy(class Level* level,
       right_border_(right_border) {}
 
 void RoamingEnemy::Move() {
-  bool impulse_needed = false;
-  if ((body_->GetWorldCenter().x - left_border_ < 1e-3f) ||
-      (right_border_ - body_->GetWorldCenter().x < 1e-3f)) {
-    impulse_needed = true;
-    ChangeDirection();
-  }
-
-  if (body_->GetLinearVelocity().LengthSquared() < 1e-3f) {
-    impulse_needed = true;
-  }
-
-  if (!impulse_needed) return;
-
-  b2Vec2 impulse(direction_ * kHorizontalSpeed, 0);
-  impulse.x -= body_->GetLinearVelocity().x;
+  b2Vec2 impulse(GetDesiredSpeed() - body_->GetLinearVelocity().x, 0);
   impulse *= body_->GetMass();
   body_->ApplyLinearImpulse(impulse, body_->GetWorldCenter(), true);
+}
+
+float RoamingEnemy::GetDesiredSpeed() {
+  if (player_visible_) return 0;
+  if ((body_->GetWorldCenter().x - left_border_ < 1e-3f) ||
+      (right_border_ - body_->GetWorldCenter().x < 1e-3f)) {
+    ChangeDirection();
+  }
+  return kHorizontalSpeed * direction_;
 }

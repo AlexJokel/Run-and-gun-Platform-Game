@@ -32,6 +32,8 @@ protected:
   class Shot;
   Shot* shot_;
   void Shoot() override;
+
+  bool player_visible_ = false;
 };
 
 class Enemy::Shot : public QObject {
