@@ -25,7 +25,7 @@ protected:
 
   /// Direction by x-axis coefficient.
   /// By default everybody "looks" to the right
-  float direction_ = 1;
+  int direction_ = 1;
 };
 
 #endif // CREATURE_H
