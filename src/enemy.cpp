@@ -45,12 +45,11 @@ Object* Enemy::NearestObjectCallback::GetNearestObject() const {
 }
 
 void Enemy::Shoot() {
-
   /// Check if the enemy sees the player
   NearestObjectCallback nearest_object_callback({ObjectType::kGround,
                                                  ObjectType::kPlayer});
   b2Vec2 ray_end_point = body_->GetWorldCenter();
-  ray_end_point.x -= Level()->PixelsToMeters(Level()->width());
+  ray_end_point.x += direction_ * Level()->PixelsToMeters(Level()->width());
   Level()->World()->RayCast(&nearest_object_callback,
                             body_->GetWorldCenter(),
                             ray_end_point);
