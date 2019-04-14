@@ -16,13 +16,17 @@ b2Shape* RectangleShapeInfo::Init() {
   return polygon_shape;
 }
 
-BodyInfo::BodyInfo(float x, float y, ShapeInfo* shape_info, BodyType body_type)
-  : x(x), y(y), shape_info(shape_info), body_type(body_type) {}
+BodyInfo::BodyInfo(b2Vec2 position, ShapeInfo* shape_info, BodyType body_type)
+  : position(position), shape_info(shape_info), body_type(body_type) {}
+
+uint qHash(ObjectType type) {
+  return static_cast<uint>(type);
+}
 
 Object::Object(class Level* scene,
                BodyInfo body_info) : QGraphicsRectItem(nullptr) {
   b2BodyDef body_def;
-  body_def.position.Set(body_info.x, body_info.y);
+  body_def.position.Set(body_info.position.x, body_info.position.y);
   body_def.fixedRotation = true;
   switch (body_info.body_type) {
     case BodyType::kStatic : {
@@ -85,8 +89,7 @@ void Object::Draw() {
   b2Vec2 top_left_corner = body_->GetPosition()
       + dynamic_cast<b2PolygonShape*>(
           body_->GetFixtureList()->GetShape())->m_vertices[0];
-  setPos(Level()->MetersToPixels(top_left_corner.x),
-          Level()->MetersToPixels(top_left_corner.y));
+  setPos(Level()->MetersToPixels(top_left_corner));
 
   /// Deal with rotation
   auto angle = static_cast<qreal>(body_->GetAngle()); /// in radians

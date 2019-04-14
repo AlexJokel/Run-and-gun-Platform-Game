@@ -6,11 +6,13 @@
 class Arrow : public Object {
 public:
   Arrow(class Level*,
-        float x, float y,
-        float mouse_x, float mouse_y,
+        b2Vec2 position,
+        b2Vec2 mouse_position,
         ShapeInfo* = PassShapeInfo(ShapeType::kRectangle, 0.4f, 0.1f));
 
   void advance(int) override;
+
+  ObjectType Type() const override;
 
 protected:
   const float kSpeed = 10;
