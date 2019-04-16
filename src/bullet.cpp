@@ -23,9 +23,11 @@ Bullet::Bullet(class Level* level,
       {direction * kHorizontalSpeed_ * body_->GetMass(), 0},
       body_->GetWorldCenter(), true);
 
-  /// Add color
-  setBrush(Qt::black);
-  setPen(Qt::NoPen);
+  /// Set pixmap
+  SetPixmap(":/images/images/bullet.jpg", Qt::IgnoreAspectRatio);
+  if (direction < 0) {
+      ReflectPixmap();
+  }
 }
 
 ObjectType Bullet::Type() const {

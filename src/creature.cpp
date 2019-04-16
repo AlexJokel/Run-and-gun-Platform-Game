@@ -26,6 +26,8 @@ void Creature::Move() {
 }
 
 void Creature::ChangeDirection() {
+  ReflectPixmap();
+
   direction_ *= -1;
 }
 

@@ -1,5 +1,5 @@
 #include "ground.h"
-
+#include "level.h"
 #include <QGraphicsView>
 
 Ground::Ground(class Level* scene,
@@ -10,8 +10,8 @@ Ground::Ground(class Level* scene,
                       PassShapeInfo(ShapeType::kRectangle,
                                     size.x / 2, size.y / 2),
                       BodyType::kStatic}) {
-  setBrush(Qt::darkGray);
-  setPen(Qt::NoPen);
+    /// Set pixmap
+    SetPixmap(":/images/images/black_wall.jpg", Qt::IgnoreAspectRatio);
 }
 
 ObjectType Ground::Type() const {

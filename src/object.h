@@ -2,7 +2,9 @@
 #define OBJECT_H
 
 #include <QGraphicsRectItem>
+#include <QGraphicsPixmapItem>
 #include <Box2D/Box2D.h>
+#include <QBrush>
 
 namespace CollisionMask {
   enum {
@@ -71,7 +73,8 @@ uint qHash(ObjectType);
 
 class Level;
 
-class Object : public QObject, public QGraphicsRectItem {
+class Object : public QObject, public QGraphicsPixmapItem {
+
 public:
   Object(Level*,
          BodyInfo body_info);
@@ -80,6 +83,9 @@ public:
 
   void advance(int) override;
   virtual void Draw();
+
+  void SetPixmap(QString path = "", Qt::AspectRatioMode = Qt::IgnoreAspectRatio);
+  void ReflectPixmap();
 
   Level* Level() const;
   friend class Level;

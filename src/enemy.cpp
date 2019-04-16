@@ -1,5 +1,4 @@
 #include "enemy.h"
-
 #include "level.h"
 #include "bullet.h"
 
@@ -18,8 +17,7 @@ Enemy::Enemy(class Level* level,
   body_->GetFixtureList()->SetFilterData(enemy_filter);
 
   /// Add color
-  setBrush(Qt::red);
-  setPen(Qt::NoPen);
+  SetPixmap(":/images/images/enemy.png", Qt::IgnoreAspectRatio);
 }
 
 ObjectType Enemy::Type() const {
