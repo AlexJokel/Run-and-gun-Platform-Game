@@ -5,4 +5,7 @@
     <qresource prefix="/images">
         <file>images/button_background.jpg</file>
     </qresource>
+    <qresource prefix="/levels">
+        <file>levels/level1.dat</file>
+    </qresource>
 </RCC>

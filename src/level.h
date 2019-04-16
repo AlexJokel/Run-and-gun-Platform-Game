@@ -30,6 +30,9 @@ public:
   qreal MetersToPixels(float) const;
   float PixelsToMeters(qreal) const;
 
+  Player* GetPlayer() const;
+  QList<Ground*> GetGround() const;
+
 public slots:
   void advance();
 

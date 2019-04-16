@@ -115,3 +115,10 @@ qreal Level::MetersToPixels(float meters) const {
 float Level::PixelsToMeters(qreal pixels) const {
   return static_cast<float>(pixels / kMetersToPixelsRatio_);
 }
+
+Player* Level::GetPlayer() const {
+  return objects_.player;
+}
+QList<Ground*> Level::GetGround() const {
+  return objects_.ground;
+}
