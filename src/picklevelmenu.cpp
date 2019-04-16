@@ -3,6 +3,7 @@
 #include <QDebug>
 
 #include "cssstylestorage.h"
+#include "levelloader.h"
 #include "picklevelmenu.h"
 #include "game.h"
 #include "level.h"
@@ -25,7 +26,8 @@ PickLevelMenu::PickLevelMenu(class Game* game, qreal width, qreal height,
           (CssStyleStorage::GetInstance().GetMenuButtonStyle());
       layout->addWidget(button, i, j);
       QObject::connect(button, &Button::clicked, this, [&] {
-         Game()->PushScene(new Level(Game(), 1920, 1080));
+         LevelLoader loader(":/levels/levels/level1.dat");
+         Game()->PushScene(loader.LoadLevel(Game(), 1920, 1080));
       });
     }
   }

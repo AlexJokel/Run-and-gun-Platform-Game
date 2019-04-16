@@ -6,7 +6,9 @@
 
 #include "level.h"
 
-QDataStream& operator<<(QDataStream& out, b2Vec2);
+QDataStream& operator<<(QDataStream& out, const b2Vec2&);
+QDataStream& operator>>(QDataStream& in, b2Vec2&);
+
 QDataStream& operator<<(QDataStream& out, Object*);
 QDataStream& operator<<(QDataStream& out, Level*);
 

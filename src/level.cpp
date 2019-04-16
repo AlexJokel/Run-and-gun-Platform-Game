@@ -17,28 +17,6 @@ Level::Level(class Game* game, qreal width, qreal height)
   /// World initialization
   world_->SetContactListener(new ContactListener());
 
-  /// Player initialization
-  objects_.player = new Player(this, 3, 3);
-
-  /// Create floor
-  objects_.ground.append(new Ground(this,
-                        0,
-                        PixelsToMeters(this->height()) - 1,
-                        PixelsToMeters(this->width()),
-                        1));
-
-  /// Create walls
-  objects_.ground.append(new Ground(this,
-                         0,
-                         0,
-                         1,
-                         PixelsToMeters(this->height())));
-  objects_.ground.append(new Ground(this,
-                         PixelsToMeters(this->width()) - 1,
-                         0,
-                         1,
-                         PixelsToMeters(this->height())));
-
   /// Draw dot grid
   for (size_t x = 0; x < this->width(); x += 100) {
     for (size_t y = 0; y < this->height(); y += 100) {
@@ -121,4 +99,12 @@ Player* Level::GetPlayer() const {
 }
 QList<Ground*> Level::GetGround() const {
   return objects_.ground;
+}
+
+void Level::SetPlayer(Player* player) {
+  objects_.player = player;
+}
+
+void Level::AppendGround(Ground* ground) {
+  objects_.ground.append(ground);
 }

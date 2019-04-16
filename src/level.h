@@ -33,6 +33,9 @@ public:
   Player* GetPlayer() const;
   QList<Ground*> GetGround() const;
 
+  void SetPlayer(Player* player);
+  void AppendGround(Ground* ground);
+
 public slots:
   void advance();
 
