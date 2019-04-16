@@ -4,6 +4,7 @@
 #include "player.h"
 #include "level.h"
 #include "scene.h"
+#include "settings_button.h"
 
 Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
     : Menu(game, width, height, color) {
