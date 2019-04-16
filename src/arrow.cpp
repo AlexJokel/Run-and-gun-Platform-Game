@@ -1,15 +1,16 @@
 #include "arrow.h"
 
+#include "level.h"
+
 Arrow::Arrow(class Level* scene,
              b2Vec2 position,
-             b2Vec2 mouse_position,
              ShapeInfo* shape_info)
     : Object(scene, {position, shape_info, BodyType::kDynamic}) {
   ///Enable rotation
   body_->SetFixedRotation(false);
 
   /// Set starting velocity
-  b2Vec2 velocity = mouse_position - position; /// Difference in coordinates
+  b2Vec2 velocity = Level()->MousePosition() - position;
   velocity *= kSpeed / velocity.Length(); /// Scale to desired length
   body_->SetLinearVelocity(velocity);
 

@@ -103,8 +103,6 @@ void Level::mousePressEvent(QGraphicsSceneMouseEvent* event) {
 void Level::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
   mouse_state_.buttons_released.insert(event->button());
   if (event->button() == Qt::RightButton) Game()->PopScene();
-  if (event->button() != Qt::LeftButton) return;
-  objects_.player->ScheduleShot(PixelsToMeters(event->scenePos()));
 }
 
 void Level::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {

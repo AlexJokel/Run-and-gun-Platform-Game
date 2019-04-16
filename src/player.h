@@ -14,7 +14,6 @@ public:
          b2Vec2 position,
          ShapeInfo* = PassShapeInfo(ShapeType::kRectangle, 0.5f, 0.5f));
 
-  void ScheduleShot(b2Vec2 direction);
   void advance(int) override;
 
   ObjectType Type() const override;
@@ -23,12 +22,6 @@ protected:
   const float kJumpHeight_ = 3;
   const float kVerticalSpeed_ = 10;
   static float CalcSpeedForHeight(b2World*, float);
-
-  struct Shot {
-    bool scheduled = false;
-    b2Vec2 direction;
-  };
-  Shot shot_;
 
   float GetDesiredSpeed() const override;
   void Move() override;
