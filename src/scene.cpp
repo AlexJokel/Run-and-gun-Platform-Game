@@ -9,3 +9,5 @@ Scene::Scene(class Game* game, qreal width, qreal height)
 Game* Scene::Game() const {
   return game_;
 }
+
+void Scene::keyPressEvent(QKeyEvent*) {}

@@ -11,6 +11,7 @@
 #include "player.h"
 #include "ground.h"
 #include "arrow.h"
+#include "enemy.h"
 
 class Level : public Scene {
 public:
@@ -28,7 +29,9 @@ public:
   b2World* World() const;
 
   qreal MetersToPixels(float) const;
+  QPointF MetersToPixels(b2Vec2) const;
   float PixelsToMeters(qreal) const;
+  b2Vec2 PixelsToMeters(QPointF) const;
 
 public slots:
   void advance();
@@ -46,6 +49,7 @@ protected:
   struct SceneObjects {
     Player* player;
     QList<Ground*> ground;
+    QList<Enemy*> enemies;
   };
 
   SceneObjects objects_;
