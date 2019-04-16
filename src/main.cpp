@@ -15,10 +15,10 @@
 #include "ground.h"
 
 int main(int argc, char *argv[]) {
-  QApplication a(argc, argv);
+  QApplication application(argc, argv);
 
-  /// Scene & view initialization
-  auto game = new Game();
+  /// Game start
+  new Game(&application);
 
-  return a.exec();
+  return application.exec();
 }

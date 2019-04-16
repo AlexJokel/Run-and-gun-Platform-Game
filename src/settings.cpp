@@ -22,7 +22,7 @@ Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
     int yPos = this->height() -quit_button_->boundingRect().height() * 5;
     quit_button_->setPos(xPos,yPos);
     QObject::connect(quit_button_, &Button::clicked, this->Game(),
-                     [this]{Game()->SetScene(new MainMenu(this->Game(), 1920, 1080, Qt::lightGray));});
+                     [this]{Game()->PushScene(new MainMenu(this->Game(), 1920, 1080, Qt::lightGray));});
     addItem(quit_button_);
     buttons_.push_back(quit_button_);
 

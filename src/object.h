@@ -2,13 +2,17 @@
 #define OBJECT_H
 
 #include <QGraphicsRectItem>
+#include <QGraphicsPixmapItem>
 #include <Box2D/Box2D.h>
+#include <QBrush>
 
 namespace CollisionMask {
   enum {
     kDefault = 0x0001,
     kPlayer = 0x0002,
-    kArrow = 0x0004
+    kArrow = 0x0004,
+    kEnemy = 0x0008,
+    kBullet = 0x0010,
   };
 }
 
@@ -50,18 +54,27 @@ ShapeInfo* PassShapeInfo(ShapeType shape_type, Args... args) {
 }
 
 struct BodyInfo {
-  float x;
-  float y;
+  b2Vec2 position;
   ShapeInfo* shape_info;
   BodyType body_type;
   float density = 1;
 
-  BodyInfo(float x, float y, ShapeInfo*, BodyType);
+  BodyInfo(b2Vec2, ShapeInfo*, BodyType);
 };
+
+enum class ObjectType {
+  kGround,
+  kPlayer,
+  kEnemy,
+  kArrow,
+  kBullet,
+};
+uint qHash(ObjectType);
 
 class Level;
 
-class Object : public QGraphicsRectItem {
+class Object : public QObject, public QGraphicsPixmapItem {
+
 public:
   Object(Level*,
          BodyInfo body_info);
@@ -71,8 +84,13 @@ public:
   void advance(int) override;
   virtual void Draw();
 
+  void SetPixmap(QString path = "", Qt::AspectRatioMode = Qt::IgnoreAspectRatio);
+  void ReflectPixmap();
+
   Level* Level() const;
   friend class Level;
+
+  virtual ObjectType Type() const = 0;
 
 protected:
   b2Body* body_;

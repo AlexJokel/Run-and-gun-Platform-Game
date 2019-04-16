@@ -2,22 +2,41 @@
 #include "level.h"
 #include "button.h"
 #include "main_menu.h"
-#include <QGraphicsTextItem>
 
-Game::Game() : QGraphicsView() {
+#include <QScrollBar>
+#include <QDebug>
+
+Game::Game(QApplication* application) : QGraphicsView(),
+                                        application_(application) {
   setFixedSize(1280, 720);
   setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-  SetScene(new MainMenu(this, 1920, 1080, Qt::lightGray));
+  /// Disable scroll events
+  auto scroll_disabler = new ScrollDisabler();
+  verticalScrollBar()->installEventFilter(scroll_disabler);
+
+  PushScene(new MainMenu(this, 1280, 720, Qt::lightGray));
+
   show();
 }
 
-void Game::SetScene(Scene* scene) {
-  delete current_scene;
-    setScene(scene);
+void Game::PushScene(Scene* scene) {
+  setScene(scene);
+  scenes_.push(scene);
 }
 
-void Game::Exit() {
-  close();
+void Game::PopScene() {
+  delete scenes_.top();
+  scenes_.pop();
+  if (scenes_.empty()) {
+    application_->quit();
+    return;
+  }
+  setScene(scenes_.top());
+}
+
+bool Game::ScrollDisabler::eventFilter(QObject*, QEvent* event) {
+  if (event->type() == QEvent::Wheel) return true;
+  return false;
 }

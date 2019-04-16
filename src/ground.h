@@ -7,8 +7,10 @@ class Ground : public Object {
 public:
   /// x, y --- top left corner Box2D coordinates
   Ground(class Level*,
-         float x, float y,
-         float width, float height);
+         b2Vec2 position,
+         b2Vec2 size);
+
+  ObjectType Type() const override;
 };
 
 #endif // GROUND_H

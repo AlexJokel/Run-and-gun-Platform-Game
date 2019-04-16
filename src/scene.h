@@ -10,6 +10,9 @@ public:
   Scene(Game*, qreal width, qreal height);
 
   Game* Game() const;
+
+  void keyPressEvent(QKeyEvent*) override;
+
 protected:
   class Game* game_;
 };
