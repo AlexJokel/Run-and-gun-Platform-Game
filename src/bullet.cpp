@@ -25,6 +25,9 @@ Bullet::Bullet(class Level* level,
 
   /// Set pixmap
   SetPixmap(":/images/images/bullet.jpg", Qt::IgnoreAspectRatio);
+  if (direction < 0) {
+      ReflectPixmap();
+  }
 }
 
 ObjectType Bullet::Type() const {

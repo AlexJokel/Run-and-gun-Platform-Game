@@ -107,6 +107,13 @@ void Object::SetPixmap(QString path, Qt::AspectRatioMode aspect_ratio_mode) {
     setPixmap(pm_scaled);
 }
 
+void Object::ReflectPixmap() {
+    QMatrix reflect_matrix(-1, 0, 0, 1, 0, 0);
+    QTransform tr(reflect_matrix);
+    QPixmap pm_transformed = pixmap().transformed(tr);
+    setPixmap(pm_transformed);
+}
+
 Level* Object::Level() const {
   return dynamic_cast<class Level*>(scene());
 }

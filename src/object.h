@@ -83,7 +83,9 @@ public:
 
   void advance(int) override;
   virtual void Draw();
+
   void SetPixmap(QString path = "", Qt::AspectRatioMode = Qt::IgnoreAspectRatio);
+  void ReflectPixmap();
 
   Level* Level() const;
   friend class Level;
