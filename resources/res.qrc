@@ -4,7 +4,6 @@
         <file>images/arrow2.png</file>
         <file>images/player.png</file>
         <file>images/black_wall.jpg</file>
-        <file>images/reverse_arrow2.png</file>
         <file>images/bullet.jpg</file>
         <file>images/enemy.png</file>
     </qresource>
