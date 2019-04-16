@@ -46,7 +46,7 @@ SOURCES += \
     src/staticenemy.cpp \
     src/roamingenemy.cpp \
     src/bullet.cpp \
-    src/settings_button.cpp
+    src/settings_button.cpp \
 
 HEADERS += \
 #    Box2D/Box2D.h
@@ -67,7 +67,7 @@ HEADERS += \
     src/staticenemy.h \
     src/roamingenemy.h \
     src/bullet.h \
-    src/settings_button.h
+    src/settings_button.h \
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

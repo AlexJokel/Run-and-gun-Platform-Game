@@ -36,10 +36,8 @@ Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
 
     //creating buttons for controls
     qreal h = this->height()/4;
-    h = AddButton(static_cast<QString>(Player::controls_.left), 4 * this->width()/7, this->height()/4);
-    h = AddButton(static_cast<QString>(Player::controls_.right), 4 * this->width()/7, h+this->height()/15);
-    h = AddButton(static_cast<QString>(Player::controls_.shoot), 4 * this->width()/7, h+this->height()/15);
-    h = AddButton(static_cast<QString>(Player::controls_.exit), 4 * this->width()/7, h+this->height()/15);
+    h = AddButton(static_cast<QString>(Player::controls_map_["Left"]), 4 * this->width()/7, this->height()/4);
+    h = AddButton(static_cast<QString>(Player::controls_map_["Right"]), 4 * this->width()/7, h+this->height()/15);
 
     //creating button for full screen
 }

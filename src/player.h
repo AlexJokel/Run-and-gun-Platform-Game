@@ -17,14 +17,8 @@ public:
 
   void advance(int) override;
 
-  struct Controls {
-      Qt::Key left = Qt::Key_A;
-      Qt::Key right = Qt::Key_D;
-      Qt::Key jump = Qt::Key_Space;
-      Qt::MouseButton shoot = Qt::LeftButton;
-      Qt::MouseButton exit = Qt::RightButton;
-  };
-  static Controls controls_;
+  static QMap<QString, Qt::Key> controls_map_;
+
   ObjectType Type() const override;
 
 protected:

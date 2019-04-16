@@ -5,7 +5,11 @@
 
 #include "level.h"
 
-Player::Controls Player::controls_;
+QMap<QString, Qt::Key> Player::controls_map_ = {
+{"Left", Qt::Key_A},
+{"Right", Qt::Key_D},
+{"Jump", Qt::Key_Space}
+};
 
 Player::Player(class Level* scene,
                b2Vec2 position,
@@ -33,10 +37,10 @@ ObjectType Player::Type() const {
 
 float Player::GetDesiredSpeed() const {
   float desired_speed = 0;
-  if (Level()->KeyPressed(Player::controls_.left)) {
+  if (Level()->KeyPressed(Player::controls_map_["Left"])) {
     desired_speed -= kHorizontalSpeed_;
   }
-  if (Level()->KeyPressed(Player::controls_.right)) {
+  if (Level()->KeyPressed(Player::controls_map_["Right"])) {
     desired_speed += kHorizontalSpeed_;
   }
   return desired_speed;
@@ -51,7 +55,7 @@ void Player::Move() {
   }
 
   // Handle jumping
-  if (Level()->KeyPressed(Player::controls_.jump)) {
+  if (Level()->KeyPressed(Player::controls_map_["Jump"])) {
     if (qAbs(body_->GetLinearVelocity().y) < 1e-3f) {
       body_->ApplyLinearImpulse({0, -kVerticalSpeed_ * body_->GetMass()},
                                 body_->GetWorldCenter(), true);
