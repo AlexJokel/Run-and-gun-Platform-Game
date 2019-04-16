@@ -46,13 +46,22 @@ float Player::GetDesiredSpeed() const {
 }
 
 void Player::Move() {
-  Creature::Move();
+  // Change direction if necessary
+  auto relative_mouse_x =
+      Level()->MousePosition().x - body_->GetWorldCenter().x;
+  if (direction_ * relative_mouse_x < 0) {
+    ChangeDirection();
+  }
+
+  // Handle jumping
   if (Level()->KeyPressed(Qt::Key_Space)) {
     if (qAbs(body_->GetLinearVelocity().y) < 1e-3f) {
       body_->ApplyLinearImpulse({0, -kVerticalSpeed_ * body_->GetMass()},
                                 body_->GetWorldCenter(), true);
     }
   }
+
+  Creature::Move();
 }
 
 void Player::Shoot() {
