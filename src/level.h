@@ -4,6 +4,7 @@
 #include <QGraphicsScene>
 #include <QKeyEvent>
 #include <QMap>
+#include <QSet>
 
 #include <Box2D/Box2D.h>
 
@@ -20,11 +21,14 @@ public:
 
   void keyPressEvent(QKeyEvent*) override;
   void keyReleaseEvent(QKeyEvent*) override;
+  void mousePressEvent(QGraphicsSceneMouseEvent*) override;
   void mouseReleaseEvent(QGraphicsSceneMouseEvent*) override;
   void mouseMoveEvent(QGraphicsSceneMouseEvent*) override;
 
   bool KeyPressed(qint32) const;
   b2Vec2 MousePosition() const;
+  bool ButtonPressed(Qt::MouseButton) const;
+  bool ButtonReleased(Qt::MouseButton) const;
 
   void RemoveObject(Object*);
 
@@ -46,8 +50,14 @@ protected:
   const qint32 kFramesPerSecond_ = 60;
   const qreal kTimeStep_ = 1 / static_cast<qreal>(kFramesPerSecond_);
 
+  struct MouseState {
+    b2Vec2 mouse_position;
+    QSet<Qt::MouseButton> buttons_pressed;
+    QSet<Qt::MouseButton> buttons_released;
+    void ClearButtons();
+  };
+  MouseState mouse_state_;
   QMap<qint32, bool> keys_;
-  b2Vec2 mouse_position_;
 
   struct SceneObjects {
     Player* player;

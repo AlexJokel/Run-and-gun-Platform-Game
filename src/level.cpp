@@ -82,6 +82,7 @@ void Level::advance() {
 
   /// Advance the scene
   QGraphicsScene::advance();
+  mouse_state_.ClearButtons();
 
   /// Repaint the view
   views().front()->viewport()->repaint();
@@ -95,14 +96,19 @@ void Level::keyReleaseEvent(QKeyEvent *event) {
   keys_[event->key()] = false;
 }
 
+void Level::mousePressEvent(QGraphicsSceneMouseEvent* event) {
+  mouse_state_.buttons_pressed.insert(event->button());
+}
+
 void Level::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
+  mouse_state_.buttons_released.insert(event->button());
   if (event->button() == Qt::RightButton) Game()->PopScene();
   if (event->button() != Qt::LeftButton) return;
   objects_.player->ScheduleShot(PixelsToMeters(event->scenePos()));
 }
 
 void Level::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
-  mouse_position_ = PixelsToMeters(event->scenePos());
+  mouse_state_.mouse_position = PixelsToMeters(event->scenePos());
 }
 
 bool Level::KeyPressed(qint32 key) const {
@@ -110,7 +116,15 @@ bool Level::KeyPressed(qint32 key) const {
 }
 
 b2Vec2 Level::MousePosition() const {
-  return mouse_position_;
+  return mouse_state_.mouse_position;
+}
+
+bool Level::ButtonPressed(Qt::MouseButton button) const {
+  return mouse_state_.buttons_pressed.contains(button);
+}
+
+bool Level::ButtonReleased(Qt::MouseButton button) const {
+  return mouse_state_.buttons_released.contains(button);
 }
 
 void Level::RemoveObject(Object* object) {
@@ -131,4 +145,9 @@ float Level::PixelsToMeters(qreal pixels) const {
 
 b2Vec2 Level::PixelsToMeters(QPointF point) const {
   return {PixelsToMeters(point.x()), PixelsToMeters(point.y())};
+}
+
+void Level::MouseState::ClearButtons() {
+  buttons_pressed.clear();
+  buttons_released.clear();
 }
