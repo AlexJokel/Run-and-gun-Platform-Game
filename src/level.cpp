@@ -101,8 +101,16 @@ void Level::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
   objects_.player->ScheduleShot(PixelsToMeters(event->scenePos()));
 }
 
+void Level::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
+  mouse_position_ = PixelsToMeters(event->scenePos());
+}
+
 bool Level::KeyPressed(qint32 key) const {
   return keys_.value(key, false);
+}
+
+b2Vec2 Level::MousePosition() const {
+  return mouse_position_;
 }
 
 void Level::RemoveObject(Object* object) {

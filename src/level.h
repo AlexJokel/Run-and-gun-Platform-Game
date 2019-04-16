@@ -21,8 +21,10 @@ public:
   void keyPressEvent(QKeyEvent*) override;
   void keyReleaseEvent(QKeyEvent*) override;
   void mouseReleaseEvent(QGraphicsSceneMouseEvent*) override;
+  void mouseMoveEvent(QGraphicsSceneMouseEvent*) override;
 
   bool KeyPressed(qint32) const;
+  b2Vec2 MousePosition() const;
 
   void RemoveObject(Object*);
 
@@ -45,6 +47,7 @@ protected:
   const qreal kTimeStep_ = 1 / static_cast<qreal>(kFramesPerSecond_);
 
   QMap<qint32, bool> keys_;
+  b2Vec2 mouse_position_;
 
   struct SceneObjects {
     Player* player;
