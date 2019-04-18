@@ -6,7 +6,7 @@
 class SettingsButton : public Button {
 public:
     SettingsButton(QString name, QGraphicsItem* parent = nullptr);
-    void ChangeControl(Qt::Key) {}
+    void ChangeControl(Qt::Key);
 
 protected:
     QString key_;
