@@ -3,6 +3,7 @@
 
 #include "menu.h"
 #include "level.h"
+#include "levelstorage.h"
 
 class PickLevelMenu : public Menu {
 public:
@@ -10,6 +11,7 @@ public:
                 qint32 num_columns, qint32 num_rows);
 protected:
   QVector<Level*> levels_;
+  LevelStorage* storage_;
 };
 
 #endif // PICKLEVELMENU_H

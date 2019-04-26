@@ -10,7 +10,8 @@
 
 PickLevelMenu::PickLevelMenu(class Game* game, qreal width, qreal height,
                              QColor color, qint32 num_columns, qint32 num_rows)
-    : Menu(game, width, height, color) {
+    : Menu(game, width, height, color),
+      storage_(new LevelStorage(num_columns * num_rows)) {
   auto layout = new QGridLayout();
   /// writing hint
   title_text_ = new QGraphicsTextItem("Pick a level");

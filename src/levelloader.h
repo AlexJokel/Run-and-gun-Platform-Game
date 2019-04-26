@@ -14,7 +14,7 @@ QDataStream& operator<<(QDataStream& out, Level*);
 
 class LevelLoader {
 public:
-  LevelLoader(const QString& file_name);
+  LevelLoader(const QString& file_name = "");
 
   void SetFileName(const QString& new_file_name);
   const QString& GetFileName();
