@@ -2,15 +2,14 @@
 
 LevelStorage::LevelStorage(qint32 level_number) :
       level_number_(level_number),
-      loader (new LevelLoader()) {
+      state_loader_(new LevelLoader(kOpenStatePath_)) {
   assert(level_number > 0);
-  /// open initial levels
-  /// later state would be upload from file
-  for (qint32 i = 0; i < level_number_; ++i) {
-    open_state_[i] = false;
-  }
-  open_state_[0] = true;
-  open_state_[1] = true;
+  /// load open_state_ from file
+  open_state_ = state_loader_->LoadState();
+}
+
+LevelStorage::~LevelStorage() {
+  state_loader_->SaveState(open_state_);
 }
 
 void LevelStorage::UnlockLevel(qint32 index) {
@@ -28,8 +27,8 @@ Level* LevelStorage::GetLevelByIndex(Game* game, qint32 index) {
   if (!open_state_[index]) {
     return nullptr;
   }
-  QString file_name = level_path_prefix_ + "level"
+  QString file_name = kLevelPathPrefix_ + "level"
       + QString::number(index) + ".dat";
-  loader->SetFileName(file_name);
+  auto loader = new LevelLoader(file_name);
   return loader->LoadLevel(game, 1920, 1080);
 }

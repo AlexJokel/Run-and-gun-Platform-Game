@@ -26,6 +26,9 @@ public:
   Level* LoadLevel(class Game*, qreal width, qreal height);
   void WriteLevel(Level* level);
 
+  QMap<qint32, bool> LoadState();
+  void SaveState(const QMap<qint32, bool>& state);
+
 private:
   QString file_name_;
 };

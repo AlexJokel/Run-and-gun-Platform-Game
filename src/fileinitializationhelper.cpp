@@ -34,7 +34,6 @@ void FileInitializationHelper::CreateOpenLevelMap() {
     open_state[i] = false;
   }
   open_state[0] = true;
-  open_state[1] = true;
 
   QFile file("open_levels_state.dat");
   file.open(QIODevice::WriteOnly);

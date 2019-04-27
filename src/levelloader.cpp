@@ -2,7 +2,6 @@
 
 #include "levelloader.h"
 
-
 QDataStream& operator<<(QDataStream& out, const b2Vec2& pair) {
   return out << pair.x << pair.y;
 }
@@ -43,7 +42,7 @@ Level* LevelLoader::LoadLevel(class Game* game,
 
   QFile file(file_name_);
   if(!file.open(QIODevice::ReadOnly)) {
-    qDebug() << "LevelLoader::LoadLevel: File can't be opened for reading!\n";
+    qCritical() << "LevelLoader::LoadLevel: File can't be opened for reading!\n";
     return nullptr;
   }
   QDataStream input(&file);
@@ -73,11 +72,35 @@ Level* LevelLoader::LoadLevel(class Game* game,
 void LevelLoader::WriteLevel(Level *level) {
   QFile file(file_name_);
   if(!file.open(QIODevice::WriteOnly)) {
-    qDebug() << "LevelLoader::WriteLevel: File can't be opened for writing!\n";
+    qCritical() << "LevelLoader::WriteLevel: File can't be opened for writing!\n";
     return;
   }
   QDataStream output(&file);
   // serialize level into the file
   output << level;
+  file.close();
+}
+
+QMap<qint32, bool> LevelLoader::LoadState() {
+  QFile file(file_name_);
+  if(!file.open(QIODevice::ReadOnly)) {
+    qCritical() << "LevelLoader::LoadState: File can't be opened for reading!\n";
+    return QMap<qint32, bool>();
+  }
+  QDataStream input(&file);
+  QMap<qint32, bool> state;
+  input >> state;
+  file.close();
+  return state;
+}
+
+void LevelLoader::SaveState(const QMap<qint32, bool>& state) {
+  QFile file(file_name_);
+  if(!file.open(QIODevice::WriteOnly)) {
+    qCritical() << "LevelLoader::SaveState: File can't be opened for writing!\n";
+    return;
+  }
+  QDataStream output(&file);
+  output << state;
   file.close();
 }
