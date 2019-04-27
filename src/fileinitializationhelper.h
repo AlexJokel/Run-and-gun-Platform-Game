@@ -9,6 +9,8 @@ public:
   /// After creating of the level don't forget to add it to resouces
   static void CreateFirstLevel(class Game* game,
                                const QString& file_name = "level0.dat");
+  static void CreateSecondLevel(class Game* game,
+                               const QString& file_name = "level1.dat");
   static void CreateOpenLevelMap(const QString& file_name = "open_levels_state.dat");
 };
 
