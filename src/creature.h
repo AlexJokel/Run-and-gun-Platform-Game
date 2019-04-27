@@ -13,6 +13,8 @@ public:
 
   void advance(int) override;
 
+  ObjectType Type() const override;
+
 public slots:
   /// Invert the direction
   void ChangeDirection();

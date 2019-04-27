@@ -5,6 +5,7 @@
 #include <QGraphicsPixmapItem>
 #include <Box2D/Box2D.h>
 #include <QBrush>
+#include <QHash>
 
 namespace CollisionMask {
   enum {
@@ -63,9 +64,13 @@ struct BodyInfo {
 };
 
 enum class ObjectType {
+  kObject,
   kGround,
+  kCreature,
   kPlayer,
   kEnemy,
+  kStaticEnemy,
+  kRoamingEnemy,
   kArrow,
   kBullet,
 };
@@ -92,8 +97,16 @@ public:
 
   virtual ObjectType Type() const = 0;
 
+  // Checks if 'this' inherits parameter type.
+  // Simply goes up the inheritance tree.
+  bool Inherits(ObjectType) const;
+
 protected:
   b2Body* body_;
+
+private:
+  // Inheritance tree
+  static const QHash<ObjectType, ObjectType> parents_;
 };
 
 #endif // OBJECT_H

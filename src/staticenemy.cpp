@@ -10,6 +10,10 @@ StaticEnemy::StaticEnemy(class Level* level,
   direction_change_timer_->start(kDirectionChangeInterval_);
 }
 
+ObjectType StaticEnemy::Type() const {
+  return ObjectType::kStaticEnemy;
+}
+
 void StaticEnemy::Move() {
   if (player_visible_) {
     direction_change_timer_->stop();

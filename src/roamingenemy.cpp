@@ -20,6 +20,10 @@ RoamingEnemy::RoamingEnemy(class Level* level,
     : Enemy(level, position, horizontal_speed, shape_info),
       borders_(borders) {}
 
+ObjectType RoamingEnemy::Type() const {
+  return ObjectType::kRoamingEnemy;
+}
+
 void RoamingEnemy::Move() {
   /// The product is positive --> direction and position are
   /// to the same side --> direction must be changed.

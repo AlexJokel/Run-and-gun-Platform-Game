@@ -4,6 +4,18 @@
 
 #include "level.h"
 
+const QHash<ObjectType, ObjectType> Object::parents_{
+    {ObjectType::kObject,       ObjectType::kObject},
+    {ObjectType::kCreature,     ObjectType::kObject},
+    {ObjectType::kGround,       ObjectType::kObject},
+    {ObjectType::kArrow,        ObjectType::kObject},
+    {ObjectType::kBullet,       ObjectType::kObject},
+    {ObjectType::kPlayer,       ObjectType::kCreature},
+    {ObjectType::kEnemy,        ObjectType::kCreature},
+    {ObjectType::kStaticEnemy,  ObjectType::kEnemy},
+    {ObjectType::kRoamingEnemy, ObjectType::kEnemy},
+};
+
 RectangleShapeInfo::RectangleShapeInfo(float half_width,
                                    float half_height)
     : ShapeInfo(),
@@ -116,4 +128,13 @@ void Object::ReflectPixmap() {
 
 Level* Object::Level() const {
   return dynamic_cast<class Level*>(scene());
+}
+
+bool Object::Inherits(ObjectType type) const {
+  auto current_type = Type();
+  while (current_type != type) {
+    if (current_type == ObjectType::kObject) return false;
+    current_type = parents_[current_type];
+  }
+  return true;
 }

@@ -18,6 +18,10 @@ void Creature::advance(int phase) {
   Draw();
 }
 
+ObjectType Creature::Type() const {
+  return ObjectType::kCreature;
+}
+
 void Creature::Move() {
   b2Vec2 impulse(GetDesiredSpeed() - body_->GetLinearVelocity().x, 0);
   impulse *= body_->GetMass();
