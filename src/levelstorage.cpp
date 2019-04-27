@@ -1,11 +1,20 @@
 #include <QDebug>
 
+#include "fileinitializationhelper.h"
 #include "levelstorage.h"
 
 LevelStorage::LevelStorage(qint32 level_number) :
-      level_number_(level_number),
-      state_loader_(new LevelLoader(kOpenStatePath_)) {
+      level_number_(level_number) {
   assert(level_number > 0);
+
+  /// Create defult open state file
+  /// if no one is provided
+  QFile file(kOpenStatePath_);
+  if (!file.exists()) {
+    qCritical() << "Initial level state file was created!\n";
+    FileInitializationHelper::CreateOpenLevelMap(kOpenStatePath_);
+  }
+  state_loader_ = new LevelLoader(kOpenStatePath_);
   /// load open_state_ from file
   open_state_ = state_loader_->LoadState();
 }

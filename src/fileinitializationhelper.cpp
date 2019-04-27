@@ -3,7 +3,7 @@
 #include "level.h"
 #include "levelloader.h"
 
-void FileInitializationHelper:: CreateLevel(class Game* game) {
+void FileInitializationHelper:: CreateLevel(class Game* game, const QString& file_name) {
   auto level = new Level(game, 1920, 1080);
   /// Player initialization
   level->SetPlayer(new Player(level, {3, 3}));
@@ -18,19 +18,19 @@ void FileInitializationHelper:: CreateLevel(class Game* game) {
   level->AppendGround(new Ground(level,
                          {level->PixelsToMeters(level->width()) - 1, 0},
                          {1, level->PixelsToMeters(level->height())}));
-  LevelLoader loader("level1.dat");
+  LevelLoader loader(file_name);
   loader.WriteLevel(level);
   delete level;
 }
 
-void FileInitializationHelper::CreateOpenLevelMap() {
+void FileInitializationHelper::CreateOpenLevelMap(const QString& file_name) {
   QMap<qint32, bool> open_state;
   for (qint32 i = 0; i < 15; ++i) {
     open_state[i] = false;
   }
   open_state[0] = true;
 
-  QFile file("open_levels_state.dat");
+  QFile file(file_name);
   file.open(QIODevice::WriteOnly);
   QDataStream output(&file);
   output << open_state;
