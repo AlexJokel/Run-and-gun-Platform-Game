@@ -15,6 +15,8 @@ public:
   void LockLevel(qint32 index);
   void SaveState() const;
 
+  bool IsOpen(qint32 index) const;
+
   Level* GetLevelByIndex(Game* game, qint32 index) const;
 
 private:

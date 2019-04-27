@@ -1,9 +1,11 @@
 <RCC>
     <qresource prefix="/style">
         <file>styles/main_menu_button.css</file>
+        <file>styles/locked_button_style.css</file>
     </qresource>
     <qresource prefix="/images">
         <file>images/button_background.jpg</file>
+        <file>images/lock.png</file>
     </qresource>
     <qresource prefix="/levels">
         <file>levels/level0.dat</file>
