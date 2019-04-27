@@ -13,9 +13,9 @@ public:
 
   void UnlockLevel(qint32 index);
   void LockLevel(qint32 index);
-  void SaveState();
+  void SaveState() const;
 
-  Level* GetLevelByIndex(Game* game, qint32 index);
+  Level* GetLevelByIndex(Game* game, qint32 index) const;
 
 private:
   const QString kLevelPathPrefix_ = ":/levels/levels/";

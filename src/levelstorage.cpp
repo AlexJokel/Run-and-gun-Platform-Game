@@ -20,11 +20,11 @@ void LevelStorage::LockLevel(qint32 index) {
   open_state_[index] = false;
 }
 
-void LevelStorage::SaveState() {
+void LevelStorage::SaveState() const{
   state_loader_->SaveState(open_state_);
 }
 
-Level* LevelStorage::GetLevelByIndex(Game* game, qint32 index) {
+Level* LevelStorage::GetLevelByIndex(Game* game, qint32 index) const {
   assert(0 <= index && index < level_number_);
   if (!open_state_[index]) {
     return nullptr;

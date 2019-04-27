@@ -32,12 +32,12 @@ void LevelLoader::SetFileName(const QString& file_name) {
   file_name_ = file_name;
 }
 
-const QString& LevelLoader::GetFileName() {
+const QString& LevelLoader::GetFileName() const {
   return file_name_;
 }
 
 Level* LevelLoader::LoadLevel(class Game* game,
-                              qreal width, qreal height) {
+                              qreal width, qreal height) const {
   QFile file(file_name_);
   if(!file.open(QIODevice::ReadOnly)) {
     qCritical() << "LevelLoader::LoadLevel: File " << file_name_
@@ -69,7 +69,7 @@ Level* LevelLoader::LoadLevel(class Game* game,
   return level;
 }
 
-void LevelLoader::WriteLevel(Level *level) {
+void LevelLoader::WriteLevel(Level *level) const {
   QFile file(file_name_);
   if(!file.open(QIODevice::WriteOnly)) {
     qCritical() << "LevelLoader::WriteLevel: File " << file_name_
@@ -82,7 +82,7 @@ void LevelLoader::WriteLevel(Level *level) {
   file.close();
 }
 
-QMap<qint32, bool> LevelLoader::LoadState() {
+QMap<qint32, bool> LevelLoader::LoadState() const {
   QFile file(file_name_);
   if(!file.open(QIODevice::ReadOnly)) {
     qCritical() << "LevelLoader::LoadState: File " << file_name_
@@ -96,7 +96,7 @@ QMap<qint32, bool> LevelLoader::LoadState() {
   return state;
 }
 
-void LevelLoader::SaveState(const QMap<qint32, bool>& state) {
+void LevelLoader::SaveState(const QMap<qint32, bool>& state) const {
   QFile file(file_name_);
   if(!file.open(QIODevice::WriteOnly)) {
     qCritical() << "LevelLoader::SaveState: File " << file_name_
