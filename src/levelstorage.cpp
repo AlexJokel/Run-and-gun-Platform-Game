@@ -1,3 +1,5 @@
+#include <QDebug>
+
 #include "levelstorage.h"
 
 LevelStorage::LevelStorage(qint32 level_number) :
@@ -8,10 +10,6 @@ LevelStorage::LevelStorage(qint32 level_number) :
   open_state_ = state_loader_->LoadState();
 }
 
-LevelStorage::~LevelStorage() {
-  state_loader_->SaveState(open_state_);
-}
-
 void LevelStorage::UnlockLevel(qint32 index) {
   assert(0 <= index && index < level_number_);
   open_state_[index] = true;
@@ -20,6 +18,10 @@ void LevelStorage::UnlockLevel(qint32 index) {
 void LevelStorage::LockLevel(qint32 index) {
    assert(0 <= index && index < level_number_);
   open_state_[index] = false;
+}
+
+void LevelStorage::SaveState() {
+  state_loader_->SaveState(open_state_);
 }
 
 Level* LevelStorage::GetLevelByIndex(Game* game, qint32 index) {

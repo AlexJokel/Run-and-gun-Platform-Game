@@ -13,6 +13,7 @@ public:
 
   void UnlockLevel(qint32 index);
   void LockLevel(qint32 index);
+  void SaveState();
 
   Level* GetLevelByIndex(Game* game, qint32 index);
 
