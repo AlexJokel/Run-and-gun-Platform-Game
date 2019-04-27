@@ -6,18 +6,18 @@
 #include "level.h"
 
 Player::Player(class Level* scene,
-               float x, float y,
-               ShapeInfo* shape_init)
-    : Creature(scene, BodyInfo{x, y, shape_init, BodyType::kDynamic}, 5),
-      kVerticalSpeed_(CalcSpeedForHeight(scene->World(), kJumpHeight)) {
+               b2Vec2 position,
+               ShapeInfo* shape_info)
+    : Creature(scene, position, 5, shape_info),
+      kVerticalSpeed_(CalcSpeedForHeight(scene->World(), kJumpHeight_)) {
   /// Set player collision mask
   b2Filter player_filter;
   player_filter.categoryBits = CollisionMask::kPlayer;
   player_filter.maskBits ^= CollisionMask::kArrow;
   body_->GetFixtureList()->SetFilterData(player_filter);
 
-  /// Add color
-  setBrush(Qt::darkGreen);
+  /// Set pixmap
+  SetPixmap(":/images/images/player.png", Qt::IgnoreAspectRatio);
 }
 
 void Player::advance(int phase) {
@@ -25,21 +25,43 @@ void Player::advance(int phase) {
   Level()->views().front()->centerOn(this);
 }
 
-void Player::Move() {
-  b2Vec2 velocity(0, body_->GetLinearVelocity().y);
+ObjectType Player::Type() const {
+  return ObjectType::kPlayer;
+}
+
+float Player::GetDesiredSpeed() const {
+  float desired_speed = 0;
   if (Level()->KeyPressed(Qt::Key_A)) {
-    velocity.x -= kHorizontalSpeed;
+    desired_speed -= kHorizontalSpeed_;
   }
   if (Level()->KeyPressed(Qt::Key_D)) {
-    velocity.x += kHorizontalSpeed;
+    desired_speed += kHorizontalSpeed_;
   }
+  return desired_speed;
+}
+
+void Player::Move() {
+  // Change direction if necessary
+  auto relative_mouse_x =
+      Level()->MousePosition().x - body_->GetWorldCenter().x;
+  if (direction_ * relative_mouse_x < 0) {
+    ChangeDirection();
+  }
+
+  // Handle jumping
   if (Level()->KeyPressed(Qt::Key_Space)) {
-    if (qAbs(velocity.y) < 1e-6f) {
-      velocity.y -= kVerticalSpeed_;
+    if (qAbs(body_->GetLinearVelocity().y) < 1e-3f) {
+      body_->ApplyLinearImpulse({0, -kVerticalSpeed_ * body_->GetMass()},
+                                body_->GetWorldCenter(), true);
     }
   }
 
-  body_->SetLinearVelocity(velocity);
+  Creature::Move();
+}
+
+void Player::Shoot() {
+  if (!Level()->ButtonReleased(Qt::LeftButton)) return;
+  new Arrow(Level(), body_->GetWorldCenter());
 }
 
 /// Copy-pasted this function

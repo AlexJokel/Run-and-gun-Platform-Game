@@ -1,20 +1,29 @@
 #include "arrow.h"
+#include "level.h"
+
+#include "level.h"
 
 Arrow::Arrow(class Level* scene,
-             float x, float y,
-             float mouse_x, float mouse_y,
+             b2Vec2 position,
              ShapeInfo* shape_info)
-    : Object(scene, BodyInfo{x, y, shape_info, BodyType::kDynamic}) {
+    : Object(scene, {position, shape_info, BodyType::kDynamic}) {
   ///Enable rotation
   body_->SetFixedRotation(false);
 
   /// Set starting velocity
-  b2Vec2 velocity(mouse_x - x, mouse_y - y); /// Difference in coordinates
+  b2Vec2 velocity = Level()->MousePosition() - position;
   velocity *= kSpeed / velocity.Length(); /// Scale to desired length
   body_->SetLinearVelocity(velocity);
 
   /// Set angle
   SetAngle(velocity);
+  Draw();
+
+  /// Set pixmap
+  SetPixmap(":/images/images/arrow2.png", Qt::IgnoreAspectRatio);
+  if (velocity.x < 0) {
+    ReflectPixmap();
+  }
 
   /// Disable arrow-arrow & arrow-player collision
   b2Filter arrow_filter;
@@ -26,6 +35,10 @@ Arrow::Arrow(class Level* scene,
 void Arrow::advance(int phase) {
   SetAngle(body_->GetLinearVelocity());
   Object::advance(phase);
+}
+
+ObjectType Arrow::Type() const {
+  return ObjectType::kArrow;
 }
 
 void Arrow::SetAngle(b2Vec2 velocity) {

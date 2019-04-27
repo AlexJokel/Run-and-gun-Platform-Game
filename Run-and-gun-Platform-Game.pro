@@ -45,7 +45,11 @@ SOURCES += \
     src/cssstylestorage.cpp \
     src/levelloader.cpp \
     src/levelstorage.cpp \
-    src/fileinitializationhelper.cpp
+    src/fileinitializationhelper.cpp \
+    src/enemy.cpp \
+    src/staticenemy.cpp \
+    src/roamingenemy.cpp \
+    src/bullet.cpp
 
 HEADERS += \
 #    Box2D/Box2D.h
@@ -65,7 +69,11 @@ HEADERS += \
     src/cssstylestorage.h \
     src/levelloader.h \
     src/levelstorage.h \
-    src/fileinitializationhelper.h
+    src/fileinitializationhelper.h \
+    src/enemy.h \
+    src/staticenemy.h \
+    src/roamingenemy.h \
+    src/bullet.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -77,9 +85,5 @@ win32: LIBS += -L$$PWD/lib/ -lBox2D
 win32:!win32-g++: PRE_TARGETDEPS += $$PWD/lib/Box2D.lib
 else:win32-g++: PRE_TARGETDEPS += $$PWD/lib/libBox2D.a
 
-DISTFILES += \
-    res/css/button_style.css
-
 RESOURCES += \
-    resources/res.qrc \
     resources/res.qrc

@@ -50,7 +50,7 @@ Level* LevelLoader::LoadLevel(class Game* game,
   b2Vec2 pos, size;
 
   input >> pos >> size;
-  level->SetPlayer(new Player(level, pos.x, pos.y,
+  level->SetPlayer(new Player(level, {pos.x, pos.y},
                               PassShapeInfo(ShapeType::kRectangle, size.x, size.y)));
   qint32 count;
   input >> count;
@@ -61,8 +61,8 @@ Level* LevelLoader::LoadLevel(class Game* game,
     size.y *= 2;
     pos.x = pos.x - size.x / 2;
     pos.y = pos.y - size.y / 2;
-    level->AppendGround(new Ground(level, pos.x, pos.y,
-                                   size.x, size.y));
+    level->AppendGround(new Ground(level, {pos.x, pos.y},
+                      {size.x, size.y}));
   }
   file.close();
 

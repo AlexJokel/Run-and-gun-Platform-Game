@@ -4,17 +4,34 @@
 #include "object.h"
 
 class Creature : public Object {
+  Q_OBJECT
 public:
   Creature(class Level*,
-           BodyInfo,
-           float horizontal_speed);
+           b2Vec2 position,
+           float horizontal_speed,
+           ShapeInfo* = PassShapeInfo(ShapeType::kRectangle, 0.5f, 0.5f));
 
   void advance(int) override;
 
-protected:
-  const float kHorizontalSpeed;
+public slots:
+  /// Invert the direction
+  void ChangeDirection();
 
-  virtual void Move() = 0;
+protected:
+  const float kHorizontalSpeed_;
+
+  /// Handles horizontal movement.
+  /// Uses impulses.
+  virtual void Move();
+
+  virtual void Shoot();
+
+  /// Calculate necessary horizontal speed.
+  virtual float GetDesiredSpeed() const = 0;
+
+  /// Direction by x-axis coefficient.
+  /// By default everybody "looks" to the right
+  int direction_ = 1;
 };
 
 #endif // CREATURE_H

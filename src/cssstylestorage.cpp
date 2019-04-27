@@ -17,14 +17,14 @@ const QString& CssStyleStorage::GetLockedButtonStyle() const {
 }
 
 CssStyleStorage::CssStyleStorage() {
-  QFile menu_button_file(":/style/styles/main_menu_button.css");
+  QFile menu_button_file(":/styles/styles/main_menu_button.css");
   if (menu_button_file.open(QIODevice::ReadOnly)) {
     menu_button_style_ = menu_button_file.readAll();
     menu_button_file.close();
   } else {
     qCritical() << "Failed to load main_menu_button.css";
   }
-  QFile locked_button_file(":/style/styles/locked_button_style.css");
+  QFile locked_button_file(":/styles/styles/locked_button_style.css");
   if (locked_button_file.open(QIODevice::ReadOnly)) {
     locked_button_style_ = locked_button_file.readAll();
     locked_button_file.close();
