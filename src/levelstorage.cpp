@@ -16,7 +16,7 @@ void LevelStorage::UnlockLevel(qint32 index) {
 }
 
 void LevelStorage::LockLevel(qint32 index) {
-   assert(0 <= index && index < level_number_);
+  assert(0 <= index && index < level_number_);
   open_state_[index] = false;
 }
 

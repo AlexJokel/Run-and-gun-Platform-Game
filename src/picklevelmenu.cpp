@@ -20,15 +20,20 @@ PickLevelMenu::PickLevelMenu(class Game* game, qreal width, qreal height,
                       - title_text_->boundingRect().width() / 2, 170);
   addItem(title_text_);
 
-  for (qint32 i = 0; i < num_columns; ++i) {
-    for (qint32 j = 0; j < num_rows; ++j) {
-      auto button = new Button("Level #" + QString::number(i * num_rows + j), 120, 120);
+  for (int i = 0; i < num_columns; ++i) {
+    for (int j = 0; j < num_rows; ++j) {
+      auto button = new Button("Level #" + QString::number(i * num_rows + j + 1), 120, 120);
       button->setStyleSheet
           (CssStyleStorage::GetInstance().GetMenuButtonStyle());
       layout->addWidget(button, i, j);
-      QObject::connect(button, &Button::clicked, this, [&] {
-         LevelLoader loader(":/levels/levels/level1.dat");
-         Game()->PushScene(loader.LoadLevel(Game(), 1920, 1080));
+      QObject::connect(button, &Button::clicked, this, [&, num_rows, i, j] {
+        //qDebug() << i << ' ' << j << "\n";
+        /// level could be nullptr if either
+        /// there is no input file provided or it is locked
+        auto level = storage_->GetLevelByIndex(Game(), i * num_rows + j);
+        if (level != nullptr) {
+          Game()->PushScene(level);
+        }
       });
     }
   }
