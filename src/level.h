@@ -41,9 +41,11 @@ public:
 
   Player* GetPlayer() const;
   QList<Ground*> GetGround() const;
+  QList<Enemy*> GetEnemies() const;
 
   void SetPlayer(Player* player);
   void AppendGround(Ground* ground);
+  void AppendEnemy(Enemy* enemy);
 
 public slots:
   void advance();

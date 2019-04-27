@@ -1,6 +1,8 @@
 #include <QDebug>
 
 #include "levelloader.h"
+#include "staticenemy.h"
+#include "roamingenemy.h"
 
 QDataStream& operator<<(QDataStream& out, const b2Vec2& pair) {
   return out << pair.x << pair.y;
@@ -12,14 +14,33 @@ QDataStream& operator>>(QDataStream& in, b2Vec2& pair) {
 
 QDataStream& operator<<(QDataStream& out,
                         Object* object) {
-    return out << object->GetPos() << object->GetSize();
+  out << object->GetPos() << object->GetSize();
+  /// Write borders if object is RoamingEnemy
+
+  if (object->Type() == ObjectType::kRoamingEnemy) {
+    out << dynamic_cast<RoamingEnemy*>(object)->GetBorders();
+  }
+  return out;
 }
 
 QDataStream& operator<<(QDataStream& out, Level* level) {
+  /// 1) Write Player
   out << level->GetPlayer();
+
+  /// 2) Write Ground
   auto ground = level->GetGround();
   out << ground.size();
   for (const auto& item : ground) {
+    out << item;
+  }
+
+  /// 3) Write Enemies
+  auto enemies = level->GetEnemies();
+  out << enemies.size();
+  for (const auto& item : enemies) {
+    /// Enemy type
+    out << static_cast<qint32>(item->Type());
+    /// Enemy itself
     out << item;
   }
   return out;
@@ -49,12 +70,14 @@ Level* LevelLoader::LoadLevel(class Game* game,
   // read level from the file
   b2Vec2 pos, size;
 
+  /// 1) Read Player
   input >> pos >> size;
   level->SetPlayer(new Player(level, {pos.x, pos.y},
                               PassShapeInfo(ShapeType::kRectangle, size.x, size.y)));
+
+  /// 2) Read Ground
   qint32 count;
   input >> count;
-
   for (qint32 i = 0; i < count; ++i) {
     input >> pos >> size;
     size.x *= 2;
@@ -64,6 +87,28 @@ Level* LevelLoader::LoadLevel(class Game* game,
     level->AppendGround(new Ground(level, {pos.x, pos.y},
                       {size.x, size.y}));
   }
+
+  /// 3) Read Enemies
+  input >> count;
+
+  ObjectType type;
+  qint32 type_int;
+  b2Vec2 borders;
+  for (qint32 i = 0; i < count; ++i) {
+    input >> type_int;
+    type = static_cast<ObjectType>(type_int);
+    input >> pos >> size;
+    if (type == ObjectType::kRoamingEnemy) {
+      input >> borders;
+      /// (horizontal_speed = 2) may also be serialized later
+      level->AppendEnemy(new RoamingEnemy(level, {pos.x, pos.y},
+        {borders.x, borders.y}, 2, PassShapeInfo(ShapeType::kRectangle, size.x, size.y)));
+    } else {
+      level->AppendEnemy(new StaticEnemy(level, {pos.x, pos.y},
+                      PassShapeInfo(ShapeType::kRectangle, size.x, size.y)));
+    }
+  }
+
   file.close();
 
   return level;

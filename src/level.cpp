@@ -128,8 +128,13 @@ float Level::PixelsToMeters(qreal pixels) const {
 Player* Level::GetPlayer() const {
   return objects_.player;
 }
+
 QList<Ground*> Level::GetGround() const {
   return objects_.ground;
+}
+
+QList<Enemy*> Level::GetEnemies() const {
+  return objects_.enemies;
 }
 
 void Level::SetPlayer(Player* player) {
@@ -138,6 +143,10 @@ void Level::SetPlayer(Player* player) {
 
 void Level::AppendGround(Ground* ground) {
   objects_.ground.append(ground);
+}
+
+void Level::AppendEnemy(Enemy *enemy) {
+  objects_.enemies.append(enemy);
 }
 
 b2Vec2 Level::PixelsToMeters(QPointF point) const {

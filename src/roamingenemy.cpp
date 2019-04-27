@@ -20,6 +20,10 @@ RoamingEnemy::RoamingEnemy(class Level* level,
     : Enemy(level, position, horizontal_speed, shape_info),
       borders_(borders) {}
 
+ObjectType RoamingEnemy::Type() const {
+  return ObjectType::kRoamingEnemy;
+}
+
 void RoamingEnemy::Move() {
   /// The product is positive --> direction and position are
   /// to the same side --> direction must be changed.
@@ -32,4 +36,8 @@ void RoamingEnemy::Move() {
 float RoamingEnemy::GetDesiredSpeed() const {
   if (player_visible_) return 0;
   return kHorizontalSpeed_ * direction_;
+}
+
+b2Vec2 RoamingEnemy::GetBorders() const {
+  return {borders_.left, borders_.right};
 }

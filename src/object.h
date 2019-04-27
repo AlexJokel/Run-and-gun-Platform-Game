@@ -66,6 +66,8 @@ enum class ObjectType {
   kGround,
   kPlayer,
   kEnemy,
+  kRoamingEnemy,
+  kStaticEnemy,
   kArrow,
   kBullet,
 };

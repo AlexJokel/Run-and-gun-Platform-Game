@@ -2,8 +2,10 @@
 
 #include "level.h"
 #include "levelloader.h"
+#include "staticenemy.h"
+#include "roamingenemy.h"
 
-void FileInitializationHelper:: CreateLevel(class Game* game, const QString& file_name) {
+void FileInitializationHelper:: CreateFirstLevel(class Game* game, const QString& file_name) {
   auto level = new Level(game, 1920, 1080);
   /// Player initialization
   level->SetPlayer(new Player(level, {3, 3}));
@@ -18,6 +20,18 @@ void FileInitializationHelper:: CreateLevel(class Game* game, const QString& fil
   level->AppendGround(new Ground(level,
                          {level->PixelsToMeters(level->width()) - 1, 0},
                          {1, level->PixelsToMeters(level->height())}));
+
+  /// Enemy initialization
+  level->AppendEnemy(new StaticEnemy(level, {7, 3}));
+  level->AppendEnemy(new RoamingEnemy(level, {10, 3}, {8, 12}));
+
+  /// Draw dot grid
+  for (size_t x = 0; x < level->width(); x += 100) {
+    for (size_t y = 0; y < level->height(); y += 100) {
+      level->addItem(new QGraphicsRectItem(x, y, 1, 1));
+    }
+  }
+
   LevelLoader loader(file_name);
   loader.WriteLevel(level);
   delete level;

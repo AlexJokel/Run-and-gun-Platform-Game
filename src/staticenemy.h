@@ -11,6 +11,7 @@ public:
   StaticEnemy(class Level*,
               b2Vec2 position,
               ShapeInfo* = PassShapeInfo(ShapeType::kRectangle, 0.5f, 0.5f));
+  ObjectType Type() const override;
 
 protected:
   void Move() override;
