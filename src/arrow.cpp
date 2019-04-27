@@ -6,7 +6,9 @@
 Arrow::Arrow(class Level* scene,
              b2Vec2 position,
              ShapeInfo* shape_info)
-    : Object(scene, {position, shape_info, BodyType::kDynamic}) {
+    : Object(scene,
+             {position, shape_info, BodyType::kDynamic},
+             ObjectType::kArrow) {
   ///Enable rotation
   body_->SetFixedRotation(false);
 
@@ -35,10 +37,6 @@ Arrow::Arrow(class Level* scene,
 void Arrow::advance(int phase) {
   SetAngle(body_->GetLinearVelocity());
   Object::advance(phase);
-}
-
-ObjectType Arrow::Type() const {
-  return ObjectType::kArrow;
 }
 
 void Arrow::SetAngle(b2Vec2 velocity) {

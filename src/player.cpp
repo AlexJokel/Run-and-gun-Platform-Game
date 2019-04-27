@@ -8,7 +8,7 @@
 Player::Player(class Level* scene,
                b2Vec2 position,
                ShapeInfo* shape_info)
-    : Creature(scene, position, 5, shape_info),
+    : Creature(scene, position, 5, ObjectType::kPlayer, shape_info),
       kVerticalSpeed_(CalcSpeedForHeight(scene->World(), kJumpHeight_)) {
   /// Set player collision mask
   b2Filter player_filter;
@@ -23,10 +23,6 @@ Player::Player(class Level* scene,
 void Player::advance(int phase) {
   Creature::advance(phase);
   Level()->views().front()->centerOn(this);
-}
-
-ObjectType Player::Type() const {
-  return ObjectType::kPlayer;
 }
 
 float Player::GetDesiredSpeed() const {

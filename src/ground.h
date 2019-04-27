@@ -9,8 +9,6 @@ public:
   Ground(class Level*,
          b2Vec2 position,
          b2Vec2 size);
-
-  ObjectType Type() const override;
 };
 
 #endif // GROUND_H
