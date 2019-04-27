@@ -17,7 +17,7 @@ PickLevelMenu::PickLevelMenu(class Game* game, qreal width, qreal height,
   title_text_ = new QGraphicsTextItem("Pick a level");
   title_text_->setFont(QFont("Times", 50));
   title_text_->setPos(this->width() / 2
-                      - title_text_->boundingRect().width() / 2, 170);
+                      - title_text_->boundingRect().width() / 2, 0);
   addItem(title_text_);
 
   for (int i = 0; i < num_columns; ++i) {
@@ -46,6 +46,6 @@ PickLevelMenu::PickLevelMenu(class Game* game, qreal width, qreal height,
   }
 
   menu_button_block_->setLayout(layout);
-  MoveMenuBlock(480, 350);
+  MoveMenuBlock(180, 200);
   addWidget(menu_button_block_);
 }

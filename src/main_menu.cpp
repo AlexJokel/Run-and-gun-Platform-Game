@@ -13,7 +13,7 @@ MainMenu::MainMenu(class Game* game, qreal width, qreal height, QColor color)
   title_text_ = new QGraphicsTextItem("DOKA 2");
   title_text_->setFont(QFont("Times", 150));
   title_text_->setPos(this->width() / 2 -
-                      title_text_->boundingRect().width() / 2, 150);
+                      title_text_->boundingRect().width() / 2, 0);
   addItem(title_text_);
 
   /// creating Play button
@@ -21,7 +21,7 @@ MainMenu::MainMenu(class Game* game, qreal width, qreal height, QColor color)
   play_button->setStyleSheet
       (CssStyleStorage::GetInstance().GetMenuButtonStyle());
   QObject::connect(play_button, &Button::clicked, this, [&] {
-      Game()->PushScene(new PickLevelMenu(Game(), 1920, 1080,
+      Game()->PushScene(new PickLevelMenu(Game(), 1280, 720,
                                           kOrangeDefaultBackground_, 3, 5));
   });
   layout->addWidget(play_button);
@@ -41,6 +41,6 @@ MainMenu::MainMenu(class Game* game, qreal width, qreal height, QColor color)
   layout->addWidget(quit_button);
 
   menu_button_block_->setLayout(layout);
-  MoveMenuBlock(750, 400);
+  MoveMenuBlock(430, 300);
   addWidget(menu_button_block_);
 }

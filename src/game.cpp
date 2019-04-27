@@ -17,7 +17,7 @@ Game::Game(QApplication* application) : QGraphicsView(),
   auto scroll_disabler = new ScrollDisabler();
   verticalScrollBar()->installEventFilter(scroll_disabler);
 
-  PushScene(new MainMenu(this, 1920, 1080, Menu::kOrangeDefaultBackground_));
+  PushScene(new MainMenu(this, 1280, 720, Menu::kOrangeDefaultBackground_));
 
   show();
 }
