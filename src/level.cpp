@@ -57,7 +57,11 @@ void Level::advance() {
   QGraphicsScene::advance();
 
   /// Repaint the view
-  views().front()->viewport()->repaint();
+  if (!views().empty()) {
+    views().front()->viewport()->repaint();
+  } else {
+    qDebug() << "Level has no game view!\n";
+  }
 }
 
 void Level::keyPressEvent(QKeyEvent *event) {

@@ -43,7 +43,7 @@ Level* LevelLoader::LoadLevel(class Game* game,
 
   QFile file(file_name_);
   if(!file.open(QIODevice::ReadOnly)) {
-    qDebug() << "File can't be opened for reading!\n";
+    qDebug() << "LevelLoader::LoadLevel: File can't be opened for reading!\n";
     return nullptr;
   }
   QDataStream input(&file);
@@ -73,7 +73,7 @@ Level* LevelLoader::LoadLevel(class Game* game,
 void LevelLoader::WriteLevel(Level *level) {
   QFile file(file_name_);
   if(!file.open(QIODevice::WriteOnly)) {
-    qDebug() << "File can't be opened for writing!\n";
+    qDebug() << "LevelLoader::WriteLevel: File can't be opened for writing!\n";
     return;
   }
   QDataStream output(&file);

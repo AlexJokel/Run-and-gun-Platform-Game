@@ -44,7 +44,8 @@ SOURCES += \
     src/picklevelmenu.cpp \
     src/cssstylestorage.cpp \
     src/levelloader.cpp \
-    src/levelstorage.cpp
+    src/levelstorage.cpp \
+    src/fileinitializationhelper.cpp
 
 HEADERS += \
 #    Box2D/Box2D.h
@@ -63,7 +64,8 @@ HEADERS += \
     src/picklevelmenu.h \
     src/cssstylestorage.h \
     src/levelloader.h \
-    src/levelstorage.h
+    src/levelstorage.h \
+    src/fileinitializationhelper.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
