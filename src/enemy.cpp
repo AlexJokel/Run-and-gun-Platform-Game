@@ -7,8 +7,9 @@
 Enemy::Enemy(class Level* level,
              b2Vec2 position,
              float horizontal_speed,
+             ObjectType type,
              ShapeInfo* shape_info)
-    : Creature(level, position, horizontal_speed, shape_info),
+    : Creature(level, position, horizontal_speed, type, shape_info),
       shot_(new Shot()) {
   /// Set enemy collision mask
   b2Filter enemy_filter;
@@ -18,10 +19,6 @@ Enemy::Enemy(class Level* level,
 
   /// Add color
   SetPixmap(":/images/images/enemy.png", Qt::IgnoreAspectRatio);
-}
-
-ObjectType Enemy::Type() const {
-  return ObjectType::kEnemy;
 }
 
 Enemy::NearestObjectCallback::NearestObjectCallback(

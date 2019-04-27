@@ -82,7 +82,8 @@ class Object : public QObject, public QGraphicsPixmapItem {
 
 public:
   Object(Level*,
-         BodyInfo body_info);
+         BodyInfo body_info,
+         ObjectType = ObjectType::kObject);
 
   ~Object() override;
 
@@ -95,13 +96,15 @@ public:
   Level* Level() const;
   friend class Level;
 
-  virtual ObjectType Type() const = 0;
+  ObjectType Type() const;
 
   // Checks if 'this' inherits parameter type.
   // Simply goes up the inheritance tree.
   bool Inherits(ObjectType) const;
 
 protected:
+  const ObjectType type_;
+
   b2Body* body_;
 
 private:

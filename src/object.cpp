@@ -36,7 +36,9 @@ uint qHash(ObjectType type) {
 }
 
 Object::Object(class Level* scene,
-               BodyInfo body_info) : QGraphicsPixmapItem(nullptr) {
+               BodyInfo body_info,
+               ObjectType type)
+    : QGraphicsPixmapItem(nullptr), type_(type) {
   b2BodyDef body_def;
   body_def.position.Set(body_info.position.x, body_info.position.y);
   body_def.fixedRotation = true;
@@ -128,6 +130,10 @@ void Object::ReflectPixmap() {
 
 Level* Object::Level() const {
   return dynamic_cast<class Level*>(scene());
+}
+
+ObjectType Object::Type() const {
+  return type_;
 }
 
 bool Object::Inherits(ObjectType type) const {

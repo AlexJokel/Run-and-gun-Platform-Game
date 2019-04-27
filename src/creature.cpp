@@ -7,8 +7,9 @@
 Creature::Creature(class Level* scene,
                    b2Vec2 position,
                    float horizontal_speed,
+                   ObjectType type,
                    ShapeInfo* shape_info)
-    : Object(scene, {position, shape_info, BodyType::kDynamic}),
+    : Object(scene, {position, shape_info, BodyType::kDynamic}, type),
       kHorizontalSpeed_(horizontal_speed) {}
 
 void Creature::advance(int phase) {
@@ -16,10 +17,6 @@ void Creature::advance(int phase) {
   Shoot();
   Move();
   Draw();
-}
-
-ObjectType Creature::Type() const {
-  return ObjectType::kCreature;
 }
 
 void Creature::Move() {

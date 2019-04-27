@@ -17,12 +17,9 @@ RoamingEnemy::RoamingEnemy(class Level* level,
                            Borders borders,
                            float horizontal_speed,
                            ShapeInfo* shape_info)
-    : Enemy(level, position, horizontal_speed, shape_info),
+    : Enemy(level, position, horizontal_speed,
+            ObjectType::kRoamingEnemy, shape_info),
       borders_(borders) {}
-
-ObjectType RoamingEnemy::Type() const {
-  return ObjectType::kRoamingEnemy;
-}
 
 void RoamingEnemy::Move() {
   /// The product is positive --> direction and position are

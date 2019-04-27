@@ -6,7 +6,9 @@ Bullet::Bullet(class Level* level,
                b2Vec2 position,
                float direction,
                ShapeInfo* shape_info)
-    : Object(level, {position, shape_info, BodyType::kDynamic}) {
+    : Object(level,
+             {position, shape_info, BodyType::kDynamic},
+             ObjectType::kBullet) {
   /// Set bullet collision mask
   b2Filter bullet_filter;
   bullet_filter.categoryBits = CollisionMask::kBullet;
@@ -28,8 +30,4 @@ Bullet::Bullet(class Level* level,
   if (direction < 0) {
       ReflectPixmap();
   }
-}
-
-ObjectType Bullet::Type() const {
-  return ObjectType::kBullet;
 }

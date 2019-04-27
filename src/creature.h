@@ -9,11 +9,10 @@ public:
   Creature(class Level*,
            b2Vec2 position,
            float horizontal_speed,
+           ObjectType = ObjectType::kCreature,
            ShapeInfo* = PassShapeInfo(ShapeType::kRectangle, 0.5f, 0.5f));
 
   void advance(int) override;
-
-  ObjectType Type() const override;
 
 public slots:
   /// Invert the direction
