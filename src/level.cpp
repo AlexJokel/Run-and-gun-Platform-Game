@@ -20,12 +20,14 @@ Level::Level(class Game* game, qreal width, qreal height)
   /// World initialization
   world_->SetContactListener(new ContactListener());
 
+#ifdef QT_DEBUG
   /// Draw dot grid
   for (size_t x = 0; x < this->width(); x += 100) {
     for (size_t y = 0; y < this->height(); y += 100) {
       addItem(new QGraphicsRectItem(x, y, 1, 1));
     }
   }
+#endif
 
   /// Frame timer initialization & start
   auto frame_timer = new QTimer();

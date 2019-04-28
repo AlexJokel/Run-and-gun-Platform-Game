@@ -25,13 +25,6 @@ void FileInitializationHelper:: CreateFirstLevel(class Game* game, const QString
   level->AppendEnemy(new StaticEnemy(level, {7, 3}));
   level->AppendEnemy(new RoamingEnemy(level, {10, 3}, {8, 12}));
 
-  /// Draw dot grid
-  for (size_t x = 0; x < level->width(); x += 100) {
-    for (size_t y = 0; y < level->height(); y += 100) {
-      level->addItem(new QGraphicsRectItem(x, y, 1, 1));
-    }
-  }
-
   LevelLoader loader(file_name);
   loader.WriteLevel(level);
   delete level;
@@ -65,13 +58,6 @@ void FileInitializationHelper:: CreateSecondLevel(class Game* game, const QStrin
   level->AppendEnemy(new StaticEnemy(level, {16, 6}));
   level->AppendEnemy(new RoamingEnemy(level, {10, 3}, {8, 12}));
   level->AppendEnemy(new RoamingEnemy(level, {10, 9}, {8, 12}));
-
-  /// Draw dot grid
-  for (size_t x = 0; x < level->width(); x += 100) {
-    for (size_t y = 0; y < level->height(); y += 100) {
-      level->addItem(new QGraphicsRectItem(x, y, 1, 1));
-    }
-  }
 
   LevelLoader loader(file_name);
   loader.WriteLevel(level);
