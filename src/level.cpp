@@ -47,10 +47,10 @@ Level::Level(class Game* game, qreal width, qreal height)
     }
   }
 
-  /// Frame timer initialization & start
-  auto frame_timer = new QTimer();
-  QObject::connect(frame_timer, &QTimer::timeout, this, &Level::advance);
-  frame_timer->start(static_cast<int>(1000 * kTimeStep_));
+  /// Frame timer initialization
+  frame_timer_ = new QTimer();
+  QObject::connect(frame_timer_, &QTimer::timeout, this, &Level::advance);
+  frame_timer_->setInterval(static_cast<int>(1000 * kTimeStep_));
 }
 
 Level::~Level() {
@@ -123,6 +123,14 @@ bool Level::ButtonPressed(Qt::MouseButton button) const {
 
 bool Level::ButtonReleased(Qt::MouseButton button) const {
   return mouse_state_.buttons_released.contains(button);
+}
+
+void Level::Pause() {
+  frame_timer_->stop();
+}
+
+void Level::Unpause() {
+  frame_timer_->start();
 }
 
 void Level::RemoveObject(Object* object) {

@@ -30,6 +30,9 @@ public:
   bool ButtonPressed(Qt::MouseButton) const;
   bool ButtonReleased(Qt::MouseButton) const;
 
+  void Pause() override;
+  void Unpause() override;
+
   void RemoveObject(Object*);
 
   b2World* World() const;
@@ -49,6 +52,7 @@ protected:
 
   const qint32 kFramesPerSecond_ = 60;
   const qreal kTimeStep_ = 1 / static_cast<qreal>(kFramesPerSecond_);
+  QTimer* frame_timer_;
 
   struct MouseState {
     b2Vec2 mouse_position;
