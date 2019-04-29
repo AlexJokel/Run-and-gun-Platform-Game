@@ -9,7 +9,9 @@ Enemy::Enemy(class Level* level,
              float horizontal_speed,
              ObjectType type,
              ShapeInfo* shape_info)
-    : Creature(level, position, horizontal_speed, type, shape_info),
+    : Creature(level, position, horizontal_speed, type,
+               {ObjectType::kArrow, ObjectType::kPlayer},
+               shape_info),
       shot_(new Shot()) {
   /// Set enemy collision mask
   b2Filter enemy_filter;

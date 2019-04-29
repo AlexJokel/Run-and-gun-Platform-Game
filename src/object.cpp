@@ -151,11 +151,12 @@ ObjectType Object::Type() const {
   return type_;
 }
 
-bool Object::Inherits(ObjectType type) const {
-  auto current_type = Type();
-  while (current_type != type) {
-    if (current_type == ObjectType::kObject) return false;
-    current_type = parents_[current_type];
+bool Object::Inherits(ObjectType child, ObjectType parent) {
+  while (child != parent) {
+    if (child == ObjectType::kObject) return false;
+    child = parents_[child];
   }
   return true;
 }
+
+void Object::Collide(ObjectType) {}

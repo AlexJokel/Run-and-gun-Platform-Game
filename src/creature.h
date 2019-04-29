@@ -10,9 +10,12 @@ public:
            b2Vec2 position,
            float horizontal_speed,
            ObjectType = ObjectType::kCreature,
+           const QVector<ObjectType>& removers = {},
            ShapeInfo* = PassShapeInfo(ShapeType::kRectangle, 0.5f, 0.5f));
 
   void advance(int) override;
+
+  void Collide(ObjectType) override;
 
 public slots:
   /// Invert the direction
@@ -33,6 +36,10 @@ protected:
   /// Direction by x-axis coefficient.
   /// By default everybody "looks" to the right
   int direction_ = 1;
+
+  const QVector<ObjectType> removers_;
+  void RemoveOnCollision(ObjectType collider,
+                         const QVector<ObjectType>& removing_types);
 };
 
 #endif // CREATURE_H

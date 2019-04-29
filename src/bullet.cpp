@@ -31,3 +31,7 @@ Bullet::Bullet(class Level* level,
       ReflectPixmap();
   }
 }
+
+void Bullet::Collide(ObjectType) {
+  Level()->RemoveObject(this);
+}

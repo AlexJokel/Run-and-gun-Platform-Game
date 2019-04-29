@@ -103,9 +103,11 @@ public:
 
   ObjectType Type() const;
 
-  // Checks if 'this' inherits parameter type.
-  // Simply goes up the inheritance tree.
-  bool Inherits(ObjectType) const;
+  /// Checks if 'child' inherits 'parent'.
+  /// Simply goes up the inheritance tree.
+  static bool Inherits(ObjectType child, ObjectType parent);
+
+  virtual void Collide(ObjectType);
 
 protected:
   const ObjectType type_;
