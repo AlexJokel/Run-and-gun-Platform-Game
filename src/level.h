@@ -40,8 +40,8 @@ public:
   b2Vec2 PixelsToMeters(QPointF) const;
 
   Player* GetPlayer() const;
-  QList<Ground*> GetGround() const;
-  QList<Enemy*> GetEnemies() const;
+  const QList<Ground*>& GetGround() const;
+  const QList<Enemy*>& GetEnemies() const;
 
   void SetPlayer(Player* player);
   void AppendGround(Ground* ground);

@@ -131,11 +131,11 @@ Player* Level::GetPlayer() const {
   return objects_.player;
 }
 
-QList<Ground*> Level::GetGround() const {
+const QList<Ground*>& Level::GetGround() const {
   return objects_.ground;
 }
 
-QList<Enemy*> Level::GetEnemies() const {
+const QList<Enemy*>& Level::GetEnemies() const {
   return objects_.enemies;
 }
 

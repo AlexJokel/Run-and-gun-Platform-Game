@@ -14,9 +14,9 @@ QDataStream& operator>>(QDataStream& in, b2Vec2& pair) {
 
 QDataStream& operator<<(QDataStream& out,
                         Object* object) {
+  out << static_cast<qint32>(object->Type());
   out << object->GetPos() << object->GetSize();
   /// Write borders if object is RoamingEnemy
-
   if (object->Type() == ObjectType::kRoamingEnemy) {
     out << dynamic_cast<RoamingEnemy*>(object)->GetBorders();
   }
@@ -28,20 +28,15 @@ QDataStream& operator<<(QDataStream& out, Level* level) {
   out << level->GetPlayer();
 
   /// 2) Write Ground
-  auto ground = level->GetGround();
-  out << ground.size();
-  for (const auto& item : ground) {
-    out << item;
+  auto grounds = level->GetGround();
+  for (const auto& ground : grounds) {
+    out << ground;
   }
 
   /// 3) Write Enemies
   auto enemies = level->GetEnemies();
-  out << enemies.size();
-  for (const auto& item : enemies) {
-    /// Enemy type
-    out << static_cast<qint32>(item->Type());
-    /// Enemy itself
-    out << item;
+  for (const auto& enemy : enemies) {
+    out << enemy;
   }
   return out;
 }
@@ -67,50 +62,44 @@ Level* LevelLoader::LoadLevel(class Game* game,
   }
   auto level = new Level(game, width, height);
   QDataStream input(&file);
-  // read level from the file
-  b2Vec2 pos, size;
-
-  /// 1) Read Player
-  input >> pos >> size;
-  level->SetPlayer(new Player(level, {pos.x, pos.y},
-                              PassShapeInfo(ShapeType::kRectangle, size.x, size.y)));
-
-  /// 2) Read Ground
-  qint32 count;
-  input >> count;
-  for (qint32 i = 0; i < count; ++i) {
-    input >> pos >> size;
-    size.x *= 2;
-    size.y *= 2;
-    pos.x = pos.x - size.x / 2;
-    pos.y = pos.y - size.y / 2;
-    level->AppendGround(new Ground(level, {pos.x, pos.y},
-                      {size.x, size.y}));
-  }
-
-  /// 3) Read Enemies
-  input >> count;
 
   ObjectType type;
-  qint32 type_int;
-  b2Vec2 borders;
-  for (qint32 i = 0; i < count; ++i) {
-    input >> type_int;
-    type = static_cast<ObjectType>(type_int);
+  qint32 raw_type;
+  b2Vec2 pos, size, borders;
+  while(!input.atEnd()) {
+    input >> raw_type;
+    type = static_cast<ObjectType>(raw_type);
     input >> pos >> size;
-    if (type == ObjectType::kRoamingEnemy) {
+
+    switch(type) {
+    case ObjectType::kPlayer:
+      level->SetPlayer(new Player(level, {pos.x, pos.y},
+                                  PassShapeInfo(ShapeType::kRectangle, size.x, size.y)));
+      break;
+    case ObjectType::kGround:
+      size.x *= 2;
+      size.y *= 2;
+      pos.x = pos.x - size.x / 2;
+      pos.y = pos.y - size.y / 2;
+      level->AppendGround(new Ground(level, {pos.x, pos.y},
+                        {size.x, size.y}));
+      break;
+    case ObjectType::kStaticEnemy:
+      level->AppendEnemy(new StaticEnemy(level, {pos.x, pos.y},
+                      PassShapeInfo(ShapeType::kRectangle, size.x, size.y)));
+      break;
+    case ObjectType::kRoamingEnemy:
       input >> borders;
       /// (horizontal_speed = 2) may also be serialized later
       level->AppendEnemy(new RoamingEnemy(level, {pos.x, pos.y},
         {borders.x, borders.y}, 2, PassShapeInfo(ShapeType::kRectangle, size.x, size.y)));
-    } else {
-      level->AppendEnemy(new StaticEnemy(level, {pos.x, pos.y},
-                      PassShapeInfo(ShapeType::kRectangle, size.x, size.y)));
+      break;
+    default:
+      qCritical() << "Serialized level is damaged!";
     }
   }
 
   file.close();
-
   return level;
 }
 
@@ -122,7 +111,6 @@ void LevelLoader::WriteLevel(Level *level) const {
     return;
   }
   QDataStream output(&file);
-  // serialize level into the file
   output << level;
   file.close();
 }
