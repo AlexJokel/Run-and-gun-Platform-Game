@@ -127,6 +127,14 @@ float Level::PixelsToMeters(qreal pixels) const {
   return static_cast<float>(pixels / kMetersToPixelsRatio_);
 }
 
+float Level::Width() const {
+  return PixelsToMeters(width());
+}
+
+float Level::Height() const {
+  return PixelsToMeters(height());
+}
+
 Player* Level::GetPlayer() const {
   return objects_.player;
 }

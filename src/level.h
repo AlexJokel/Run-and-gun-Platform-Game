@@ -40,6 +40,9 @@ public:
   float PixelsToMeters(qreal) const;
   b2Vec2 PixelsToMeters(QPointF) const;
 
+  float Width() const;
+  float Height() const;
+
   Player* GetPlayer() const;
   const QList<Ground*>& GetGround() const;
   const QList<Enemy*>& GetEnemies() const;
