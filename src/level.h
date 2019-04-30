@@ -15,6 +15,7 @@
 #include "enemy.h"
 
 class Level : public Scene {
+  Q_OBJECT
 public:
   Level(class Game*, qreal width = 1920, qreal heigh = 1080);
   ~Level() override;
@@ -46,6 +47,9 @@ public:
   void SetPlayer(Player* player);
   void AppendGround(Ground* ground);
   void AppendEnemy(Enemy* enemy);
+
+public: signals:
+  void Finish();
 
 public slots:
   void advance();
