@@ -103,7 +103,6 @@ void Object::Draw() {
   /// Deal with rotation
   auto angle = static_cast<qreal>(body_->GetAngle()); /// in radians
   angle *= 180 / M_PI; /// to degress
-  angle *= -1; /// to clockwise
   setRotation(angle);
 }
 

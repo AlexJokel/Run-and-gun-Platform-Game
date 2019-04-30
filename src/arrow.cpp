@@ -44,6 +44,6 @@ void Arrow::Collide(ObjectType) {
 }
 
 void Arrow::SetAngle(b2Vec2 velocity) {
-  float angle = -atan(velocity.y / velocity.x);
+  float angle = atan(velocity.y / velocity.x);
   body_->SetTransform(body_->GetWorldPoint({0, 0}), angle);
 }
