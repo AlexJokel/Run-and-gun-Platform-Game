@@ -23,11 +23,16 @@ Game::Game(QApplication* application) : QGraphicsView(),
 }
 
 void Game::PushScene(Scene* scene) {
+  if (!scenes_.empty()) {
+    scenes_.top()->Pause();
+  }
   setScene(scene);
   scenes_.push(scene);
+  scenes_.top()->Unpause();
 }
 
 void Game::PopScene() {
+  scenes_.top()->Pause();
   if (scenes_.size() == 1) {
     application_->quit();
     return;
@@ -35,6 +40,7 @@ void Game::PopScene() {
   delete scenes_.top();
   scenes_.pop();
   setScene(scenes_.top());
+  scenes_.top()->Unpause();
 }
 
 bool Game::ScrollDisabler::eventFilter(QObject*, QEvent* event) {
