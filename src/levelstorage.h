@@ -9,7 +9,6 @@
 class LevelStorage {
 public:
   LevelStorage(qint32 level_number);
-  ~LevelStorage();
 
   void UnlockLevel(qint32 index);
   void LockLevel(qint32 index);
@@ -26,7 +25,6 @@ private:
 
   qint32 level_number_;
   QMap<qint32, bool> open_state_;
-  QMap<qint32, Level*> storage_;
   LevelLoader* state_loader_;
 };
 
