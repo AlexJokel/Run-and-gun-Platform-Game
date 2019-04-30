@@ -49,7 +49,7 @@ void FileInitializationHelper:: CreateSecondLevel(class Game* game, const QStrin
 
   /// Create platforms
   level->AppendGround(new Ground(level, {10, 8}, {4, 0.5}));
-  level->AppendGround(new Ground(level, {15, 6}, {6, 0.5}));
+  level->AppendGround(new Ground(level, {15, 6}, {level->Width() - 15, 0.5}));
   level->AppendGround(new Ground(level, {0, 4},
   {level->PixelsToMeters(level->width()) - 4, 0.5}));
 

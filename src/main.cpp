@@ -20,7 +20,11 @@ int main(int argc, char *argv[]) {
   QApplication application(argc, argv);
 
   /// Game start
-  new Game(&application);
+  auto game = new Game(&application);
+  game->x(); // to suppress 'unused variable' warning
+
+//  FileInitializationHelper::CreateSecondLevel(game,
+//      "../Run-and-gun-Platform-Game/resources/levels/level1.dat");
 
   return application.exec();
 }
