@@ -96,6 +96,11 @@ public:
   Level* Level() const;
   friend class Level;
 
+  b2Body* GetBody() const;
+
+  b2Vec2 GetPos() const;
+  b2Vec2 GetSize() const;
+
   ObjectType Type() const;
 
   // Checks if 'this' inherits parameter type.

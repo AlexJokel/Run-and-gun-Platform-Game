@@ -1,24 +1,15 @@
 #ifndef BUTTON_H
 #define BUTTON_H
 
+#include <QPushButton>
 #include <QGraphicsRectItem>
 #include <QGraphicsSceneMouseEvent>
 #include <QBrush>
 
-class Button : public QObject, public QGraphicsRectItem {
-  Q_OBJECT
+class Button : public QPushButton {
 public:
-  Button(QString name, QGraphicsItem* parent = nullptr);
-
-  void mousePressEvent(QGraphicsSceneMouseEvent*) override;
-  void hoverEnterEvent(QGraphicsSceneHoverEvent*) override;
-  void hoverLeaveEvent(QGraphicsSceneHoverEvent*) override;
-
-signals:
-  void clicked();
-
-private:
-  QGraphicsTextItem* text_;
+  Button(const QString& title, qint32 width, qint32 height,
+         QWidget* parent = nullptr);
 };
 
 #endif // BUTTON_H

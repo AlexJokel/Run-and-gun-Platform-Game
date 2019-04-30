@@ -34,3 +34,7 @@ float RoamingEnemy::GetDesiredSpeed() const {
   if (player_visible_) return 0;
   return kHorizontalSpeed_ * direction_;
 }
+
+b2Vec2 RoamingEnemy::GetBorders() const {
+  return {borders_.left, borders_.right};
+}

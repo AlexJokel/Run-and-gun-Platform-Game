@@ -15,8 +15,9 @@
 #include "enemy.h"
 
 class Level : public Scene {
+  Q_OBJECT
 public:
-  Level(class Game*, qreal width, qreal height);
+  Level(class Game*, qreal width = 1920, qreal heigh = 1080);
   ~Level() override;
 
   void keyPressEvent(QKeyEvent*) override;
@@ -41,6 +42,20 @@ public:
   QPointF MetersToPixels(b2Vec2) const;
   float PixelsToMeters(qreal) const;
   b2Vec2 PixelsToMeters(QPointF) const;
+
+  float Width() const;
+  float Height() const;
+
+  Player* GetPlayer() const;
+  const QList<Ground*>& GetGround() const;
+  const QList<Enemy*>& GetEnemies() const;
+
+  void SetPlayer(Player* player);
+  void AppendGround(Ground* ground);
+  void AppendEnemy(Enemy* enemy);
+
+public: signals:
+  void Finish();
 
 public slots:
   void advance();

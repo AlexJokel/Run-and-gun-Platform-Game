@@ -132,6 +132,21 @@ Level* Object::Level() const {
   return dynamic_cast<class Level*>(scene());
 }
 
+b2Body* Object::GetBody() const {
+  return body_;
+}
+
+b2Vec2 Object::GetPos() const {
+  return body_->GetWorldCenter();
+}
+
+b2Vec2 Object::GetSize() const {
+  auto rect_shape = dynamic_cast<b2PolygonShape*>(
+      body_->GetFixtureList()->GetShape());
+  return {qAbs(rect_shape->m_vertices[0].x),
+        qAbs(rect_shape->m_vertices[0].y)};
+}
+
 ObjectType Object::Type() const {
   return type_;
 }
