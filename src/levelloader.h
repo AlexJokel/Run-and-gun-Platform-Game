@@ -24,13 +24,20 @@ public:
   /// Serialized object:
   /// (type, pos, size, *borders*)
   /// *borders* is optional for RoamingEnemy
-  Level* LoadLevel(class Game*, qreal width, qreal height) const;
+  Level* LoadLevel(class Game*) const;
   void WriteLevel(Level* level) const;
 
   QMap<qint32, bool> LoadState() const;
   void SaveState(const QMap<qint32, bool>& state) const;
 
 private:
+  struct BoundingBox {
+    b2Vec2 top_left;
+    b2Vec2 bottom_right;
+  };
+  void UpdateBoundingRect(BoundingBox& box, const b2Vec2& position,
+                          const b2Vec2& size) const;
+
   QString file_name_;
 };
 

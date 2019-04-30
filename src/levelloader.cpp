@@ -1,4 +1,5 @@
 #include <QDebug>
+#include <QtGlobal>
 
 #include "levelloader.h"
 #include "staticenemy.h"
@@ -52,16 +53,19 @@ const QString& LevelLoader::GetFileName() const {
   return file_name_;
 }
 
-Level* LevelLoader::LoadLevel(class Game* game,
-                              qreal width, qreal height) const {
+Level* LevelLoader::LoadLevel(class Game* game) const {
   QFile file(file_name_);
   if(!file.open(QIODevice::ReadOnly)) {
     qCritical() << "LevelLoader::LoadLevel: File " << file_name_
                 << " can't be opened for reading!\n";
     return nullptr;
   }
-  auto level = new Level(game, width, height);
+  auto level = new Level(game);
   QDataStream input(&file);
+
+  BoundingBox bounding_rect =
+    {{std::numeric_limits<float>::max(), std::numeric_limits<float>::max()},
+    {std::numeric_limits<float>::min(), std::numeric_limits<float>::min()}};
 
   ObjectType type;
   qint32 raw_type;
@@ -75,6 +79,7 @@ Level* LevelLoader::LoadLevel(class Game* game,
     case ObjectType::kPlayer:
       level->SetPlayer(new Player(level, {pos.x, pos.y},
                                   PassShapeInfo(ShapeType::kRectangle, size.x, size.y)));
+      UpdateBoundingRect(bounding_rect, {pos.x, pos.y}, {size.x, size.y});
       break;
     case ObjectType::kGround:
       size.x *= 2;
@@ -83,21 +88,26 @@ Level* LevelLoader::LoadLevel(class Game* game,
       pos.y = pos.y - size.y / 2;
       level->AppendGround(new Ground(level, {pos.x, pos.y},
                         {size.x, size.y}));
+      UpdateBoundingRect(bounding_rect, {pos.x, pos.y}, {size.x, size.y});
       break;
     case ObjectType::kStaticEnemy:
       level->AppendEnemy(new StaticEnemy(level, {pos.x, pos.y},
                       PassShapeInfo(ShapeType::kRectangle, size.x, size.y)));
+      UpdateBoundingRect(bounding_rect, {pos.x, pos.y}, {size.x, size.y});
       break;
     case ObjectType::kRoamingEnemy:
       input >> borders;
       /// (horizontal_speed = 2) may also be serialized later
       level->AppendEnemy(new RoamingEnemy(level, {pos.x, pos.y},
         {borders.x, borders.y}, 2, PassShapeInfo(ShapeType::kRectangle, size.x, size.y)));
+      UpdateBoundingRect(bounding_rect, {pos.x, pos.y}, {size.x, size.y});
       break;
     default:
       qCritical() << "Serialized level is damaged!";
     }
   }
+  level->setSceneRect({level->MetersToPixels(bounding_rect.top_left),
+                      level->MetersToPixels(bounding_rect.bottom_right)});
 
   file.close();
   return level;
@@ -139,4 +149,12 @@ void LevelLoader::SaveState(const QMap<qint32, bool>& state) const {
   QDataStream output(&file);
   output << state;
   file.close();
+}
+
+void LevelLoader::UpdateBoundingRect(BoundingBox& box, const b2Vec2& position,
+                                     const b2Vec2& size) const {
+  box.top_left.x = qMin(box.top_left.x, position.x);
+  box.top_left.y = qMin(box.top_left.y, position.y);
+  box.bottom_right.x = qMax(box.bottom_right.x, position.x + size.x);
+  box.bottom_right.y = qMax(box.bottom_right.y, position.y + size.y);
 }

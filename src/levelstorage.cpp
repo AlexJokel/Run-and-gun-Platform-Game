@@ -46,5 +46,5 @@ Level* LevelStorage::GetLevelByIndex(Game* game, qint32 index) const {
   QString file_name = kLevelPathPrefix_ + "level"
       + QString::number(index) + ".dat";
   auto loader = new LevelLoader(file_name);
-  return loader->LoadLevel(game, 1920, 1080);
+  return loader->LoadLevel(game);
 }
