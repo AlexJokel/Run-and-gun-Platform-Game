@@ -20,6 +20,15 @@ Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
                         title_text_->boundingRect().width() / 2, 0);
     addItem(title_text_);
 
+    // creating controls buttons
+    AddButtonToLayout(layout, "A", 120, 100, "Left");
+    AddButtonToLayout(layout, "D", 120, 100, "Right");
+    AddButtonToLayout(layout, "Space", 120, 100, "Jump");
+
+    menu_button_block_->setLayout(layout);
+    MoveMenuBlock(900, 150);
+    addWidget(menu_button_block_);
+
     //creating a title/*
 //    title_text_ = new QGraphicsTextItem(QString("Settings"));
 //    QFont titleFont("times new roman", this->width()/50);

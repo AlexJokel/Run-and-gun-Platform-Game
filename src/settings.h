@@ -8,7 +8,7 @@ class Settings : public Menu {
 public:
     Settings(class Game*, qreal width, qreal height, QColor);
     void AddText(QString, qreal width, qreal height, QFont, QColor);
-    void AddButton(QVBoxLayout* layout, QString name, qreal width, qreal height, QString key);
+    void AddButtonToLayout(QVBoxLayout* layout, QString name, qint32 width, qint32 height, QString key);
 };
 
 #endif // SETTINGS_H
