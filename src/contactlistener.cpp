@@ -39,12 +39,10 @@ void ContactListener::BeginContact(b2Contact* contact) {
 bool ContactListener::CheckContactedTypes(QPair<Object*, Object*>* objects,
                                           ObjectType type1,
                                           ObjectType type2) const {
-  if ((objects->first->Type() == type1) &&
-      (objects->second->Type() == type2)) {
+  if (objects->first->Inherits(type1) && objects->second->Inherits(type2)) {
     return true;
   }
-  if ((objects->first->Type() == type2) &&
-      (objects->second->Type() == type1)) {
+  if (objects->first->Inherits(type2) && objects->second->Inherits(type1)) {
     qSwap(objects->first, objects->second);
     return true;
   }
@@ -53,10 +51,10 @@ bool ContactListener::CheckContactedTypes(QPair<Object*, Object*>* objects,
 
 bool ContactListener::CheckContactedTypes(QPair<Object*, Object*>* objects,
                                           ObjectType type) const {
-  if (objects->first->Type() == type) {
+  if (objects->first->Inherits(type)) {
     return true;
   }
-  if (objects->second->Type() == type) {
+  if (objects->second->Inherits(type)) {
     qSwap(objects->first, objects->second);
     return true;
   }

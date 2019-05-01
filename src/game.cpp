@@ -1,3 +1,4 @@
+#include "menu.h"
 #include "game.h"
 #include "level.h"
 #include "button.h"
@@ -16,24 +17,30 @@ Game::Game(QApplication* application) : QGraphicsView(),
   auto scroll_disabler = new ScrollDisabler();
   verticalScrollBar()->installEventFilter(scroll_disabler);
 
-  PushScene(new MainMenu(this, 1280, 720, Qt::lightGray));
+  PushScene(new MainMenu(this, 1280, 720, Menu::kOrangeDefaultBackground_));
 
   show();
 }
 
 void Game::PushScene(Scene* scene) {
+  if (!scenes_.empty()) {
+    scenes_.top()->Pause();
+  }
   setScene(scene);
   scenes_.push(scene);
+  scenes_.top()->Unpause();
 }
 
 void Game::PopScene() {
-  delete scenes_.top();
-  scenes_.pop();
-  if (scenes_.empty()) {
+  scenes_.top()->Pause();
+  if (scenes_.size() == 1) {
     application_->quit();
     return;
   }
+  delete scenes_.top();
+  scenes_.pop();
   setScene(scenes_.top());
+  scenes_.top()->Unpause();
 }
 
 bool Game::ScrollDisabler::eventFilter(QObject*, QEvent* event) {

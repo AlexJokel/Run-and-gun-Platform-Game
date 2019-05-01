@@ -22,6 +22,8 @@ public:
                float horizontal_speed = 2,
                ShapeInfo* = PassShapeInfo(ShapeType::kRectangle, 0.5f, 0.5f));
 
+  b2Vec2 GetBorders() const;
+
 protected:
   Borders borders_;
 

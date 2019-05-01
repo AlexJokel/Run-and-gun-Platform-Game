@@ -11,3 +11,6 @@ Game* Scene::Game() const {
 }
 
 void Scene::keyPressEvent(QKeyEvent*) {}
+
+void Scene::Pause() {}
+void Scene::Unpause() {}

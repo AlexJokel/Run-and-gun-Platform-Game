@@ -20,26 +20,7 @@ Level::Level(class Game* game, qreal width, qreal height)
   /// World initialization
   world_->SetContactListener(new ContactListener());
 
-  /// Player initialization
-  objects_.player = new Player(this, {3, 3});
-
-  /// Create floor
-  objects_.ground.append(new Ground(this,
-      {0, PixelsToMeters(this->height()) - 1},
-      {PixelsToMeters(this->width()), 1}));
-
-  /// Create walls
-  objects_.ground.append(new Ground(this,
-      {0, 0},
-      {1, PixelsToMeters(this->height())}));
-  objects_.ground.append(new Ground(this,
-      {PixelsToMeters(this->width()) - 1, 0},
-      {1, PixelsToMeters(this->height())}));
-
-  /// Enemy initialization
-  objects_.enemies.append(new StaticEnemy(this, {7, 3}));
-  objects_.enemies.append(new RoamingEnemy(this, {10, 3}, {8, 12}));
-
+#ifdef QT_DEBUG
   /// Draw dot grid
   for (size_t x = 0; x < this->width(); x += 100) {
     for (size_t y = 0; y < this->height(); y += 100) {
@@ -50,11 +31,12 @@ Level::Level(class Game* game, qreal width, qreal height)
 
 
   }
+#endif
 
-  /// Frame timer initialization & start
-  auto frame_timer = new QTimer();
-  QObject::connect(frame_timer, &QTimer::timeout, this, &Level::advance);
-  frame_timer->start(static_cast<int>(1000 * kTimeStep_));
+  /// Frame timer initialization
+  frame_timer_ = new QTimer();
+  QObject::connect(frame_timer_, &QTimer::timeout, this, &Level::advance);
+  frame_timer_->setInterval(static_cast<int>(1000 * kTimeStep_));
 }
 
 Level::~Level() {
@@ -89,7 +71,11 @@ void Level::advance() {
   mouse_state_.ClearButtons();
 
   /// Repaint the view
-  views().front()->viewport()->repaint();
+  if (!views().empty()) {
+    views().front()->viewport()->repaint();
+  } else {
+    qDebug() << "Level has no game view!\n";
+  }
 }
 
 void Level::keyPressEvent(QKeyEvent *event) {
@@ -129,6 +115,14 @@ bool Level::ButtonReleased(Qt::MouseButton button) const {
   return mouse_state_.buttons_released.contains(button);
 }
 
+void Level::Pause() {
+  frame_timer_->stop();
+}
+
+void Level::Unpause() {
+  frame_timer_->start();
+}
+
 void Level::RemoveObject(Object* object) {
   objects_for_removal.insert(object);
 }
@@ -143,6 +137,38 @@ QPointF Level::MetersToPixels(b2Vec2 point) const {
 
 float Level::PixelsToMeters(qreal pixels) const {
   return static_cast<float>(pixels / kMetersToPixelsRatio_);
+}
+
+float Level::Width() const {
+  return PixelsToMeters(width());
+}
+
+float Level::Height() const {
+  return PixelsToMeters(height());
+}
+
+Player* Level::GetPlayer() const {
+  return objects_.player;
+}
+
+const QList<Ground*>& Level::GetGround() const {
+  return objects_.ground;
+}
+
+const QList<Enemy*>& Level::GetEnemies() const {
+  return objects_.enemies;
+}
+
+void Level::SetPlayer(Player* player) {
+  objects_.player = player;
+}
+
+void Level::AppendGround(Ground* ground) {
+  objects_.ground.append(ground);
+}
+
+void Level::AppendEnemy(Enemy *enemy) {
+  objects_.enemies.append(enemy);
 }
 
 b2Vec2 Level::PixelsToMeters(QPointF point) const {

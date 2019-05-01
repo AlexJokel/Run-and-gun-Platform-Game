@@ -18,9 +18,6 @@ public:
   void advance(int) override;
 
   static QMap<QString, Qt::Key> controls_map_;
-
-  ObjectType Type() const override;
-
 protected:
   const float kJumpHeight_ = 3;
   const float kVerticalSpeed_ = 10;

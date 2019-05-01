@@ -10,9 +10,8 @@ public:
   Enemy(class Level*,
         b2Vec2 position,
         float horizontal_speed,
+        ObjectType = ObjectType::kEnemy,
         ShapeInfo* = PassShapeInfo(ShapeType::kRectangle, 0.5f, 0.5f));
-
-  ObjectType Type() const override;
 
 protected:
   class NearestObjectCallback : public b2RayCastCallback {

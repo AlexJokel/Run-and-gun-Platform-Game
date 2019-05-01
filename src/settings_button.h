@@ -5,7 +5,8 @@
 
 class SettingsButton : public Button {
 public:
-    SettingsButton(QString name, QGraphicsItem* parent = nullptr);
+    SettingsButton(const QString& title, qint32 width, qint32 height,
+                   QWidget* parent = nullptr);
     void ChangeControl(Qt::Key);
 
 protected:

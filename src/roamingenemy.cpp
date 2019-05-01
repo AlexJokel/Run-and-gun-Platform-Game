@@ -17,7 +17,8 @@ RoamingEnemy::RoamingEnemy(class Level* level,
                            Borders borders,
                            float horizontal_speed,
                            ShapeInfo* shape_info)
-    : Enemy(level, position, horizontal_speed, shape_info),
+    : Enemy(level, position, horizontal_speed,
+            ObjectType::kRoamingEnemy, shape_info),
       borders_(borders) {}
 
 void RoamingEnemy::Move() {
@@ -32,4 +33,8 @@ void RoamingEnemy::Move() {
 float RoamingEnemy::GetDesiredSpeed() const {
   if (player_visible_) return 0;
   return kHorizontalSpeed_ * direction_;
+}
+
+b2Vec2 RoamingEnemy::GetBorders() const {
+  return {borders_.left, borders_.right};
 }
