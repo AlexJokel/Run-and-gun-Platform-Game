@@ -8,6 +8,15 @@
 
 Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
     : Menu(game, width, height, color) {
+    auto layout = new QVBoxLayout();
+
+    // creating a title
+    title_text_ = new QGraphicsTextItem("SETTINGS");
+    title_text_->setFont(QFont("Comic", 70));
+    title_text_->setPos(this->width() / 2 -
+                        title_text_->boundingRect().width() / 2, 0);
+    addItem(title_text_);
+
     //creating a title/*
 //    title_text_ = new QGraphicsTextItem(QString("Settings"));
 //    QFont titleFont("times new roman", this->width()/50);
