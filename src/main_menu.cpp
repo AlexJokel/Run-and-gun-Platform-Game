@@ -36,7 +36,6 @@ MainMenu::MainMenu(class Game* game, qreal width, qreal height, QColor color)
       Game()->PushScene(new Settings(Game(), 1280, 720,
                                      Qt::lightGray));
   });
-  layout->addWidget(settings_button);
 
   /// creating Quit button
   auto quit_button = new Button("QUIT", 400, 100);

@@ -5,6 +5,9 @@
 #include "level.h"
 #include "scene.h"
 #include "settings_button.h"
+#include "cssstylestorage.h"
+
+#include <QAbstractButton>
 
 Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
     : Menu(game, width, height, color) {
@@ -59,10 +62,10 @@ void Settings::AddText(QString text, qreal width, qreal height, QFont font, QCol
 //    addItem(text_);
 }
 
-qreal Settings::AddButton(QString name, qreal width, qreal height) {
-//    Button* button = new Button(QString(name));
-//    button->setPos(width, height);
-//    addItem(button);
-//    buttons_.push_back(button);
-//    return height;
+void Settings::AddButtonToLayout(QVBoxLayout* layout, QString name, qint32 width,
+                                 qint32 height, QString key) {
+    auto button = new SettingsButton(name, width, height, key);
+    button->setStyleSheet
+        (CssStyleStorage::GetInstance().GetMenuButtonStyle());
+    layout->addWidget(button);
 }
