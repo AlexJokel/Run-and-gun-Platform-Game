@@ -52,7 +52,9 @@ void Enemy::Shoot() {
                             ray_end_point);
 
   /// Shoot if necessary
-  if (nearest_object_callback.GetNearestObject()->Type() ==
+  auto nearest_object = nearest_object_callback.GetNearestObject();
+  if (nearest_object == nullptr) return;
+  if (nearest_object->Type() ==
       ObjectType::kPlayer) {
     player_visible_ = true;
     if (shot_->TryShooting()) {
