@@ -18,6 +18,17 @@ Player::Player(class Level* scene,
   player_filter.maskBits ^= CollisionMask::kArrow;
   body_->GetFixtureList()->SetFilterData(player_filter);
 
+  /// Add fixture to check if grounded
+  b2FixtureDef grounded_checker_def;
+  grounded_checker_def.filter.maskBits = CollisionMask::kDefault;
+  grounded_checker_def.isSensor = true;
+  b2EdgeShape grounded_checker_shape;
+  auto body_shape = dynamic_cast<b2PolygonShape*>(GetShape());
+  grounded_checker_shape.Set(body_shape->GetVertex(3) + b2Vec2(0.01f, 0),
+                             body_shape->GetVertex(2) - b2Vec2(0.01f, 0));
+  grounded_checker_def.shape = &grounded_checker_shape;
+  jump_helper_.grounded_checker_ = body_->CreateFixture(&grounded_checker_def);
+
   /// Set pixmap
   SetPixmap(":/images/images/player.png", Qt::IgnoreAspectRatio);
 }
@@ -25,6 +36,15 @@ Player::Player(class Level* scene,
 void Player::advance(int phase) {
   Creature::advance(phase);
   Level()->views().front()->centerOn(this);
+}
+
+void Player::Collide(ObjectType type, const b2Contact* contact) {
+  Creature::Collide(type, contact);
+  if ((contact->GetFixtureA() == jump_helper_.grounded_checker_) ||
+      (contact->GetFixtureB() == jump_helper_.grounded_checker_)) {
+    jump_helper_.grounded_ ^= true;
+    if (jump_helper_.grounded_) jump_helper_.jumped_ = false;
+  }
 }
 
 float Player::GetDesiredSpeed() const {
@@ -47,11 +67,11 @@ void Player::Move() {
   }
 
   // Handle jumping
-  if (Level()->KeyPressed(Qt::Key_Space)) {
-    if (qAbs(body_->GetLinearVelocity().y) < 1e-3f) {
-      body_->ApplyLinearImpulse({0, -kVerticalSpeed_ * body_->GetMass()},
-                                body_->GetWorldCenter(), true);
-    }
+  if (jump_helper_.grounded_ && !jump_helper_.jumped_ &&
+          Level()->KeyPressed(Qt::Key_Space)) {
+    body_->ApplyLinearImpulse({0, -kVerticalSpeed_ * body_->GetMass()},
+                              body_->GetWorldCenter(), true);
+    jump_helper_.jumped_ = true;
   }
 
   Creature::Move();

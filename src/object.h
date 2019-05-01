@@ -109,7 +109,7 @@ public:
   /// Simply goes up the inheritance tree.
   static bool Inherits(ObjectType child, ObjectType parent);
 
-  virtual void Collide(ObjectType);
+  virtual void Collide(ObjectType, const b2Contact*);
 
 protected:
   const ObjectType type_;

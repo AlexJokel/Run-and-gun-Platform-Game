@@ -166,4 +166,4 @@ bool Object::Inherits(ObjectType child, ObjectType parent) {
   return true;
 }
 
-void Object::Collide(ObjectType) {}
+void Object::Collide(ObjectType, const b2Contact*) {}
