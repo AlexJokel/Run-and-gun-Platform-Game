@@ -56,7 +56,7 @@ void FileInitializationHelper:: CreateSecondLevel(class Game* game, const QStrin
                                       {0, 1},
                                       {0.01f, 3}));
   level->AppendGround(new Ground(level,
-                         {0, 4},
+                         {0, 4.5},
                          {0.5, 2.5}));
   level->AppendGround(new Ground(level,
                          {0, 6.5},
