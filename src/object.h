@@ -98,6 +98,7 @@ public:
   friend class Level;
 
   b2Body* GetBody() const;
+  b2Shape* GetShape() const;
 
   b2Vec2 GetPos() const;
   b2Vec2 GetSize() const;
