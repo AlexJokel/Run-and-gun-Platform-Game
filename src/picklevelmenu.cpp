@@ -36,7 +36,8 @@ void PickLevelMenu::Draw() {
   for (int i = 0; i < column_count_; ++i) {
     for (int j = 0; j < row_count_; ++j) {
       auto level_index = i * row_count_ + j;
-      auto button = new Button("Level #" + QString::number(level_index + 1), 120, 120);
+      auto button = new Button(
+          "Level #" + QString::number(level_index), 120, 120);
 
       if (storage_->IsOpen(level_index)) {
         button->setStyleSheet
