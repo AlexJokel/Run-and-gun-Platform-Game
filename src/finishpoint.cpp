@@ -8,7 +8,7 @@ FinishPoint::FinishPoint(class Level* level,
     : Ground(level, position, size, ObjectType::kFinishPoint) {}
 
 void FinishPoint::Collide(ObjectType type) {
-  if (type == ObjectType::kPlayer) {
+  if (Object::Inherits(type, ObjectType::kPlayer)) {
     Level()->ScheduleFinish();
   }
 }

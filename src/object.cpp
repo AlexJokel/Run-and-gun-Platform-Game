@@ -10,6 +10,7 @@ const QHash<ObjectType, ObjectType> Object::parents_{
     {ObjectType::kGround,       ObjectType::kObject},
     {ObjectType::kArrow,        ObjectType::kObject},
     {ObjectType::kBullet,       ObjectType::kObject},
+    {ObjectType::kFinishPoint,  ObjectType::kGround},
     {ObjectType::kPlayer,       ObjectType::kCreature},
     {ObjectType::kEnemy,        ObjectType::kCreature},
     {ObjectType::kStaticEnemy,  ObjectType::kEnemy},
