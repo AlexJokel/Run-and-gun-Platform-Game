@@ -49,6 +49,12 @@ b2World* Level::World() const {
 }
 
 void Level::advance() {
+  if (finish_scheduled_) {
+    emit Finish();
+    Game()->PopScene();
+    return;
+  }
+
   /// Advance the world
   world_->Step(static_cast<float>(kTimeStep_), 8, 3);
 
@@ -121,6 +127,10 @@ void Level::Unpause() {
 
 void Level::RemoveObject(Object* object) {
   objects_for_removal.insert(object);
+}
+
+void Level::ScheduleFinish() {
+  finish_scheduled_ = true;
 }
 
 qreal Level::MetersToPixels(float meters) const {

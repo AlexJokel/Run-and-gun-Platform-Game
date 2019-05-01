@@ -4,6 +4,7 @@
 #include "levelloader.h"
 #include "staticenemy.h"
 #include "roamingenemy.h"
+#include "finishpoint.h"
 
 QDataStream& operator<<(QDataStream& out, const b2Vec2& pair) {
   return out << pair.x << pair.y;
@@ -82,12 +83,23 @@ Level* LevelLoader::LoadLevel(class Game* game) const {
       UpdateBoundingRect(bounding_rect, {pos.x, pos.y}, {size.x, size.y});
       break;
     case ObjectType::kGround:
+    case ObjectType::kFinishPoint:
       size.x *= 2;
       size.y *= 2;
       pos.x = pos.x - size.x / 2;
       pos.y = pos.y - size.y / 2;
-      level->AppendGround(new Ground(level, {pos.x, pos.y},
-                        {size.x, size.y}));
+      switch (type) {
+        case ObjectType::kGround:
+          level->AppendGround(new Ground(level, {pos.x, pos.y},
+                                         {size.x, size.y}));
+          break;
+        case ObjectType::kFinishPoint:
+          level->AppendGround(new FinishPoint(level, {pos.x, pos.y},
+                                              {size.x, size.y}));
+          break;
+        default:
+          break;
+      }
       UpdateBoundingRect(bounding_rect, {pos.x, pos.y}, {size.x, size.y});
       break;
     case ObjectType::kStaticEnemy:

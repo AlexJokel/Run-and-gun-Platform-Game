@@ -10,6 +10,8 @@ public:
          float direction,
          ShapeInfo* = PassShapeInfo(ShapeType::kRectangle, 0.1f, 0.05f));
 
+  void Collide(ObjectType) override;
+
 protected:
   const float kHorizontalSpeed_ = 10;
 };

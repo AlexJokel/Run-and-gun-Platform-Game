@@ -9,7 +9,9 @@ Enemy::Enemy(class Level* level,
              float horizontal_speed,
              ObjectType type,
              ShapeInfo* shape_info)
-    : Creature(level, position, horizontal_speed, type, shape_info),
+    : Creature(level, position, horizontal_speed, type,
+               {ObjectType::kArrow, ObjectType::kPlayer},
+               shape_info),
       shot_(new Shot()) {
   /// Set enemy collision mask
   b2Filter enemy_filter;
@@ -50,7 +52,9 @@ void Enemy::Shoot() {
                             ray_end_point);
 
   /// Shoot if necessary
-  if (nearest_object_callback.GetNearestObject()->Type() ==
+  auto nearest_object = nearest_object_callback.GetNearestObject();
+  if (nearest_object == nullptr) return;
+  if (nearest_object->Type() ==
       ObjectType::kPlayer) {
     player_visible_ = true;
     if (shot_->TryShooting()) {

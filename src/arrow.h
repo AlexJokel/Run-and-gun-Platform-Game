@@ -11,6 +11,8 @@ public:
 
   void advance(int) override;
 
+  void Collide(ObjectType) override;
+
 protected:
   const float kSpeed = 10;
 

@@ -8,7 +8,9 @@
 Player::Player(class Level* scene,
                b2Vec2 position,
                ShapeInfo* shape_info)
-    : Creature(scene, position, 5, ObjectType::kPlayer, shape_info),
+    : Creature(scene, position, 5, ObjectType::kPlayer,
+               {ObjectType::kBullet, ObjectType::kEnemy},
+               shape_info),
       kVerticalSpeed_(CalcSpeedForHeight(scene->World(), kJumpHeight_)) {
   /// Set player collision mask
   b2Filter player_filter;

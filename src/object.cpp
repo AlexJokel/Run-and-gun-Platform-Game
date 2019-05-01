@@ -10,6 +10,7 @@ const QHash<ObjectType, ObjectType> Object::parents_{
     {ObjectType::kGround,       ObjectType::kObject},
     {ObjectType::kArrow,        ObjectType::kObject},
     {ObjectType::kBullet,       ObjectType::kObject},
+    {ObjectType::kFinishPoint,  ObjectType::kGround},
     {ObjectType::kPlayer,       ObjectType::kCreature},
     {ObjectType::kEnemy,        ObjectType::kCreature},
     {ObjectType::kStaticEnemy,  ObjectType::kEnemy},
@@ -150,11 +151,12 @@ ObjectType Object::Type() const {
   return type_;
 }
 
-bool Object::Inherits(ObjectType type) const {
-  auto current_type = Type();
-  while (current_type != type) {
-    if (current_type == ObjectType::kObject) return false;
-    current_type = parents_[current_type];
+bool Object::Inherits(ObjectType child, ObjectType parent) {
+  while (child != parent) {
+    if (child == ObjectType::kObject) return false;
+    child = parents_[child];
   }
   return true;
 }
+
+void Object::Collide(ObjectType) {}

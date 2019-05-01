@@ -22,15 +22,22 @@ LevelStorage::LevelStorage(qint32 level_number) :
 void LevelStorage::UnlockLevel(qint32 index) {
   assert(0 <= index && index < level_number_);
   open_state_[index] = true;
+  Update();
 }
 
 void LevelStorage::LockLevel(qint32 index) {
   assert(0 <= index && index < level_number_);
   open_state_[index] = false;
+  Update();
 }
 
 void LevelStorage::SaveState() const {
   state_loader_->SaveState(open_state_);
+}
+
+void LevelStorage::Update() {
+  SaveState();
+  emit Changed();
 }
 
 bool LevelStorage::IsOpen(qint32 index) const {

@@ -8,7 +8,8 @@ public:
   /// x, y --- top left corner Box2D coordinates
   Ground(class Level*,
          b2Vec2 position,
-         b2Vec2 size);
+         b2Vec2 size,
+         ObjectType = ObjectType::kGround);
 };
 
 #endif // GROUND_H

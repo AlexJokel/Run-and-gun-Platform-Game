@@ -35,6 +35,7 @@ public:
   void Unpause() override;
 
   void RemoveObject(Object*);
+  void ScheduleFinish();
 
   b2World* World() const;
 
@@ -87,6 +88,8 @@ protected:
   SceneObjects objects_;
 
   QSet<Object*> objects_for_removal;
+
+  bool finish_scheduled_ = false;
 };
 
 #endif // LEVEL_H
