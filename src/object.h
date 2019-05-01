@@ -66,6 +66,7 @@ struct BodyInfo {
 enum class ObjectType {
   kObject,
   kGround,
+  kFinishPoint,
   kCreature,
   kPlayer,
   kEnemy,

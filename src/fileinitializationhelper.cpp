@@ -4,6 +4,7 @@
 #include "levelloader.h"
 #include "staticenemy.h"
 #include "roamingenemy.h"
+#include "finishpoint.h"
 
 void FileInitializationHelper:: CreateFirstLevel(class Game* game, const QString& file_name) {
   auto level = new Level(game);
@@ -25,9 +26,9 @@ void FileInitializationHelper:: CreateFirstLevel(class Game* game, const QString
   level->AppendGround(new Ground(level,
                                  {0, 3.5},
                                  {0.01f, 3}));
-  level->AppendGround(new Ground(level,
-                                 {19.99f, 3.5},
-                                 {0.01f, 3}));
+  level->AppendGround(new FinishPoint(level,
+                                      {19.99f, 3.5},
+                                      {0.01f, 3}));
 
   /// Enemy initialization
   level->AppendEnemy(new StaticEnemy(level, {7, 6}));
@@ -51,9 +52,9 @@ void FileInitializationHelper:: CreateSecondLevel(class Game* game, const QStrin
   level->AppendGround(new Ground(level,
                          {0, 0},
                          {0.5, 1}));
-  level->AppendGround(new Ground(level,
-                         {0, 1},
-                         {0.01f, 3}));
+  level->AppendGround(new FinishPoint(level,
+                                      {0, 1},
+                                      {0.01f, 3}));
   level->AppendGround(new Ground(level,
                          {0, 4},
                          {0.5, 2.5}));
