@@ -16,6 +16,9 @@ public slots:
   void PushScene(Scene*);
   void PopScene();
 
+  void InstallScrollDisabler();
+  void RemoveScrollDisabler();
+
 protected:
   QApplication* application_;
 
@@ -25,6 +28,8 @@ protected:
   protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
   };
+
+  ScrollDisabler* scroll_disabler_;
 };
 
 #endif // GAME_H

@@ -8,6 +8,8 @@ public:
     Settings(class Game*, qreal width, qreal height, QColor);
     void AddText(QString, qreal width, qreal height, QFont, QColor);
     void AddButtonToLayout(QVBoxLayout* layout, QString name, qint32 width, qint32 height, QString key);
+
+    ~Settings() override;
 };
 
 #endif // SETTINGS_H
