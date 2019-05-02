@@ -5,13 +5,13 @@
 
 #include "level.h"
 
-Player::Player(class Level* scene,
+Player::Player(class Level* level,
                b2Vec2 position,
                ShapeInfo* shape_info)
-    : Creature(scene, position, 5, ObjectType::kPlayer,
+    : Creature(level, position, 5, ObjectType::kPlayer,
                {ObjectType::kBullet, ObjectType::kEnemy},
                shape_info),
-      kVerticalSpeed_(CalcSpeedForHeight(scene->World(), kJumpHeight_)) {
+      kVerticalSpeed_(CalcSpeedForHeight(level->World(), kJumpHeight_)) {
   /// Set player collision mask
   b2Filter player_filter;
   player_filter.categoryBits = CollisionMask::kPlayer;
@@ -20,6 +20,9 @@ Player::Player(class Level* scene,
 
   /// Set pixmap
   SetPixmap(":/images/images/player.png", Qt::IgnoreAspectRatio);
+
+  /// Set initial arrow_count
+  arrow_count = level->GetProvidedArrowCount();
 }
 
 void Player::advance(int phase) {
@@ -59,6 +62,8 @@ void Player::Move() {
 
 void Player::Shoot() {
   if (!Level()->ButtonReleased(Qt::LeftButton)) return;
+  if (arrow_count == 0) return;
+  --arrow_count;
   new Arrow(Level(), body_->GetWorldCenter());
 }
 

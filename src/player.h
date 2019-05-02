@@ -19,6 +19,8 @@ public:
 protected:
   const float kJumpHeight_ = 3;
   const float kVerticalSpeed_ = 10;
+  qint32 arrow_count;
+
   static float CalcSpeedForHeight(b2World*, float);
 
   float GetDesiredSpeed() const override;
