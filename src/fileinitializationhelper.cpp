@@ -7,7 +7,7 @@
 #include "finishpoint.h"
 
 void FileInitializationHelper:: CreateFirstLevel(class Game* game, const QString& file_name) {
-  auto level = new Level(game);
+  auto level = new Level(game, 10);
 
   /// Player initialization
   level->SetPlayer(new Player(level, {1, 6}));
@@ -40,7 +40,7 @@ void FileInitializationHelper:: CreateFirstLevel(class Game* game, const QString
 }
 
 void FileInitializationHelper:: CreateSecondLevel(class Game* game, const QString& file_name) {
-  auto level = new Level(game);
+  auto level = new Level(game, 15);
   /// Player initialization
   level->SetPlayer(new Player(level, {3, 9}));
 

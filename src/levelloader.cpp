@@ -26,6 +26,7 @@ QDataStream& operator<<(QDataStream& out,
 }
 
 QDataStream& operator<<(QDataStream& out, Level* level) {
+  out << level->GetProvidedArrowCount();
   /// 1) Write Player
   out << level->GetPlayer();
 
@@ -61,8 +62,10 @@ Level* LevelLoader::LoadLevel(class Game* game) const {
                 << " can't be opened for reading!\n";
     return nullptr;
   }
-  auto level = new Level(game);
   QDataStream input(&file);
+  qint32 provided_level_count;
+  input >> provided_level_count;
+  auto level = new Level(game, provided_level_count);
 
   BoundingBox bounding_rect =
     {{std::numeric_limits<float>::max(), std::numeric_limits<float>::max()},

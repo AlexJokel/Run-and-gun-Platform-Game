@@ -17,7 +17,8 @@
 class Level : public Scene {
   Q_OBJECT
 public:
-  Level(class Game*, qreal width = 1920, qreal heigh = 1080);
+  Level(class Game*, qint32 provided_arrow_count,
+        qreal width = 1920, qreal heigh = 1080);
   ~Level() override;
 
   void keyPressEvent(QKeyEvent*) override;
@@ -55,6 +56,8 @@ public:
   void AppendGround(Ground* ground);
   void AppendEnemy(Enemy* enemy);
 
+  qint32 GetProvidedArrowCount() const;
+
 public: signals:
   void Finish();
 
@@ -90,6 +93,7 @@ protected:
   QSet<Object*> objects_for_removal;
 
   bool finish_scheduled_ = false;
+  const qint32 provided_arrow_count_;
 };
 
 #endif // LEVEL_H

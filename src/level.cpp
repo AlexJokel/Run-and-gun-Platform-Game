@@ -11,9 +11,11 @@
 #include "staticenemy.h"
 #include "roamingenemy.h"
 
-Level::Level(class Game* game, qreal width, qreal height)
+Level::Level(class Game* game, qint32 provided_arrow_count,
+             qreal width, qreal height)
     : Scene(game, width, height),
-      world_(new b2World({0, 9.8f})) {
+      world_(new b2World({0, 9.8f})),
+      provided_arrow_count_(provided_arrow_count) {
   /// Set custom view update
   Game()->setViewportUpdateMode(QGraphicsView::NoViewportUpdate);
 
@@ -175,6 +177,10 @@ void Level::AppendGround(Ground* ground) {
 
 void Level::AppendEnemy(Enemy *enemy) {
   objects_.enemies.append(enemy);
+}
+
+qint32 Level::GetProvidedArrowCount() const {
+  return provided_arrow_count_;
 }
 
 b2Vec2 Level::PixelsToMeters(QPointF point) const {
