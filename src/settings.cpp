@@ -5,9 +5,10 @@
 #include "level.h"
 #include "scene.h"
 #include "settings_button.h"
+#include "picklevelmenu.h"
 #include "cssstylestorage.h"
 
-#include <QAbstractButton>
+#include <QScrollBar>
 
 Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
     : Menu(game, width, height, color) {
@@ -21,9 +22,9 @@ Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
     addItem(title_text_);
 
     // creating controls buttons
-    AddButtonToLayout(layout, "A", 120, 100, "Left");
-    AddButtonToLayout(layout, "D", 120, 100, "Right");
-    AddButtonToLayout(layout, "Space", 120, 100, "Jump");
+    AddButtonToLayout(layout, "A", 200, 100, "Left");
+    AddButtonToLayout(layout, "D", 200, 100, "Right");
+    AddButtonToLayout(layout, "Space", 200, 100, "Jump");
 
     menu_button_block_->setLayout(layout);
     MoveMenuBlock(900, 150);
