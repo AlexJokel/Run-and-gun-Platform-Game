@@ -10,7 +10,7 @@ public:
               b2Vec2 position,
               b2Vec2 size);
 
-  void Collide(ObjectType) override;
+  void Collide(ObjectType, const b2Contact*) override;
 };
 
 #endif // FINISHPOINT_H

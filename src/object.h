@@ -98,6 +98,7 @@ public:
   friend class Level;
 
   b2Body* GetBody() const;
+  b2Shape* GetShape() const;
 
   b2Vec2 GetPos() const;
   b2Vec2 GetSize() const;
@@ -108,7 +109,7 @@ public:
   /// Simply goes up the inheritance tree.
   static bool Inherits(ObjectType child, ObjectType parent);
 
-  virtual void Collide(ObjectType);
+  virtual void Collide(ObjectType, const b2Contact*);
 
 protected:
   const ObjectType type_;
