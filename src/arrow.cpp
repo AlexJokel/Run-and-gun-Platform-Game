@@ -39,7 +39,7 @@ void Arrow::advance(int phase) {
   Object::advance(phase);
 }
 
-void Arrow::Collide(ObjectType) {
+void Arrow::Collide(ObjectType, const b2Contact*) {
   Level()->RemoveObject(this);
 }
 

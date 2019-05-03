@@ -21,7 +21,7 @@ void Creature::advance(int phase) {
   Draw();
 }
 
-void Creature::Collide(ObjectType collider) {
+void Creature::Collide(ObjectType collider, const b2Contact*) {
   RemoveOnCollision(collider, removers_);
 }
 

@@ -32,6 +32,6 @@ Bullet::Bullet(class Level* level,
   }
 }
 
-void Bullet::Collide(ObjectType) {
+void Bullet::Collide(ObjectType, const b2Contact*) {
   Level()->RemoveObject(this);
 }

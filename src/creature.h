@@ -15,7 +15,7 @@ public:
 
   void advance(int) override;
 
-  void Collide(ObjectType) override;
+  void Collide(ObjectType, const b2Contact*) override;
 
 public slots:
   /// Invert the direction

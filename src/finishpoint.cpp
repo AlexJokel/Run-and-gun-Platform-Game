@@ -7,7 +7,7 @@ FinishPoint::FinishPoint(class Level* level,
                          b2Vec2 size)
     : Ground(level, position, size, ObjectType::kFinishPoint) {}
 
-void FinishPoint::Collide(ObjectType type) {
+void FinishPoint::Collide(ObjectType type, const b2Contact*) {
   if (Object::Inherits(type, ObjectType::kPlayer)) {
     Level()->ScheduleFinish();
   }
