@@ -22,7 +22,12 @@ Player::Player(class Level* level,
   SetPixmap(":/images/images/player.png", Qt::IgnoreAspectRatio);
 
   /// Set initial arrow_count
-  arrow_count = level->GetProvidedArrowCount();
+  arrow_count_ = level->GetProvidedArrowCount();
+  QObject::connect(this, &Player::ArrowCountChanged,
+                   this, [&]() {
+      Level()->UpdateRemainingArrows(arrow_count_);
+  });
+  emit ArrowCountChanged();
 }
 
 void Player::advance(int phase) {
@@ -62,8 +67,9 @@ void Player::Move() {
 
 void Player::Shoot() {
   if (!Level()->ButtonReleased(Qt::LeftButton)) return;
-  if (arrow_count == 0) return;
-  --arrow_count;
+  if (arrow_count_ == 0) return;
+  --arrow_count_;
+  emit ArrowCountChanged();
   new Arrow(Level(), body_->GetWorldCenter());
 }
 

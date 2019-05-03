@@ -5,6 +5,7 @@
 #include <QKeyEvent>
 #include <QMap>
 #include <QSet>
+#include <QGraphicsTextItem>
 
 #include <Box2D/Box2D.h>
 
@@ -57,6 +58,7 @@ public:
   void AppendEnemy(Enemy* enemy);
 
   qint32 GetProvidedArrowCount() const;
+  void UpdateRemainingArrows(qint32 left);
 
 public: signals:
   void Finish();
@@ -94,6 +96,7 @@ protected:
 
   bool finish_scheduled_ = false;
   const qint32 provided_arrow_count_;
+  QGraphicsTextItem* arrow_count_hint_;
 };
 
 #endif // LEVEL_H

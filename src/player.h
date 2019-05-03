@@ -9,6 +9,7 @@
 #include "creature.h"
 
 class Player : public Creature {
+  Q_OBJECT
 public:
   Player(class Level*,
          b2Vec2 position,
@@ -19,13 +20,15 @@ public:
 protected:
   const float kJumpHeight_ = 3;
   const float kVerticalSpeed_ = 10;
-  qint32 arrow_count;
+  qint32 arrow_count_;
 
   static float CalcSpeedForHeight(b2World*, float);
 
   float GetDesiredSpeed() const override;
   void Move() override;
   void Shoot() override;
+protected: signals:
+  void ArrowCountChanged() const;
 };
 
 #endif // PLAYER_H
