@@ -38,9 +38,11 @@ Level::Level(class Game* game, qint32 provided_arrow_count,
   frame_timer_->setInterval(static_cast<int>(1000 * kTimeStep_));
 
   /// Enable displaying of arrow_count_hint_ box
-  QFont font("Times", 20);
-  arrow_count_hint_->setFont(QFont("Times", 20));
-  arrow_count_hint_->setDefaultTextColor(QColor(50, 0, 200));
+  QFont font("Comic Sans MS", 20);
+  font.setWeight(QFont::Black);
+  arrow_count_hint_->setFont(font);
+  arrow_count_hint_->setDefaultTextColor(QColor(255, 50, 0));
+  arrow_count_hint_->setZValue(std::numeric_limits<qreal>::max());
   arrow_count_hint_->show();
   addItem(arrow_count_hint_);
 }
@@ -94,8 +96,7 @@ void Level::advance() {
 }
 
 void Level::UpdateRemainingArrows(qint32 left) {
-  arrow_count_hint_->setPlainText("Arrows left:" +
-                                  QString::number(left));
+  arrow_count_hint_->setPlainText(QString::number(left) + " arrows remaining");
 }
 
 void Level::keyPressEvent(QKeyEvent *event) {
