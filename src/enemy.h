@@ -13,7 +13,7 @@ public:
         ObjectType = ObjectType::kEnemy,
         ShapeInfo* = PassShapeInfo(ShapeType::kRectangle, 0.5f, 0.5f));
 
-protected:
+  protected:
   class NearestObjectCallback : public b2RayCastCallback {
   public:
     NearestObjectCallback(const QSet<ObjectType>& opaque_types);
@@ -23,7 +23,7 @@ protected:
 
     Object* GetNearestObject() const;
 
-  protected:
+protected:
     Object* nearest_object_ = nullptr;
     QSet<ObjectType> opaque_types_;
   };

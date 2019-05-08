@@ -20,7 +20,8 @@ public:
   const QString& GetFileName() const;
 
   /// Protocol of storing levels in files:
-  /// Just a list of serialized object in any order
+  /// First: qint32 - provided_arrow_count
+  /// Then: Just a list of serialized object in any order
   /// Serialized object:
   /// (type, pos, size, *borders*)
   /// *borders* is optional for RoamingEnemy

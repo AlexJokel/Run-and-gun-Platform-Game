@@ -9,6 +9,7 @@
 #include "creature.h"
 
 class Player : public Creature {
+  Q_OBJECT
 public:
   Player(class Level*,
          b2Vec2 position,
@@ -25,6 +26,8 @@ protected:
   const float kVerticalSpeed_;
   static float CalcSpeedForHeight(b2World*, float);
 
+  qint32 arrow_count_;
+
   struct JumpHelper {
     b2Fixture* grounded_checker_ = nullptr;
     bool grounded_ = false;
@@ -35,6 +38,8 @@ protected:
   float GetDesiredSpeed() const override;
   void Move() override;
   void Shoot() override;
+protected: signals:
+  void ArrowCountChanged() const;
 };
 
 #endif // PLAYER_H
