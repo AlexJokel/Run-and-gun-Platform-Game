@@ -12,8 +12,9 @@ public:
         float horizontal_speed,
         ObjectType = ObjectType::kEnemy,
         ShapeInfo* = PassShapeInfo(ShapeType::kRectangle, 0.5f, 0.5f));
+  ~Enemy() override;
 
-  protected:
+protected:
   class NearestObjectCallback : public b2RayCastCallback {
   public:
     NearestObjectCallback(const QVector<ObjectType>& opaque_types);
@@ -23,7 +24,7 @@ public:
 
     Object* GetNearestObject() const;
 
-protected:
+  protected:
     Object* nearest_object_ = nullptr;
     QVector<ObjectType> opaque_types_;
   };

@@ -15,6 +15,7 @@ Level::Level(class Game* game, qint32 provided_arrow_count,
              qreal width, qreal height)
     : Scene(game, width, height),
       world_(new b2World({0, 9.8f})),
+      frame_timer_(new QTimer()),
       provided_arrow_count_(provided_arrow_count),
       arrow_count_hint_(new QGraphicsTextItem()) {
   /// Set custom view update
@@ -33,7 +34,6 @@ Level::Level(class Game* game, qint32 provided_arrow_count,
 #endif
 
   /// Frame timer initialization
-  frame_timer_ = new QTimer();
   QObject::connect(frame_timer_, &QTimer::timeout, this, &Level::advance);
   frame_timer_->setInterval(static_cast<int>(1000 * kTimeStep_));
 
@@ -54,6 +54,9 @@ Level::~Level() {
   for (auto& object : this->items()) {
       delete object;
   }
+
+  delete world_;
+  delete frame_timer_;
 }
 
 b2World* Level::World() const {

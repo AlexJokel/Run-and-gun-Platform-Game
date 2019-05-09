@@ -24,6 +24,10 @@ Enemy::Enemy(class Level* level,
   SetPixmap(":/images/images/enemy.png", Qt::IgnoreAspectRatio);
 }
 
+Enemy::~Enemy() {
+  delete shot_;
+}
+
 Enemy::NearestObjectCallback::NearestObjectCallback(
     const QVector<ObjectType>& opaque_types)
     : b2RayCastCallback(), opaque_types_(opaque_types) {}

@@ -10,6 +10,7 @@ class PickLevelMenu : public Menu {
 public:
   PickLevelMenu(class Game*, qreal width, qreal height, QColor color,
                 qint32 column_count, qint32 row_count);
+  ~PickLevelMenu() override;
 
 public slots:
   void Draw();

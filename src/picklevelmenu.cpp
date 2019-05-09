@@ -31,6 +31,10 @@ PickLevelMenu::PickLevelMenu(class Game* game, qreal width, qreal height,
   addWidget(menu_button_block_);
 }
 
+PickLevelMenu::~PickLevelMenu() {
+  delete storage_;
+}
+
 void PickLevelMenu::Draw() {
   auto layout = new QGridLayout();
   for (int i = 0; i < column_count_; ++i) {

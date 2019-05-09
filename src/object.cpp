@@ -70,6 +70,10 @@ Object::Object(class Level* scene,
   body_->CreateFixture(&fixture_def);
   body_->SetUserData(this);
 
+  /// Clean up pointers
+  delete fixture_def.shape;
+  delete body_info.shape_info;
+
   /// Prepare for drawing
   auto rect_shape = dynamic_cast<b2PolygonShape*>(GetShape());
   auto half_width =

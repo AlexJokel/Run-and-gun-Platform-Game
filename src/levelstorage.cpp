@@ -19,6 +19,10 @@ LevelStorage::LevelStorage(qint32 level_number) :
   open_state_ = state_loader_->LoadState();
 }
 
+LevelStorage::~LevelStorage() {
+  delete state_loader_;
+}
+
 void LevelStorage::UnlockLevel(qint32 index) {
   assert(0 <= index && index < level_number_);
   open_state_[index] = true;
@@ -55,6 +59,7 @@ Level* LevelStorage::GetLevelByIndex(Game* game, qint32 index) const {
 
   auto loader = new LevelLoader(file_name);
   auto level = loader->LoadLevel(game);
+  delete loader;
   QObject::connect(level, &Level::Finish, [this, index]() {
     // 'this' in lambdas is const-qualified
     const_cast<LevelStorage*>(this)->UnlockLevel(

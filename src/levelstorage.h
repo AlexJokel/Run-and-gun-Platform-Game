@@ -10,6 +10,7 @@ class LevelStorage : public QObject {
   Q_OBJECT
 public:
   LevelStorage(qint32 level_number);
+  ~LevelStorage() override;
 
   void UnlockLevel(qint32 index);
   void LockLevel(qint32 index);
