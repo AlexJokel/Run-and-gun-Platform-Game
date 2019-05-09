@@ -3,6 +3,7 @@
 #include "bullet.h"
 
 #include <QTimer>
+#include <QDebug>
 
 Enemy::Enemy(class Level* level,
              b2Vec2 position,
@@ -24,7 +25,7 @@ Enemy::Enemy(class Level* level,
 }
 
 Enemy::NearestObjectCallback::NearestObjectCallback(
-    const QSet<ObjectType>& opaque_types)
+    const QVector<ObjectType>& opaque_types)
     : b2RayCastCallback(), opaque_types_(opaque_types) {}
 
 float Enemy::NearestObjectCallback::ReportFixture(b2Fixture* fixture,
@@ -32,9 +33,13 @@ float Enemy::NearestObjectCallback::ReportFixture(b2Fixture* fixture,
                                                   const b2Vec2&,
                                                   float fraction) {
   auto found_object = static_cast<Object*>(fixture->GetBody()->GetUserData());
-  if (!opaque_types_.contains(found_object->Type())) return -1;
-  nearest_object_ = found_object;
-  return fraction;
+  for (const auto& type : opaque_types_) {
+    if (Object::Inherits(found_object->Type(), type)) {
+      nearest_object_ = found_object;
+      return fraction;
+    }
+  }
+  return -1;
 }
 
 Object* Enemy::NearestObjectCallback::GetNearestObject() const {
