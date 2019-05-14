@@ -31,6 +31,7 @@ const QMap<int, QString> Settings::code_to_key = {
 Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
     : Menu(game, width, height, color) {
     auto layout = new QVBoxLayout();
+    Game()->RemoveScrollDisabler();
 
     // creating a title
     title_text_ = new QGraphicsTextItem("SETTINGS");
@@ -63,4 +64,8 @@ void Settings::AddButtonToLayout(QVBoxLayout* layout, qint32 width,
     button->setStyleSheet
         (CssStyleStorage::GetInstance().GetMenuButtonStyle());
     layout->addWidget(button);
+}
+
+Settings::~Settings() {
+  Game()->InstallScrollDisabler();
 }
