@@ -45,6 +45,24 @@ Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
     AddButtonToLayout(layout, 200, 100, "Right");
     AddButtonToLayout(layout, 200, 100, "Jump");
 
+    // creating screen button
+    auto screen_button = new Button((Game()->IsFullScreen()) ? "YES" : "NO", 200, 100);
+    layout->addWidget(screen_button);
+    screen_button->setStyleSheet
+        (CssStyleStorage::GetInstance().GetMenuButtonStyle());
+    QObject::connect(screen_button, &Button::clicked, this, [=]() {
+      if (Game()->IsFullScreen()) {
+        screen_button->setText("NO");
+        game->showNormal();
+        game->scale(0.71428,0.71428);
+      } else {
+        screen_button->setText("YES");
+        game->showFullScreen();
+        game->scale(1.4,1.4);
+      }
+      game->ChangeScreenState();
+    });
+
     menu_button_block_->setLayout(layout);
     MoveMenuBlock(700, 150);
     addWidget(menu_button_block_);
@@ -63,6 +81,7 @@ Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
     AddText("Left", 450, 165, {"comic", 30});
     AddText("Right", 450, 275, {"comic", 30});
     AddText("Jump", 450, 385, {"comic", 30});
+    AddText("Full screen", 450, 495, {"comic", 30});
 
 }
 
