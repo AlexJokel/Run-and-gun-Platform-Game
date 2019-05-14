@@ -22,7 +22,7 @@ MainMenu::MainMenu(class Game* game, qreal width, qreal height, QColor color)
       (CssStyleStorage::GetInstance().GetMenuButtonStyle());
   QObject::connect(play_button, &Button::clicked, this, [&] {
       Game()->PushScene(new PickLevelMenu(Game(), 1280, 720,
-                                          kOrangeDefaultBackground_, 3, 5));
+                                          kOrangeDefaultBackground_, 1, 4));
   });
   layout->addWidget(play_button);
 

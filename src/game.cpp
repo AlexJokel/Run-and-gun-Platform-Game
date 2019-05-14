@@ -3,6 +3,7 @@
 #include "level.h"
 #include "button.h"
 #include "main_menu.h"
+#include "picklevelmenu.h"
 
 #include <QScrollBar>
 #include <QDebug>
@@ -37,7 +38,7 @@ void Game::PopScene() {
     application_->quit();
     return;
   }
-  delete scenes_.top();
+  scenes_.top()->deleteLater();
   scenes_.pop();
   setScene(scenes_.top());
   scenes_.top()->Unpause();

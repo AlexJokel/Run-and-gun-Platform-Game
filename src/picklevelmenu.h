@@ -19,6 +19,7 @@ protected:
   int column_count_;
   int row_count_;
 
+  QPushButton* back_button;
   LevelStorage* storage_;
 };
 
