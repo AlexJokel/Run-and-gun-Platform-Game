@@ -12,6 +12,9 @@ Arrow::Arrow(class Level* scene,
   ///Enable rotation
   body_->SetFixedRotation(false);
 
+  /// Set gravity scale
+  body_->SetGravityScale(0.6f);
+
   /// Set starting velocity
   b2Vec2 velocity = Level()->MousePosition() - position;
   velocity *= kSpeed / velocity.Length(); /// Scale to desired length
