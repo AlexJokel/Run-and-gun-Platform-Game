@@ -9,6 +9,7 @@
 #include "cssstylestorage.h"
 
 #include <QScrollBar>
+#include <QSlider>
 
 const QMap<int, QString> Settings::code_to_key = {
   {32, "Space"}, {16777220, "Enter"},
@@ -67,6 +68,15 @@ Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
     MoveMenuBlock(700, 150);
     addWidget(menu_button_block_);
 
+    // creating sliders
+    auto general_slider = new QSlider(Qt::Horizontal);
+    general_slider->move(712, 620);
+    addWidget(general_slider);
+
+    auto effects_slider = new QSlider(Qt::Horizontal);
+    effects_slider->move(712, 690);
+    addWidget(effects_slider);
+
     // creating exit button
     auto exit_button = new Button("EXIT", 100, 100);
    exit_button->move(30,30);
@@ -78,10 +88,12 @@ Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
     });
 
     // creating text for controls
-    AddText("Left", 450, 165, {"comic", 30});
-    AddText("Right", 450, 275, {"comic", 30});
-    AddText("Jump", 450, 385, {"comic", 30});
-    AddText("Full screen", 450, 495, {"comic", 30});
+    AddText("Left", 380, 165, {"comic", 30});
+    AddText("Right", 380, 275, {"comic", 30});
+    AddText("Jump", 380, 385, {"comic", 30});
+    AddText("Full screen", 380, 495, {"comic", 30});
+    AddText("General music", 380, 590, {"comic", 30});
+    AddText("Effects", 380, 660, {"comic", 30});
 
 }
 
