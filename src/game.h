@@ -19,6 +19,9 @@ public slots:
   void InstallScrollDisabler();
   void RemoveScrollDisabler();
 
+  bool IsFullScreen();
+  void ChangeScreenState();
+
 protected:
   QApplication* application_;
 
@@ -29,6 +32,7 @@ protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
   };
 
+  bool full_screen_;
   ScrollDisabler* scroll_disabler_;
 };
 

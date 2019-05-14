@@ -8,7 +8,8 @@
 #include <QDebug>
 
 Game::Game(QApplication* application) : QGraphicsView(),
-                                        application_(application) {
+                                        application_(application),
+                                        full_screen_(false) {
   setFixedSize(1280, 720);
   setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -51,6 +52,16 @@ void Game::InstallScrollDisabler() {
 void Game::RemoveScrollDisabler() {
   setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
   verticalScrollBar()->removeEventFilter(scroll_disabler_);
+}
+
+bool Game::IsFullScreen()
+{
+  return full_screen_;
+}
+
+void Game::ChangeScreenState()
+{
+  full_screen_ = !full_screen_;
 }
 
 bool Game::ScrollDisabler::eventFilter(QObject*, QEvent* event) {
