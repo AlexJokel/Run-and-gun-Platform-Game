@@ -48,6 +48,16 @@ Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
     menu_button_block_->setLayout(layout);
     MoveMenuBlock(900, 150);
     addWidget(menu_button_block_);
+
+    // creating exit button
+    auto exit_button = new Button("EXIT", 100, 100);
+   exit_button->move(30,30);
+   exit_button->setStyleSheet
+       (CssStyleStorage::GetInstance().GetMenuButtonStyle());
+    addWidget(exit_button);
+    QObject::connect(exit_button, &Button::clicked, this, [&]() {
+      Game()->PopScene();
+    });
 }
 
 void Settings::AddText(QString text, qreal width, qreal height, QColor color) {
