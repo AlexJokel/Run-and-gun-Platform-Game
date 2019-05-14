@@ -46,7 +46,7 @@ Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
     AddButtonToLayout(layout, 200, 100, "Jump");
 
     menu_button_block_->setLayout(layout);
-    MoveMenuBlock(900, 150);
+    MoveMenuBlock(700, 150);
     addWidget(menu_button_block_);
 
     // creating exit button
@@ -58,9 +58,19 @@ Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
     QObject::connect(exit_button, &Button::clicked, this, [&]() {
       Game()->PopScene();
     });
+
+    // creating text for controls
+    AddText("Left", 450, 165, {"comic", 30});
+    AddText("Right", 450, 275, {"comic", 30});
+    AddText("Jump", 450, 385, {"comic", 30});
+
 }
 
-void Settings::AddText(QString text, qreal width, qreal height, QColor color) {
+void Settings::AddText(QString text, qreal width, qreal height, QFont font) {
+  auto button_text = new QGraphicsTextItem(text);
+  button_text->setFont(font);
+  button_text->setPos(width, height);
+  addItem(button_text);
   return;
 }
 
