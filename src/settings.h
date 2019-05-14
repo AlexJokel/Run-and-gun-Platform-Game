@@ -6,8 +6,11 @@
 class Settings : public Menu {
 public:
     Settings(class Game*, qreal width, qreal height, QColor);
-    void AddText(QString, qreal width, qreal height, QFont, QColor);
-    void AddButtonToLayout(QVBoxLayout* layout, QString name, qint32 width, qint32 height, QString key);
+    void AddText(QString, qreal width, qreal height, QColor);
+    void AddButtonToLayout(QVBoxLayout* layout, qint32 width, qint32 height, QString key);
+
+private:
+  static const QMap<int, QString> code_to_key;
 };
 
 #endif // SETTINGS_H

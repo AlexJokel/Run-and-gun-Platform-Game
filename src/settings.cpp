@@ -10,6 +10,24 @@
 
 #include <QScrollBar>
 
+const QMap<int, QString> Settings::code_to_key = {
+  {32, "Space"}, {16777220, "Enter"},
+  {16777221, "NumEnter"},{16777251, "Alt"},
+  {16777248, "Shift"}, {16777249, "Ctrl"},
+  {16777217, "Tab"}, {16777264, "F1"},
+  {16777265, "F2"}, {16777266, "F3"},
+  {16777267, "F4"}, {16777268, "F5"},
+  {16777269, "F6"}, {16777270, "F7"},
+  {16777271, "F8"}, {16777272, "F9"},
+  {16777273, "F10"}, {16777274, "F11"},
+  {16777275, "F12"}, {16777222, "Insert"},
+  {16777223, "Delete"}, {16777238, "PgUp"},
+  {16777239, "PgDn"}, {16777232, "Home"},
+  {16777233, "Home"}, {16777235, "🡹"},
+  {16777234, "🡸"}, {16777237, "🡻"},
+  {16777236, "🡺"}, {16777219, "Backspace"}
+};
+
 Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
     : Menu(game, width, height, color) {
     auto layout = new QVBoxLayout();
@@ -22,23 +40,26 @@ Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
     addItem(title_text_);
 
     // creating controls buttons
-    AddButtonToLayout(layout, "A", 200, 100, "Left");
-    AddButtonToLayout(layout, "D", 200, 100, "Right");
-    AddButtonToLayout(layout, "Space", 200, 100, "Jump");
+    AddButtonToLayout(layout, 200, 100, "Left");
+    AddButtonToLayout(layout, 200, 100, "Right");
+    AddButtonToLayout(layout, 200, 100, "Jump");
 
     menu_button_block_->setLayout(layout);
     MoveMenuBlock(900, 150);
     addWidget(menu_button_block_);
-
 }
 
-void Settings::AddText(QString text, qreal width, qreal height, QFont font, QColor color) {
-
+void Settings::AddText(QString text, qreal width, qreal height, QColor color) {
+  return;
 }
 
-void Settings::AddButtonToLayout(QVBoxLayout* layout, QString name, qint32 width,
+void Settings::AddButtonToLayout(QVBoxLayout* layout, qint32 width,
                                  qint32 height, QString key) {
-    auto button = new SettingsButton(name, width, height, key);
+    auto button = new SettingsButton(
+          (code_to_key.count(static_cast<int>(Player::controls_map_[key])) == 0)
+          ? static_cast<QString>(Player::controls_map_[key])
+          : code_to_key[static_cast<int>(Player::controls_map_[key])],
+                                     width, height, key);
     button->setStyleSheet
         (CssStyleStorage::GetInstance().GetMenuButtonStyle());
     layout->addWidget(button);
