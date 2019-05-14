@@ -3,6 +3,7 @@
 #include <QGraphicsView>
 
 #include "level.h"
+#include "soundeffectstorage.h"
 
 Creature::Creature(class Level* scene,
                    b2Vec2 position,
@@ -45,6 +46,7 @@ void Creature::RemoveOnCollision(ObjectType collider,
   for (const auto& remover : removing_types) {
     if (Object::Inherits(collider, remover)) {
       Level()->RemoveObject(this);
+      SoundEffectStorage::Play("Punch");
     }
   }
 }

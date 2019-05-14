@@ -1,6 +1,7 @@
 #include "enemy.h"
 #include "level.h"
 #include "bullet.h"
+#include "soundeffectstorage.h"
 
 #include <QTimer>
 #include <QDebug>
@@ -79,6 +80,7 @@ bool Enemy::Shot::TryShooting() {
 
   ready_ = false;
   QTimer::singleShot(kCooldownTime, this, &Shot::Ready);
+  SoundEffectStorage::Play("Gun shot");
   return true;
 }
 

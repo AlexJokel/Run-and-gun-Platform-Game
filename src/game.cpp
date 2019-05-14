@@ -19,6 +19,11 @@ Game::Game(QApplication* application) : QGraphicsView(),
 
   PushScene(new MainMenu(this, 1280, 720, Menu::kOrangeDefaultBackground_));
 
+  background_music_.playlist->addMedia(QUrl("qrc:/sounds/sounds/Big Rock.mp3"));
+  background_music_.playlist->setPlaybackMode(QMediaPlaylist::Loop);
+  background_music_.player->setPlaylist(background_music_.playlist);
+  background_music_.player->play();
+
   show();
 }
 
@@ -46,4 +51,9 @@ void Game::PopScene() {
 bool Game::ScrollDisabler::eventFilter(QObject*, QEvent* event) {
   if (event->type() == QEvent::Wheel) return true;
   return false;
+}
+
+Game::BackgroundMusic::~BackgroundMusic() {
+  delete player;
+  delete playlist;
 }

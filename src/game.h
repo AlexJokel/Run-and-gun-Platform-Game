@@ -4,6 +4,8 @@
 #include <QGraphicsView>
 #include <QStack>
 #include <QApplication>
+#include <QMediaPlayer>
+#include <QMediaPlaylist>
 
 #include "scene.h"
 
@@ -25,6 +27,13 @@ protected:
   protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
   };
+
+  struct BackgroundMusic {
+    QMediaPlayer* player = new QMediaPlayer();
+    QMediaPlaylist* playlist = new QMediaPlaylist();
+    ~BackgroundMusic();
+  };
+  BackgroundMusic background_music_;
 };
 
 #endif // GAME_H

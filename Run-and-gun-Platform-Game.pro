@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -47,6 +47,7 @@ SOURCES += \
     src/levelstorage.cpp \
     src/fileinitializationhelper.cpp \
     src/enemy.cpp \
+    src/soundeffectstorage.cpp \
     src/staticenemy.cpp \
     src/roamingenemy.cpp \
     src/bullet.cpp \
@@ -72,6 +73,7 @@ HEADERS += \
     src/levelstorage.h \
     src/fileinitializationhelper.h \
     src/enemy.h \
+    src/soundeffectstorage.h \
     src/staticenemy.h \
     src/roamingenemy.h \
     src/bullet.h \
