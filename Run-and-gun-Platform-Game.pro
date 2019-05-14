@@ -88,4 +88,4 @@ win32:!win32-g++: PRE_TARGETDEPS += $$PWD/lib/Box2D.lib
 else:win32-g++: PRE_TARGETDEPS += $$PWD/lib/libBox2D.a
 
 RESOURCES += \
-    resources/res.qrc
+    res/res.qrc
