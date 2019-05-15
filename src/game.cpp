@@ -11,13 +11,10 @@ Game::Game(QApplication* application) : QGraphicsView(),
                                         application_(application),
                                         full_screen_(false) {
   setFixedSize(1280, 720);
-  setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-  setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
   // Disable scroll events
   scroll_disabler_ = new ScrollDisabler();
-  verticalScrollBar()->installEventFilter(scroll_disabler_);
-  horizontalScrollBar()->installEventFilter(scroll_disabler_);
+  InstallScrollDisabler();
 
   PushScene(new MainMenu(this, 1280, 720, Menu::kOrangeDefaultBackground_));
 
