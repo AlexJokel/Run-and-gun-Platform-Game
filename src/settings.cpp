@@ -77,7 +77,9 @@ Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
                    Game(), &Game::SetMusicVolume);
   music_slider->setMaximum(100);
   music_slider->setValue(Game()->default_volume_);
-  music_slider->move(712, 670);
+  music_slider->move(712, 650);
+  music_slider->setStyleSheet(
+      CssStyleStorage::GetInstance().GetSettingsSliderStyle());
   addWidget(music_slider);
 
   auto effects_slider = new QSlider(Qt::Horizontal);
@@ -85,7 +87,9 @@ Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
                    &SoundEffectStorage::SetSoundVolume);
   effects_slider->setMaximum(100);
   effects_slider->setValue(effects_slider->maximum());
-  effects_slider->move(712, 740);
+  effects_slider->move(712, 715);
+  effects_slider->setStyleSheet(
+      CssStyleStorage::GetInstance().GetSettingsSliderStyle());
   addWidget(effects_slider);
 
   // creating exit button
