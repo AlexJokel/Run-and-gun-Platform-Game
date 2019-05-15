@@ -4,19 +4,19 @@
 
 SettingsButton::SettingsButton(const QString& title, qint32 width, qint32 height,  QString key,
                                QWidget* parent) :
-    Button (title, width, height, parent),
-    key_(key) {
-    this->setFocusPolicy(Qt::ClickFocus);
+  Button (title, width, height, parent),
+  key_(key) {
+  this->setFocusPolicy(Qt::ClickFocus);
 }
 
 void SettingsButton::ChangeControl(Qt::Key new_key) {
-    Player::controls_map_[key_] = new_key;
+  Player::controls_map_[key_] = new_key;
 }
 
 void SettingsButton::mousePressEvent(QMouseEvent*) {
-    qDebug() << "Mouse works";
-    setFocus();
-    this->setText(" ");
+  qDebug() << "Mouse works";
+  setFocus();
+  this->setText(" ");
 }
 
 void SettingsButton::keyReleaseEvent(QKeyEvent* event) {

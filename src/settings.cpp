@@ -58,11 +58,11 @@ Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
     if (Game()->IsFullScreen()) {
       screen_button->setText("NO");
       game->showNormal();
-      game->scale(0.71428,0.71428);
+      game->scale(0.6666,0.6666);
     } else {
       screen_button->setText("YES");
       game->showFullScreen();
-      game->scale(1.4,1.4);
+      game->scale(1.5,1.5);
     }
     game->ChangeScreenState();
   });
@@ -94,7 +94,7 @@ Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
 
   // creating exit button
   auto exit_button = new Button("EXIT", 100, 100);
-  exit_button->move(30,30);
+  exit_button->move(50,40);
   exit_button->setStyleSheet
       (CssStyleStorage::GetInstance().GetMenuButtonStyle());
   addWidget(exit_button);

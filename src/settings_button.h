@@ -6,14 +6,14 @@
 class SettingsButton : public Button {
 Q_OBJECT
 public:
-    SettingsButton(const QString& title, qint32 width, qint32 height, QString key,
-                   QWidget* parent = nullptr);
-    void ChangeControl(Qt::Key);
+  SettingsButton(const QString& title, qint32 width, qint32 height, QString key,
+                 QWidget* parent = nullptr);
+  void ChangeControl(Qt::Key);
 
-    void mousePressEvent(QMouseEvent *event) override;
-    void keyReleaseEvent(QKeyEvent* event) override;
+  void mousePressEvent(QMouseEvent *event) override;
+  void keyReleaseEvent(QKeyEvent* event) override;
 protected:
-    QString key_;
+  QString key_;
 };
 
 #endif // SETTINGS_BUTTON_H
