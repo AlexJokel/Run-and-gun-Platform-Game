@@ -75,6 +75,10 @@ void Game::SetMusicVolume(int new_volume) {
   background_music_.player->setVolume(new_volume);
 }
 
+int Game::GetMusicVolume() {
+  return background_music_.player->volume();
+}
+
 bool Game::ScrollDisabler::eventFilter(QObject*, QEvent* event) {
   if (event->type() == QEvent::Wheel) return true;
   return false;

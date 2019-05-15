@@ -13,6 +13,7 @@ public:
 
 public slots:
   static void SetSoundVolume(int new_volume);
+  static int GetSoundVolume();
 
 private:
   SoundEffectStorage();

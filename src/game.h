@@ -27,6 +27,7 @@ public slots:
   void ChangeScreenState();
 
   void SetMusicVolume(int new_volume);
+  int GetMusicVolume();
 
 protected:
   QApplication* application_;
