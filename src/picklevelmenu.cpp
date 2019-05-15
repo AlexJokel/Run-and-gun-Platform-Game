@@ -24,7 +24,14 @@ PickLevelMenu::PickLevelMenu(class Game* game, qreal width, qreal height,
   addItem(title_text_);
 
   Draw();
-
+  back_button = new Button("Back to main menu", 400, 100);
+  back_button->move(450, 500);
+  addWidget(back_button);
+  back_button->setStyleSheet
+      (CssStyleStorage::GetInstance().GetMenuButtonStyle());
+  back_button->setAttribute(Qt::WA_DeleteOnClose);
+  QObject::connect(back_button, &Button::clicked, Game(),
+                  &Game::PopScene);
   QObject::connect(storage_, &LevelStorage::Changed,
                    this, &PickLevelMenu::Draw);
 
@@ -41,7 +48,7 @@ void PickLevelMenu::Draw() {
     for (int j = 0; j < row_count_; ++j) {
       auto level_index = i * row_count_ + j;
       auto button = new Button(
-          "Level #" + QString::number(level_index), 120, 120);
+          "Level #" + QString::number(level_index), 150, 150);
 
       if (storage_->IsOpen(level_index)) {
         button->setStyleSheet
@@ -50,6 +57,7 @@ void PickLevelMenu::Draw() {
         button->setStyleSheet
            (CssStyleStorage::GetInstance().GetLockedButtonStyle());
       }
+      button->setFixedSize({250, 180});
       layout->addWidget(button, i, j);
       QObject::connect(button, &Button::clicked, this, [&, level_index] {
         //qDebug() << i << ' ' << j << "\n";
@@ -67,5 +75,5 @@ void PickLevelMenu::Draw() {
     delete menu_button_block_->layout();
   }
   menu_button_block_->setLayout(layout);
-  MoveMenuBlock(180, 200);
+  MoveMenuBlock(130, 200);
 }
