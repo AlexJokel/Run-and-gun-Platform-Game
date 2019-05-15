@@ -31,3 +31,7 @@ Bullet::Bullet(class Level* level,
       ReflectPixmap();
   }
 }
+
+void Bullet::Collide(ObjectType, const b2Contact*) {
+  Level()->RemoveObject(this);
+}

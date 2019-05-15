@@ -5,6 +5,7 @@
 #include <QKeyEvent>
 #include <QMap>
 #include <QSet>
+#include <QGraphicsTextItem>
 
 #include <Box2D/Box2D.h>
 
@@ -17,7 +18,8 @@
 class Level : public Scene {
   Q_OBJECT
 public:
-  Level(class Game*, qreal width = 1920, qreal heigh = 1080);
+  Level(class Game*, qint32 provided_arrow_count,
+        qreal width = 1920, qreal heigh = 1080);
   ~Level() override;
 
   void keyPressEvent(QKeyEvent*) override;
@@ -35,6 +37,7 @@ public:
   void Unpause() override;
 
   void RemoveObject(Object*);
+  void ScheduleFinish();
 
   b2World* World() const;
 
@@ -53,6 +56,9 @@ public:
   void SetPlayer(Player* player);
   void AppendGround(Ground* ground);
   void AppendEnemy(Enemy* enemy);
+
+  qint32 GetProvidedArrowCount() const;
+  void UpdateRemainingArrows(qint32 left);
 
 public: signals:
   void Finish();
@@ -87,6 +93,10 @@ protected:
   SceneObjects objects_;
 
   QSet<Object*> objects_for_removal;
+
+  bool finish_scheduled_ = false;
+  const qint32 provided_arrow_count_;
+  QGraphicsTextItem* arrow_count_hint_;
 };
 
 #endif // LEVEL_H

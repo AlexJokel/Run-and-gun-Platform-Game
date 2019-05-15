@@ -4,6 +4,7 @@
 #include <QDebug>
 
 #include "level.h"
+#include "soundeffectstorage.h"
 
 QMap<QString, Qt::Key> Player::controls_map_ = {
 {"Left", Qt::Key_A},
@@ -11,24 +12,54 @@ QMap<QString, Qt::Key> Player::controls_map_ = {
 {"Jump", Qt::Key_Space}
 };
 
-Player::Player(class Level* scene,
+Player::Player(class Level* level,
                b2Vec2 position,
                ShapeInfo* shape_info)
-    : Creature(scene, position, 5, ObjectType::kPlayer, shape_info),
-      kVerticalSpeed_(CalcSpeedForHeight(scene->World(), kJumpHeight_)) {
+    : Creature(level, position, 5, ObjectType::kPlayer,
+               {ObjectType::kBullet, ObjectType::kEnemy},
+               shape_info),
+      kVerticalSpeed_(CalcSpeedForHeight(level->World(), kJumpHeight_)) {
   /// Set player collision mask
   b2Filter player_filter;
   player_filter.categoryBits = CollisionMask::kPlayer;
   player_filter.maskBits ^= CollisionMask::kArrow;
   body_->GetFixtureList()->SetFilterData(player_filter);
 
+  /// Add fixture to check if grounded
+  b2FixtureDef grounded_checker_def;
+  grounded_checker_def.filter.maskBits = CollisionMask::kDefault;
+  grounded_checker_def.isSensor = true;
+  b2EdgeShape grounded_checker_shape;
+  auto body_shape = dynamic_cast<b2PolygonShape*>(GetShape());
+  grounded_checker_shape.Set(body_shape->GetVertex(3) + b2Vec2(0.01f, 0),
+                             body_shape->GetVertex(2) - b2Vec2(0.01f, 0));
+  grounded_checker_def.shape = &grounded_checker_shape;
+  jump_helper_.grounded_checker_ = body_->CreateFixture(&grounded_checker_def);
+
   /// Set pixmap
   SetPixmap(":/images/images/player.png", Qt::IgnoreAspectRatio);
+
+  /// Set initial arrow_count
+  arrow_count_ = level->GetProvidedArrowCount();
+  QObject::connect(this, &Player::ArrowCountChanged,
+                   this, [&]() {
+      Level()->UpdateRemainingArrows(arrow_count_);
+  });
+  emit ArrowCountChanged();
 }
 
 void Player::advance(int phase) {
   Creature::advance(phase);
   Level()->views().front()->centerOn(this);
+}
+
+void Player::Collide(ObjectType type, const b2Contact* contact) {
+  Creature::Collide(type, contact);
+  if ((contact->GetFixtureA() == jump_helper_.grounded_checker_) ||
+      (contact->GetFixtureB() == jump_helper_.grounded_checker_)) {
+    jump_helper_.grounded_ ^= true;
+    if (jump_helper_.grounded_) jump_helper_.jumped_ = false;
+  }
 }
 
 float Player::GetDesiredSpeed() const {
@@ -51,11 +82,12 @@ void Player::Move() {
   }
 
   // Handle jumping
-  if (Level()->KeyPressed(Player::controls_map_["Jump"])) {
-    if (qAbs(body_->GetLinearVelocity().y) < 1e-3f) {
-      body_->ApplyLinearImpulse({0, -kVerticalSpeed_ * body_->GetMass()},
-                                body_->GetWorldCenter(), true);
-    }
+  if (jump_helper_.grounded_ && !jump_helper_.jumped_ &&
+          Level()->KeyPressed(Player::controls_map_["Jump"])) {
+    body_->ApplyLinearImpulse({0, -kVerticalSpeed_ * body_->GetMass()},
+                              body_->GetWorldCenter(), true);
+    jump_helper_.jumped_ = true;
+    SoundEffectStorage::Play("Jump");
   }
 
   Creature::Move();
@@ -63,7 +95,11 @@ void Player::Move() {
 
 void Player::Shoot() {
   if (!Level()->ButtonReleased(Qt::LeftButton)) return;
+  if (arrow_count_ == 0) return;
+  --arrow_count_;
+  emit ArrowCountChanged();
   new Arrow(Level(), body_->GetWorldCenter());
+  SoundEffectStorage::Play("Arrow shot");
 }
 
 /// Copy-pasted this function

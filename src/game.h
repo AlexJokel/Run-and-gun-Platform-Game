@@ -4,6 +4,8 @@
 #include <QGraphicsView>
 #include <QStack>
 #include <QApplication>
+#include <QMediaPlayer>
+#include <QMediaPlaylist>
 
 #include "scene.h"
 
@@ -34,6 +36,13 @@ protected:
 
   bool full_screen_;
   ScrollDisabler* scroll_disabler_;
+
+  struct BackgroundMusic {
+    QMediaPlayer* player = new QMediaPlayer();
+    QMediaPlaylist* playlist = new QMediaPlaylist();
+    ~BackgroundMusic();
+  };
+  BackgroundMusic background_music_;
 };
 
 #endif // GAME_H

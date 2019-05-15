@@ -12,11 +12,12 @@ public:
         float horizontal_speed,
         ObjectType = ObjectType::kEnemy,
         ShapeInfo* = PassShapeInfo(ShapeType::kRectangle, 0.5f, 0.5f));
+  ~Enemy() override;
 
 protected:
   class NearestObjectCallback : public b2RayCastCallback {
   public:
-    NearestObjectCallback(const QSet<ObjectType>& opaque_types);
+    NearestObjectCallback(const QVector<ObjectType>& opaque_types);
 
     float ReportFixture(b2Fixture* fixture, const b2Vec2& point,
                         const b2Vec2& normal, float fraction) override;
@@ -25,7 +26,7 @@ protected:
 
   protected:
     Object* nearest_object_ = nullptr;
-    QSet<ObjectType> opaque_types_;
+    QVector<ObjectType> opaque_types_;
   };
 
   class Shot;

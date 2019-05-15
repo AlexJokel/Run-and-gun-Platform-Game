@@ -10,6 +10,7 @@ const QHash<ObjectType, ObjectType> Object::parents_{
     {ObjectType::kGround,       ObjectType::kObject},
     {ObjectType::kArrow,        ObjectType::kObject},
     {ObjectType::kBullet,       ObjectType::kObject},
+    {ObjectType::kFinishPoint,  ObjectType::kGround},
     {ObjectType::kPlayer,       ObjectType::kCreature},
     {ObjectType::kEnemy,        ObjectType::kCreature},
     {ObjectType::kStaticEnemy,  ObjectType::kEnemy},
@@ -69,11 +70,16 @@ Object::Object(class Level* scene,
   body_->CreateFixture(&fixture_def);
   body_->SetUserData(this);
 
+  /// Clean up pointers
+  delete fixture_def.shape;
+  delete body_info.shape_info;
+
   /// Prepare for drawing
-  auto rect_shape = dynamic_cast<b2PolygonShape*>(
-        body_->GetFixtureList()->GetShape());
-  auto half_width = Level()->MetersToPixels(qAbs(rect_shape->m_vertices[0].x));
-  auto half_height = Level()->MetersToPixels(qAbs(rect_shape->m_vertices[0].y));
+  auto rect_shape = dynamic_cast<b2PolygonShape*>(GetShape());
+  auto half_width =
+      Level()->MetersToPixels(qAbs(rect_shape->m_vertices[0].x));
+  auto half_height =
+      Level()->MetersToPixels(qAbs(rect_shape->m_vertices[0].y));
   setTransformOriginPoint(half_width, half_height);
   Draw();
 }
@@ -96,8 +102,7 @@ void Object::advance(int phase) {
 void Object::Draw() {
   /// Set position
   b2Vec2 top_left_corner = body_->GetPosition()
-      + dynamic_cast<b2PolygonShape*>(
-          body_->GetFixtureList()->GetShape())->m_vertices[0];
+      + dynamic_cast<b2PolygonShape*>(GetShape())->m_vertices[0];
   setPos(Level()->MetersToPixels(top_left_corner));
 
   /// Deal with rotation
@@ -109,8 +114,7 @@ void Object::Draw() {
   /// Sets pixmap of an object
 void Object::SetPixmap(QString path, Qt::AspectRatioMode aspect_ratio_mode) {
     QPixmap pm(path);
-    auto rect_shape = dynamic_cast<b2PolygonShape*>(
-              body_->GetFixtureList()->GetShape());
+    auto rect_shape = dynamic_cast<b2PolygonShape*>(GetShape());
     float half_width = qAbs(rect_shape->m_vertices[0].x);
     float half_height = qAbs(rect_shape->m_vertices[0].y);
     QPixmap pm_scaled = pm.scaled(
@@ -135,6 +139,14 @@ b2Body* Object::GetBody() const {
   return body_;
 }
 
+b2Shape* Object::GetShape() const {
+  b2Fixture* result_fixture = body_->GetFixtureList();
+  while (result_fixture->GetNext() != nullptr) {
+    result_fixture = result_fixture->GetNext();
+  }
+  return result_fixture->GetShape();
+}
+
 b2Vec2 Object::GetPos() const {
   return body_->GetWorldCenter();
 }
@@ -150,11 +162,12 @@ ObjectType Object::Type() const {
   return type_;
 }
 
-bool Object::Inherits(ObjectType type) const {
-  auto current_type = Type();
-  while (current_type != type) {
-    if (current_type == ObjectType::kObject) return false;
-    current_type = parents_[current_type];
+bool Object::Inherits(ObjectType child, ObjectType parent) {
+  while (child != parent) {
+    if (child == ObjectType::kObject) return false;
+    child = parents_[child];
   }
   return true;
 }
+
+void Object::Collide(ObjectType, const b2Contact*) {}

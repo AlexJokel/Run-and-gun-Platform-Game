@@ -12,6 +12,9 @@ Arrow::Arrow(class Level* scene,
   ///Enable rotation
   body_->SetFixedRotation(false);
 
+  /// Set gravity scale
+  body_->SetGravityScale(0.6f);
+
   /// Set starting velocity
   b2Vec2 velocity = Level()->MousePosition() - position;
   velocity *= kSpeed / velocity.Length(); /// Scale to desired length
@@ -37,6 +40,10 @@ Arrow::Arrow(class Level* scene,
 void Arrow::advance(int phase) {
   SetAngle(body_->GetLinearVelocity());
   Object::advance(phase);
+}
+
+void Arrow::Collide(ObjectType, const b2Contact*) {
+  Level()->RemoveObject(this);
 }
 
 void Arrow::SetAngle(b2Vec2 velocity) {

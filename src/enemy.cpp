@@ -1,15 +1,19 @@
 #include "enemy.h"
 #include "level.h"
 #include "bullet.h"
+#include "soundeffectstorage.h"
 
 #include <QTimer>
+#include <QDebug>
 
 Enemy::Enemy(class Level* level,
              b2Vec2 position,
              float horizontal_speed,
              ObjectType type,
              ShapeInfo* shape_info)
-    : Creature(level, position, horizontal_speed, type, shape_info),
+    : Creature(level, position, horizontal_speed, type,
+               {ObjectType::kArrow, ObjectType::kPlayer},
+               shape_info),
       shot_(new Shot()) {
   /// Set enemy collision mask
   b2Filter enemy_filter;
@@ -21,8 +25,12 @@ Enemy::Enemy(class Level* level,
   SetPixmap(":/images/images/enemy.png", Qt::IgnoreAspectRatio);
 }
 
+Enemy::~Enemy() {
+  delete shot_;
+}
+
 Enemy::NearestObjectCallback::NearestObjectCallback(
-    const QSet<ObjectType>& opaque_types)
+    const QVector<ObjectType>& opaque_types)
     : b2RayCastCallback(), opaque_types_(opaque_types) {}
 
 float Enemy::NearestObjectCallback::ReportFixture(b2Fixture* fixture,
@@ -30,9 +38,13 @@ float Enemy::NearestObjectCallback::ReportFixture(b2Fixture* fixture,
                                                   const b2Vec2&,
                                                   float fraction) {
   auto found_object = static_cast<Object*>(fixture->GetBody()->GetUserData());
-  if (!opaque_types_.contains(found_object->Type())) return -1;
-  nearest_object_ = found_object;
-  return fraction;
+  for (const auto& type : opaque_types_) {
+    if (Object::Inherits(found_object->Type(), type)) {
+      nearest_object_ = found_object;
+      return fraction;
+    }
+  }
+  return -1;
 }
 
 Object* Enemy::NearestObjectCallback::GetNearestObject() const {
@@ -50,7 +62,9 @@ void Enemy::Shoot() {
                             ray_end_point);
 
   /// Shoot if necessary
-  if (nearest_object_callback.GetNearestObject()->Type() ==
+  auto nearest_object = nearest_object_callback.GetNearestObject();
+  if (nearest_object == nullptr) return;
+  if (nearest_object->Type() ==
       ObjectType::kPlayer) {
     player_visible_ = true;
     if (shot_->TryShooting()) {
@@ -66,6 +80,7 @@ bool Enemy::Shot::TryShooting() {
 
   ready_ = false;
   QTimer::singleShot(kCooldownTime, this, &Shot::Ready);
+  SoundEffectStorage::Play("Gun shot");
   return true;
 }
 

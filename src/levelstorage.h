@@ -6,17 +6,23 @@
 #include "levelloader.h"
 #include "level.h"
 
-class LevelStorage {
+class LevelStorage : public QObject {
+  Q_OBJECT
 public:
   LevelStorage(qint32 level_number);
+  ~LevelStorage() override;
 
   void UnlockLevel(qint32 index);
   void LockLevel(qint32 index);
   void SaveState() const;
+  void Update();
 
   bool IsOpen(qint32 index) const;
 
   Level* GetLevelByIndex(Game* game, qint32 index) const;
+
+public: signals:
+  void Changed();
 
 private:
   const QString kLevelPathPrefix_ = ":/levels/levels/";

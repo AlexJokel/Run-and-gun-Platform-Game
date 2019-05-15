@@ -11,9 +11,13 @@
 #include "staticenemy.h"
 #include "roamingenemy.h"
 
-Level::Level(class Game* game, qreal width, qreal height)
+Level::Level(class Game* game, qint32 provided_arrow_count,
+             qreal width, qreal height)
     : Scene(game, width, height),
-      world_(new b2World({0, 9.8f})) {
+      world_(new b2World({0, 15})),
+      frame_timer_(new QTimer()),
+      provided_arrow_count_(provided_arrow_count),
+      arrow_count_hint_(new QGraphicsTextItem()) {
   /// Set custom view update
   Game()->setViewportUpdateMode(QGraphicsView::NoViewportUpdate);
 
@@ -34,9 +38,17 @@ Level::Level(class Game* game, qreal width, qreal height)
 #endif
 
   /// Frame timer initialization
-  frame_timer_ = new QTimer();
   QObject::connect(frame_timer_, &QTimer::timeout, this, &Level::advance);
   frame_timer_->setInterval(static_cast<int>(1000 * kTimeStep_));
+
+  /// Enable displaying of arrow_count_hint_ box
+  QFont font("Comic Sans MS", 20);
+  font.setWeight(QFont::Black);
+  arrow_count_hint_->setFont(font);
+  arrow_count_hint_->setDefaultTextColor(QColor(255, 50, 0));
+  arrow_count_hint_->setZValue(std::numeric_limits<qreal>::max());
+  arrow_count_hint_->show();
+  addItem(arrow_count_hint_);
 }
 
 Level::~Level() {
@@ -46,6 +58,9 @@ Level::~Level() {
   for (auto& object : this->items()) {
       delete object;
   }
+
+  delete world_;
+  delete frame_timer_;
 }
 
 b2World* Level::World() const {
@@ -53,6 +68,12 @@ b2World* Level::World() const {
 }
 
 void Level::advance() {
+  if (finish_scheduled_) {
+    emit Finish();
+    Game()->PopScene();
+    return;
+  }
+
   /// Advance the world
   world_->Step(static_cast<float>(kTimeStep_), 8, 3);
 
@@ -70,12 +91,19 @@ void Level::advance() {
   QGraphicsScene::advance();
   mouse_state_.ClearButtons();
 
+  /// Update position of arrow_count_hint_ box
+  arrow_count_hint_->setPos(Game()->mapToScene(20, 20));
+
   /// Repaint the view
   if (!views().empty()) {
     views().front()->viewport()->repaint();
   } else {
     qDebug() << "Level has no game view!\n";
   }
+}
+
+void Level::UpdateRemainingArrows(qint32 left) {
+  arrow_count_hint_->setPlainText(QString::number(left) + " arrows remaining");
 }
 
 void Level::keyPressEvent(QKeyEvent *event) {
@@ -127,6 +155,10 @@ void Level::RemoveObject(Object* object) {
   objects_for_removal.insert(object);
 }
 
+void Level::ScheduleFinish() {
+  finish_scheduled_ = true;
+}
+
 qreal Level::MetersToPixels(float meters) const {
   return static_cast<qreal>(meters) * kMetersToPixelsRatio_;
 }
@@ -169,6 +201,10 @@ void Level::AppendGround(Ground* ground) {
 
 void Level::AppendEnemy(Enemy *enemy) {
   objects_.enemies.append(enemy);
+}
+
+qint32 Level::GetProvidedArrowCount() const {
+  return provided_arrow_count_;
 }
 
 b2Vec2 Level::PixelsToMeters(QPointF point) const {

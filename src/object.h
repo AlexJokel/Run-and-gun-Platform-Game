@@ -66,6 +66,7 @@ struct BodyInfo {
 enum class ObjectType {
   kObject,
   kGround,
+  kFinishPoint,
   kCreature,
   kPlayer,
   kEnemy,
@@ -97,15 +98,18 @@ public:
   friend class Level;
 
   b2Body* GetBody() const;
+  b2Shape* GetShape() const;
 
   b2Vec2 GetPos() const;
   b2Vec2 GetSize() const;
 
   ObjectType Type() const;
 
-  // Checks if 'this' inherits parameter type.
-  // Simply goes up the inheritance tree.
-  bool Inherits(ObjectType) const;
+  /// Checks if 'child' inherits 'parent'.
+  /// Simply goes up the inheritance tree.
+  static bool Inherits(ObjectType child, ObjectType parent);
+
+  virtual void Collide(ObjectType, const b2Contact*);
 
 protected:
   const ObjectType type_;

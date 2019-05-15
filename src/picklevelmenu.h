@@ -6,10 +6,19 @@
 #include "levelstorage.h"
 
 class PickLevelMenu : public Menu {
+  Q_OBJECT
 public:
   PickLevelMenu(class Game*, qreal width, qreal height, QColor color,
-                qint32 num_columns, qint32 num_rows);
+                qint32 column_count, qint32 row_count);
+  ~PickLevelMenu() override;
+
+public slots:
+  void Draw();
+
 protected:
+  int column_count_;
+  int row_count_;
+
   LevelStorage* storage_;
 };
 

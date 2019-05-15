@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -47,11 +47,13 @@ SOURCES += \
     src/levelstorage.cpp \
     src/fileinitializationhelper.cpp \
     src/enemy.cpp \
+    src/soundeffectstorage.cpp \
     src/staticenemy.cpp \
     src/roamingenemy.cpp \
     src/bullet.cpp \
     src/settings.cpp \
-    src/settings_button.cpp
+    src/settings_button.cpp \
+    src/finishpoint.cpp
 
 HEADERS += \
 #    Box2D/Box2D.h
@@ -74,10 +76,13 @@ HEADERS += \
     src/levelstorage.h \
     src/fileinitializationhelper.h \
     src/enemy.h \
+    src/soundeffectstorage.h \
     src/staticenemy.h \
     src/roamingenemy.h \
     src/settings_button.h \
-    src/bullet.h
+    src/bullet.h \
+    src/bullet.h \
+    src/finishpoint.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -90,4 +95,4 @@ win32:!win32-g++: PRE_TARGETDEPS += $$PWD/lib/Box2D.lib
 else:win32-g++: PRE_TARGETDEPS += $$PWD/lib/libBox2D.a
 
 RESOURCES += \
-    resources/res.qrc
+    res/res.qrc
