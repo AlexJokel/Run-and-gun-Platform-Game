@@ -33,7 +33,7 @@ MainMenu::MainMenu(class Game* game, qreal width, qreal height, QColor color)
       (CssStyleStorage::GetInstance().GetMenuButtonStyle());
   QObject::connect(settings_button, &Button::clicked, this, [&] {
       Game()->PushScene(new Settings(Game(), 1280, 720,
-                                     Qt::lightGray));
+                                     kOrangeDefaultBackground_));
   });
   layout->addWidget(settings_button);
 
