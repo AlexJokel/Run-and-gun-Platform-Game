@@ -52,6 +52,7 @@ void Game::PopScene() {
 
 void Game::InstallScrollDisabler() {
   setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+  setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   verticalScrollBar()->installEventFilter(scroll_disabler_);
 }
 

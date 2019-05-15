@@ -33,7 +33,7 @@ const QMap<int, QString> Settings::code_to_key = {
 Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
   : Menu(game, width, height, color) {
   auto layout = new QVBoxLayout();
-  Game()->RemoveScrollDisabler();
+  //Game()->RemoveScrollDisabler();
 
   // creating a title
   title_text_ = new QGraphicsTextItem("SETTINGS");
@@ -56,11 +56,11 @@ Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
     if (Game()->IsFullScreen()) {
       screen_button->setText("NO");
       game->showNormal();
-      game->scale(0.71428,0.71428);
+      game->scale(0.6666,0.6666);
     } else {
       screen_button->setText("YES");
       game->showFullScreen();
-      game->scale(1.4,1.4);
+      game->scale(1.5,1.5);
     }
     game->ChangeScreenState();
   });
@@ -126,5 +126,5 @@ void Settings::AddButtonToLayout(QVBoxLayout* layout, qint32 width,
 }
 
 Settings::~Settings() {
-  Game()->InstallScrollDisabler();
+ // Game()->InstallScrollDisabler();
 }
