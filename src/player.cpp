@@ -31,7 +31,7 @@ Player::Player(class Level* level,
   jump_helper_.grounded_checker_ = body_->CreateFixture(&grounded_checker_def);
 
   /// Set pixmap
-  SetPixmap(":/images/images/player.png", Qt::IgnoreAspectRatio);
+  SetPixmap(":/images/images/elf.png", Qt::IgnoreAspectRatio);
 
   /// Set initial arrow_count
   arrow_count_ = level->GetProvidedArrowCount();

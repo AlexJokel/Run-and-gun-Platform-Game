@@ -22,7 +22,7 @@ Enemy::Enemy(class Level* level,
   body_->GetFixtureList()->SetFilterData(enemy_filter);
 
   /// Add color
-  SetPixmap(":/images/images/enemy.png", Qt::IgnoreAspectRatio);
+  SetPixmap(":/images/images/soldier.png", Qt::IgnoreAspectRatio);
 }
 
 Enemy::~Enemy() {

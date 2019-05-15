@@ -2,12 +2,18 @@
     <qresource prefix="/images">
         <file>images/arrow.png</file>
         <file>images/arrow2.png</file>
-        <file>images/black_wall.jpg</file>
         <file>images/bullet.jpg</file>
         <file>images/button_background.jpg</file>
         <file>images/enemy.png</file>
         <file>images/lock.png</file>
         <file>images/player.png</file>
+        <file>images/black_wall_2.jpg</file>
+        <file>images/razmysel.jpg</file>
+        <file>images/soldier.jpg</file>
+        <file>images/black_wall_3.jpg</file>
+        <file>images/elf.jpg</file>
+        <file>images/elf.png</file>
+        <file>images/soldier.png</file>
     </qresource>
     <qresource prefix="/styles">
         <file>styles/locked_button_style.css</file>
