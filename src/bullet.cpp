@@ -4,7 +4,7 @@
 
 Bullet::Bullet(class Level* level,
                b2Vec2 position,
-               float direction,
+               b2Vec2 direction,
                ShapeInfo* shape_info)
     : Object(level,
              {position, shape_info, BodyType::kDynamic},
@@ -21,15 +21,21 @@ Bullet::Bullet(class Level* level,
 
   body_->SetGravityScale(0);
 
-  body_->ApplyLinearImpulse(
-      {direction * kHorizontalSpeed_ * body_->GetMass(), 0},
-      body_->GetWorldCenter(), true);
+  b2Vec2 impulse = direction;
+  impulse *= kSpeed_ / impulse.Length();
+  impulse *= body_->GetMass();
+  body_->ApplyLinearImpulse(impulse, body_->GetWorldCenter(), true);
+
+  body_->SetFixedRotation(false);
+  body_->SetTransform(body_->GetWorldCenter(),
+                      atan(impulse.y / impulse.x));
 
   /// Set pixmap
   SetPixmap(":/images/images/bullet.jpg", Qt::IgnoreAspectRatio);
-  if (direction < 0) {
+  if (direction.x < 0) {
       ReflectPixmap();
   }
+  Draw();
 }
 
 void Bullet::Collide(ObjectType, const b2Contact*) {

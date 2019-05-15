@@ -4,6 +4,7 @@
 #include <QDebug>
 
 #include "level.h"
+#include "soundeffectstorage.h"
 
 Player::Player(class Level* level,
                b2Vec2 position,
@@ -80,6 +81,7 @@ void Player::Move() {
     body_->ApplyLinearImpulse({0, -kVerticalSpeed_ * body_->GetMass()},
                               body_->GetWorldCenter(), true);
     jump_helper_.jumped_ = true;
+    SoundEffectStorage::Play("Jump");
   }
 
   Creature::Move();
@@ -91,6 +93,7 @@ void Player::Shoot() {
   --arrow_count_;
   emit ArrowCountChanged();
   new Arrow(Level(), body_->GetWorldCenter());
+  SoundEffectStorage::Play("Arrow shot");
 }
 
 /// Copy-pasted this function

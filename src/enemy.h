@@ -32,7 +32,7 @@ protected:
   class Shot;
   Shot* shot_;
   void Shoot() override;
-
+  const double FOV_ = 2 * M_PI / 3; // 120 degrees
   bool player_visible_ = false;
 };
 

@@ -14,7 +14,7 @@
 Level::Level(class Game* game, qint32 provided_arrow_count,
              qreal width, qreal height)
     : Scene(game, width, height),
-      world_(new b2World({0, 9.8f})),
+      world_(new b2World({0, 15})),
       frame_timer_(new QTimer()),
       provided_arrow_count_(provided_arrow_count),
       arrow_count_hint_(new QGraphicsTextItem()) {

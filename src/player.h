@@ -3,6 +3,7 @@
 
 #include <QGraphicsRectItem>
 #include <QMap>
+#include <QMediaPlayer>
 
 #include <Box2D/Box2D.h>
 
@@ -38,6 +39,7 @@ protected:
   float GetDesiredSpeed() const override;
   void Move() override;
   void Shoot() override;
+
 protected: signals:
   void ArrowCountChanged() const;
 };

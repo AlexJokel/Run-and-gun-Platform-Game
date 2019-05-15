@@ -24,11 +24,12 @@ int main(int argc, char *argv[]) {
   game->x(); // to suppress 'unused variable' warning
 
 //  FileInitializationHelper::CreateFirstLevel(game,
-//      "../Run-and-gun-Platform-Game/resources/levels/level0.dat");
+//      "../Run-and-gun-Platform-Game/res/levels/level0.dat");
 //  FileInitializationHelper::CreateSecondLevel(game,
 //      "../Run-and-gun-Platform-Game/resources/levels/level1.dat");
 //   FileInitializationHelper::CreateThirdLevel(game,
 //        "../Run-and-gun-Platform-Game/resources/levels/level2.dat");
+
 
   return application.exec();
 }
