@@ -5,12 +5,12 @@
 
 class Settings : public Menu {
 public:
-    Settings(class Game*, qreal width, qreal height, QColor);
+  Settings(class Game*, qreal width, qreal height, QColor);
 
-    void AddText(QString, qreal width, qreal height, QFont);
-    void AddButtonToLayout(QVBoxLayout* layout, qint32 width, qint32 height, QString key);
+  void AddText(QString, qreal width, qreal height, QFont);
+  void AddButtonToLayout(QVBoxLayout* layout, qint32 width, qint32 height, QString key);
 
-    ~Settings() override;
+  ~Settings() override;
 private:
   static const QMap<int, QString> code_to_key;
 };
