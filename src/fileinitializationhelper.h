@@ -11,6 +11,8 @@ public:
                                const QString& file_name = "level0.dat");
   static void CreateSecondLevel(class Game* game,
                                const QString& file_name = "level1.dat");
+  static void CreateThirdLevel(class Game* game,
+                               const QString& file_name = "level2.dat");
   static void CreateOpenLevelMap(const QString& file_name = "open_levels_state.dat");
 };
 

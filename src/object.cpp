@@ -152,8 +152,7 @@ b2Vec2 Object::GetPos() const {
 }
 
 b2Vec2 Object::GetSize() const {
-  auto rect_shape = dynamic_cast<b2PolygonShape*>(
-      body_->GetFixtureList()->GetShape());
+  auto rect_shape = dynamic_cast<b2PolygonShape*>(GetShape());
   return {qAbs(rect_shape->m_vertices[0].x),
         qAbs(rect_shape->m_vertices[0].y)};
 }

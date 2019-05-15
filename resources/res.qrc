@@ -16,5 +16,6 @@
     <qresource prefix="/levels">
         <file>levels/level0.dat</file>
         <file>levels/level1.dat</file>
+        <file>levels/level2.dat</file>
     </qresource>
 </RCC>

@@ -81,6 +81,34 @@ void FileInitializationHelper:: CreateSecondLevel(class Game* game, const QStrin
   delete level;
 }
 
+void FileInitializationHelper::CreateThirdLevel(class Game* game, const QString& file_name) {
+  auto level = new Level(game, 20);
+  level->SetPlayer(new Player(level, {2, 9.5}));
+
+  /// Platforms
+  level->AppendGround(new Ground(level, {0, 10}, {20, 0.5}));
+  level->AppendGround(new Ground(level, {0, -3}, {0.5, 13.5}));
+  level->AppendGround(new Ground(level, {20, -3}, {0.5, 13.5}));
+  level->AppendGround(new Ground(level, {5, 7.5}, {6, 0.5}));
+  level->AppendGround(new Ground(level, {14, 7.5}, {6, 0.5}));
+  level->AppendGround(new Ground(level, {9, 5}, {6, 0.5}));
+  level->AppendGround(new Ground(level, {2, 2}, {6, 0.5}));
+  level->AppendGround(new Ground(level, {11, -0.5}, {9, 0.5}));
+  level->AppendGround(new FinishPoint(level, {20, -3}, {0.01f, 3}));
+
+  /// Enemies
+  level->AppendEnemy(new StaticEnemy(level, {7, 9.5}));
+  level->AppendEnemy(new RoamingEnemy(level, {11, 9.5}, {10, 17}));
+  level->AppendEnemy(new RoamingEnemy(level, {6, 6.5}, {6, 10}));
+  level->AppendEnemy(new RoamingEnemy(level, {15, 6.5}, {15, 19}));
+  level->AppendEnemy(new RoamingEnemy(level, {9, 4.5}, {10, 14.5}));
+  level->AppendEnemy(new RoamingEnemy(level, {13, -1}, {12, 19}));
+
+  LevelLoader loader(file_name);
+  loader.WriteLevel(level);
+  delete level;
+}
+
 void FileInitializationHelper::CreateOpenLevelMap(const QString& file_name) {
   QMap<qint32, bool> open_state;
   for (qint32 i = 0; i < 15; ++i) {
