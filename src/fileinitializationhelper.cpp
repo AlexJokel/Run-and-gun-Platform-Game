@@ -88,7 +88,7 @@ void FileInitializationHelper::CreateThirdLevel(class Game* game, const QString&
   /// Bounds
   level->AppendGround(new Ground(level, {0, 10}, {20, 0.5}));
   level->AppendGround(new Ground(level, {0, -3}, {0.5, 13.5}));
-  level->AppendGround(new Ground(level, {20, -3}, {0.5, 13.5}));
+  level->AppendGround(new Ground(level, {20, -0.5}, {0.5, 10.5}));
 
   /// Platforms
   level->AppendGround(new Ground(level, {5, 7.5}, {6, 0.5}));

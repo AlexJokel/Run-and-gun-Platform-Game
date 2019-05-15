@@ -29,8 +29,8 @@ int main(int argc, char *argv[]) {
 //      "../Run-and-gun-Platform-Game/res/levels/level1.dat");
 //   FileInitializationHelper::CreateThirdLevel(game,
 //        "../Run-and-gun-Platform-Game/res/levels/level2.dat");
-     FileInitializationHelper::CreateForthLevel(game,
-          "../Run-and-gun-Platform-Game/res/levels/level3.dat");
+//     FileInitializationHelper::CreateForthLevel(game,
+//          "../Run-and-gun-Platform-Game/res/levels/level3.dat");
 
 
   return application.exec();
