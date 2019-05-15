@@ -44,7 +44,12 @@ Player::Player(class Level* level,
 
 void Player::advance(int phase) {
   Creature::advance(phase);
-  Level()->views().front()->centerOn(this);
+  Level()->views().front()->ensureVisible(this,
+      static_cast<int>(Level()->views().front()->width() / 2 -
+          transformOriginPoint().x() - 2),
+      static_cast<int>(Level()->views().front()->height() / 2 -
+          transformOriginPoint().y() - 2));
+//  Level()->views().front()->centerOn(this);
 }
 
 void Player::Collide(ObjectType type, const b2Contact* contact) {
