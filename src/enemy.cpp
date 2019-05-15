@@ -70,7 +70,8 @@ void Enemy::Shoot() {
         (nearest_object->Type() == ObjectType::kPlayer)) {
       player_visible_ = true;
       if (shot_->TryShooting()) {
-        new Bullet(Level(), body_->GetWorldCenter(), direction_);
+        new Bullet(Level(), body_->GetWorldCenter(),
+                   ray_end_point - body_->GetWorldCenter());
       }
       return;
     } else {
