@@ -17,6 +17,7 @@ Game::Game(QApplication* application) : QGraphicsView(),
   // Disable scroll events
   scroll_disabler_ = new ScrollDisabler();
   verticalScrollBar()->installEventFilter(scroll_disabler_);
+  horizontalScrollBar()->installEventFilter(scroll_disabler_);
 
   PushScene(new MainMenu(this, 1280, 720, Menu::kOrangeDefaultBackground_));
 
@@ -54,11 +55,13 @@ void Game::InstallScrollDisabler() {
   setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   verticalScrollBar()->installEventFilter(scroll_disabler_);
+  horizontalScrollBar()->installEventFilter(scroll_disabler_);
 }
 
 void Game::RemoveScrollDisabler() {
   setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
   verticalScrollBar()->removeEventFilter(scroll_disabler_);
+  horizontalScrollBar()->removeEventFilter(scroll_disabler_);
 }
 
 bool Game::IsFullScreen()
