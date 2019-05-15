@@ -23,6 +23,7 @@ Game::Game(QApplication* application) : QGraphicsView(),
   background_music_.playlist->addMedia(QUrl("qrc:/sounds/sounds/Big Rock.mp3"));
   background_music_.playlist->setPlaybackMode(QMediaPlaylist::Loop);
   background_music_.player->setPlaylist(background_music_.playlist);
+  SetMusicVolume(default_volume_);
   background_music_.player->play();
 
   show();
@@ -67,6 +68,10 @@ bool Game::IsFullScreen()
 void Game::ChangeScreenState()
 {
   full_screen_ = !full_screen_;
+}
+
+void Game::SetMusicVolume(int new_volume) {
+  background_music_.player->setVolume(new_volume);
 }
 
 bool Game::ScrollDisabler::eventFilter(QObject*, QEvent* event) {

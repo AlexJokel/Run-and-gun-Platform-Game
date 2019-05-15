@@ -14,3 +14,7 @@ void SoundEffectStorage::Play(const QString& name) {
   });
   player->play();
 }
+
+void SoundEffectStorage::SetSoundVolume(int new_volume) {
+  volume_ = new_volume;
+}

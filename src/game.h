@@ -14,6 +14,8 @@ class Game : public QGraphicsView {
 public:
   Game(QApplication*);
 
+  const int default_volume_ = 70;
+
 public slots:
   void PushScene(Scene*);
   void PopScene();
@@ -23,6 +25,8 @@ public slots:
 
   bool IsFullScreen();
   void ChangeScreenState();
+
+  void SetMusicVolume(int new_volume);
 
 protected:
   QApplication* application_;
