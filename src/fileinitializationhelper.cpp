@@ -194,7 +194,6 @@ void FileInitializationHelper::CreateOpenLevelMap(const QString& file_name) {
     open_state[i] = false;
   }
   open_state[0] = true;
-  open_state[1] = true;
 
   QFile file(file_name);
   file.open(QIODevice::WriteOnly);
