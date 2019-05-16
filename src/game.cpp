@@ -58,6 +58,7 @@ void Game::InstallScrollDisabler() {
 void Game::RemoveScrollDisabler() {
   setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
   verticalScrollBar()->removeEventFilter(scroll_disabler_);
+  setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   horizontalScrollBar()->removeEventFilter(scroll_disabler_);
 }
 

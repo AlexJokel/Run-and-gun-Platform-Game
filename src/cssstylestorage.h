@@ -9,6 +9,8 @@ public:
 
   const QString& GetMenuButtonStyle() const;
   const QString& GetLockedButtonStyle() const;
+  const QString& GetSettingsSliderStyle() const;
+
 private:
   CssStyleStorage();
   ~CssStyleStorage();
@@ -18,6 +20,7 @@ private:
 
   QString menu_button_style_;
   QString locked_button_style_;
+  QString settings_slider_;
 };
 
 #endif // CSSSTYLESTORAGE_H

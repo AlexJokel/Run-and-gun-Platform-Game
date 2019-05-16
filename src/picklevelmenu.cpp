@@ -18,9 +18,11 @@ PickLevelMenu::PickLevelMenu(class Game* game, qreal width, qreal height,
       storage_(new LevelStorage(column_count * row_count)) {
   /// writing hint
   title_text_ = new QGraphicsTextItem("Pick a level");
-  title_text_->setFont(QFont("Times", 50));
+  QFont title_font("Verdana", 80);
+  title_font.setBold(true);
+  title_text_->setFont(title_font);
   title_text_->setPos(this->width() / 2
-                      - title_text_->boundingRect().width() / 2, 0);
+                      - title_text_->boundingRect().width() / 2, 20);
   addItem(title_text_);
 
   Draw();

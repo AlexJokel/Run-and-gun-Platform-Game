@@ -37,9 +37,11 @@ Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
 
   // creating a title
   title_text_ = new QGraphicsTextItem("SETTINGS");
-  title_text_->setFont(QFont("Comic", 70));
+  QFont title_font("Verdana", 80);
+  title_font.setBold(true);
+  title_text_->setFont(title_font);
   title_text_->setPos(this->width() / 2 -
-                      title_text_->boundingRect().width() / 2, -25);
+                      title_text_->boundingRect().width() / 2, 20);
   addItem(title_text_);
 
   // creating controls buttons
@@ -67,7 +69,7 @@ Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
     SettingsLoader(game, "settings_state.dat").SaveSettings();
   });
   menu_button_block_->setLayout(layout);
-  MoveMenuBlock(700, 110);
+  MoveMenuBlock(700, 200);
   addWidget(menu_button_block_);
 
   // creating sliders
@@ -79,7 +81,9 @@ Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
   });
   music_slider->setMaximum(100);
   music_slider->setValue(Game()->default_volume_);
-  music_slider->move(712, 580);
+  music_slider->move(712, 650);
+  music_slider->setStyleSheet(
+      CssStyleStorage::GetInstance().GetSettingsSliderStyle());
   addWidget(music_slider);
 
   auto effects_slider = new QSlider(Qt::Horizontal);
@@ -91,12 +95,14 @@ Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
 
   effects_slider->setMaximum(100);
   effects_slider->setValue(effects_slider->maximum());
-  effects_slider->move(712, 650);
+  effects_slider->move(712, 715);
+  effects_slider->setStyleSheet(
+      CssStyleStorage::GetInstance().GetSettingsSliderStyle());
   addWidget(effects_slider);
 
   // creating exit button
   auto exit_button = new Button("EXIT", 300, 100);
-  exit_button->move(500,700);
+  exit_button->move(500,790);
   exit_button->setStyleSheet
       (CssStyleStorage::GetInstance().GetMenuButtonStyle());
   addWidget(exit_button);
@@ -107,12 +113,12 @@ Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
 
 
   // creating text for controls
-  AddText("Left", 380, 125, {"comic", 30});
-  AddText("Right", 380, 235, {"comic", 30});
-  AddText("Jump", 380, 345, {"comic", 30});
-  AddText("Full screen", 380, 455, {"comic", 30});
-  AddText("Music", 380, 550, {"comic", 30});
-  AddText("Effects", 380, 620, {"comic", 30});
+  AddText("Left", 380, 215, {"Verdana", 30});
+  AddText("Right", 380, 325, {"Verdana", 30});
+  AddText("Jump", 380, 435, {"Verdana", 30});
+  AddText("Full screen", 380, 545, {"Verdana", 30});
+  AddText("Music", 380, 640, {"Verdana", 30});
+  AddText("Effects", 380, 710, {"Verdana", 30});
 }
 
 void Settings::AddText(QString text, qreal width, qreal height, QFont font) {
@@ -139,5 +145,5 @@ void Settings::AddButtonToLayout(QVBoxLayout* layout, qint32 width,
 }
 
 Settings::~Settings() {
- // Game()->InstallScrollDisabler();
+  Game()->InstallScrollDisabler();
 }
