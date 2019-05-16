@@ -54,7 +54,8 @@ SOURCES += \
     src/bullet.cpp \
     src/settings.cpp \
     src/settings_button.cpp \
-    src/finishpoint.cpp
+    src/finishpoint.cpp \
+    src/levelgenerator.cpp
 
 HEADERS += \
 #    Box2D/Box2D.h
@@ -84,7 +85,8 @@ HEADERS += \
     src/settings_button.h \
     src/bullet.h \
     src/bullet.h \
-    src/finishpoint.h
+    src/finishpoint.h \
+    src/levelgenerator.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

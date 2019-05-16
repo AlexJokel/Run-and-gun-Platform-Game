@@ -3,6 +3,7 @@
 #include "level.h"
 #include "button.h"
 #include "main_menu.h"
+#include "picklevelmenu.h"
 
 #include <QScrollBar>
 #include <QDebug>

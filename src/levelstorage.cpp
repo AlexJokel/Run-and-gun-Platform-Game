@@ -24,15 +24,17 @@ LevelStorage::~LevelStorage() {
 }
 
 void LevelStorage::UnlockLevel(qint32 index) {
-  assert(0 <= index && index < level_number_);
-  open_state_[index] = true;
-  Update();
+  if (0 <= index && index < level_number_) {
+   open_state_[index] = true;
+    Update();
+  }
 }
 
 void LevelStorage::LockLevel(qint32 index) {
-  assert(0 <= index && index < level_number_);
-  open_state_[index] = false;
-  Update();
+  if (0 <= index && index < level_number_) {
+    open_state_[index] = false;
+    Update();
+  }
 }
 
 void LevelStorage::SaveState() const {
@@ -45,12 +47,16 @@ void LevelStorage::Update() {
 }
 
 bool LevelStorage::IsOpen(qint32 index) const {
-  assert(0 <= index && index < level_number_);
+  if (index < 0 || index >= level_number_) {
+    return false;
+  }
   return open_state_.value(index);
 }
 
 Level* LevelStorage::GetLevelByIndex(Game* game, qint32 index) const {
-  assert(0 <= index && index < level_number_);
+  if (index < 0 || index >= level_number_) {
+    return nullptr;
+  }
   if (!open_state_[index]) {
     return nullptr;
   }

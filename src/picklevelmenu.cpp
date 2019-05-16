@@ -15,7 +15,8 @@ PickLevelMenu::PickLevelMenu(class Game* game, qreal width, qreal height,
     : Menu(game, width, height, color),
       column_count_(column_count),
       row_count_(row_count),
-      storage_(new LevelStorage(column_count * row_count)) {
+      storage_(new LevelStorage(column_count * row_count)),
+      level_generator_(new LevelGenerator()) {
   /// writing hint
   title_text_ = new QGraphicsTextItem("Pick a level");
   QFont title_font("Verdana", 80);
@@ -27,6 +28,22 @@ PickLevelMenu::PickLevelMenu(class Game* game, qreal width, qreal height,
 
   Draw();
 
+  play_random_button_ = new Button("Generate random level", 400, 100);
+  play_random_button_->move(450, 430);
+  addWidget(play_random_button_);
+  play_random_button_->setStyleSheet
+      (CssStyleStorage::GetInstance().GetMenuButtonStyle());
+  QObject::connect(play_random_button_, &Button::clicked, this, [&] {
+    Game()->PushScene(level_generator_->GenerateRandomLevel(Game(), 30));
+  });
+
+  back_button_ = new Button("Back to main menu", 400, 100);
+  back_button_->move(450, 550);
+  addWidget(back_button_);
+  back_button_->setStyleSheet
+      (CssStyleStorage::GetInstance().GetMenuButtonStyle());
+  QObject::connect(back_button_, &Button::clicked, Game(),
+                  &Game::PopScene);
   QObject::connect(storage_, &LevelStorage::Changed,
                    this, &PickLevelMenu::Draw);
 
@@ -43,7 +60,7 @@ void PickLevelMenu::Draw() {
     for (int j = 0; j < row_count_; ++j) {
       auto level_index = i * row_count_ + j;
       auto button = new Button(
-          "Level #" + QString::number(level_index), 120, 120);
+          "Level #" + QString::number(level_index), 150, 150);
 
       if (storage_->IsOpen(level_index)) {
         button->setStyleSheet
@@ -52,6 +69,7 @@ void PickLevelMenu::Draw() {
         button->setStyleSheet
            (CssStyleStorage::GetInstance().GetLockedButtonStyle());
       }
+      button->setFixedSize({250, 180});
       layout->addWidget(button, i, j);
       QObject::connect(button, &Button::clicked, this, [&, level_index] {
         //qDebug() << i << ' ' << j << "\n";
@@ -69,5 +87,5 @@ void PickLevelMenu::Draw() {
     delete menu_button_block_->layout();
   }
   menu_button_block_->setLayout(layout);
-  MoveMenuBlock(180, 200);
+  MoveMenuBlock(130, 200);
 }

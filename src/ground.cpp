@@ -13,5 +13,5 @@ Ground::Ground(class Level* scene,
               BodyType::kStatic},
              type) {
     /// Set pixmap
-    SetPixmap(":/images/images/black_wall.jpg", Qt::IgnoreAspectRatio);
+    SetPixmap(":/images/images/black_wall_3.jpg", Qt::IgnoreAspectRatio);
 }
