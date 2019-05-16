@@ -6,6 +6,12 @@
 #include "level.h"
 #include "soundeffectstorage.h"
 
+QMap<QString, Qt::Key> Player::controls_map_ = {
+{"Left", Qt::Key_A},
+{"Right", Qt::Key_D},
+{"Jump", Qt::Key_Space}
+};
+
 Player::Player(class Level* level,
                b2Vec2 position,
                ShapeInfo* shape_info)
@@ -63,10 +69,10 @@ void Player::Collide(ObjectType type, const b2Contact* contact) {
 
 float Player::GetDesiredSpeed() const {
   float desired_speed = 0;
-  if (Level()->KeyPressed(Qt::Key_A)) {
+  if (Level()->KeyPressed(Player::controls_map_["Left"])) {
     desired_speed -= kHorizontalSpeed_;
   }
-  if (Level()->KeyPressed(Qt::Key_D)) {
+  if (Level()->KeyPressed(Player::controls_map_["Right"])) {
     desired_speed += kHorizontalSpeed_;
   }
   return desired_speed;
@@ -82,7 +88,7 @@ void Player::Move() {
 
   // Handle jumping
   if (jump_helper_.grounded_ && !jump_helper_.jumped_ &&
-          Level()->KeyPressed(Qt::Key_Space)) {
+          Level()->KeyPressed(Player::controls_map_["Jump"])) {
     body_->ApplyLinearImpulse({0, -kVerticalSpeed_ * body_->GetMass()},
                               body_->GetWorldCenter(), true);
     jump_helper_.jumped_ = true;

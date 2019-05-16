@@ -30,6 +30,10 @@ Level::Level(class Game* game, qint32 provided_arrow_count,
     for (size_t y = 0; y < this->height(); y += 100) {
       addItem(new QGraphicsRectItem(x, y, 1, 1));
     }
+
+
+
+
   }
 #endif
 

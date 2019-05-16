@@ -1,0 +1,44 @@
+/*
+.QSlider {
+/*	background: transparent;
+/*	min-height: 40px;
+	max-height: 40px;
+/*	height: 40px;
+}
+
+.QSlider::add-page:horizontal {
+/*	height: 10px;
+	color: #000000;
+}
+
+.QSlider::sub-page:horizontal {
+/*	height: 10px;
+}
+
+.QSlider::handle:horizontal {
+/*	height: 40px;
+	color: rgb(50, 0, 140);
+}*/
+
+.QSlider {
+    min-height: 70px;
+    max-height: 70px;
+    background: transparent;
+}
+
+.QSlider::groove {
+    border-style: inset;
+    border-width: 3px;
+    border-radius: 5px;
+    border-color: rgb(50, 0, 140);
+    height: 15px;
+    background-image: url(":/images/images/button_background.jpg");
+}
+
+.QSlider::handle {
+    background: rgb(50, 0, 140);
+    width: 25px;
+    height: 30px;
+    margin: -10px 0px;
+	border-radius: 5px;
+}

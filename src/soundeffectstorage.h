@@ -11,6 +11,10 @@ public:
   /// Parameter string is the file name without extension.
   static void Play(const QString&);
 
+public slots:
+  static void SetSoundVolume(int new_volume);
+  static int GetSoundVolume();
+
 private:
   SoundEffectStorage();
 

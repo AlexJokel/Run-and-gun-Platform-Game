@@ -9,20 +9,20 @@
 #include <QDebug>
 
 Game::Game(QApplication* application) : QGraphicsView(),
-                                        application_(application) {
+                                        application_(application),
+                                        full_screen_(false) {
   setFixedSize(1280, 720);
-  setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-  setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-  /// Disable scroll events
-  auto scroll_disabler = new ScrollDisabler();
-  verticalScrollBar()->installEventFilter(scroll_disabler);
+  // Disable scroll events
+  scroll_disabler_ = new ScrollDisabler();
+  InstallScrollDisabler();
 
   PushScene(new MainMenu(this, 1280, 720, Menu::kOrangeDefaultBackground_));
 
   background_music_.playlist->addMedia(QUrl("qrc:/sounds/sounds/Big Rock.mp3"));
   background_music_.playlist->setPlaybackMode(QMediaPlaylist::Loop);
   background_music_.player->setPlaylist(background_music_.playlist);
+  SetMusicVolume(default_volume_);
   background_music_.player->play();
 
   show();
@@ -47,6 +47,48 @@ void Game::PopScene() {
   scenes_.pop();
   setScene(scenes_.top());
   scenes_.top()->Unpause();
+}
+
+void Game::InstallScrollDisabler() {
+  setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+  setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+  verticalScrollBar()->installEventFilter(scroll_disabler_);
+  horizontalScrollBar()->installEventFilter(scroll_disabler_);
+}
+
+void Game::RemoveScrollDisabler() {
+  setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+  verticalScrollBar()->removeEventFilter(scroll_disabler_);
+  setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+  horizontalScrollBar()->removeEventFilter(scroll_disabler_);
+}
+
+void Game::ChangeScreenState() {
+  full_screen_ = !full_screen_;
+}
+
+bool Game::IsFullScreen() {
+  return full_screen_;
+}
+
+void Game::SetFullScreenMode() {
+  showFullScreen();
+  scale(1.5,1.5);
+  ChangeScreenState();
+}
+
+void Game::RemoveFullScreenMode() {
+  showNormal();
+  scale(0.6666,0.6666);
+  ChangeScreenState();
+}
+
+void Game::SetMusicVolume(int new_volume) {
+  background_music_.player->setVolume(new_volume);
+}
+
+int Game::GetMusicVolume() {
+  return background_music_.player->volume();
 }
 
 bool Game::ScrollDisabler::eventFilter(QObject*, QEvent* event) {

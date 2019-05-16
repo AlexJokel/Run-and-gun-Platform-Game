@@ -5,6 +5,7 @@
 #include <QDataStream>
 
 #include "level.h"
+#include "game.h"
 
 QDataStream& operator<<(QDataStream& out, const b2Vec2&);
 QDataStream& operator>>(QDataStream& in, b2Vec2&);
@@ -31,7 +32,10 @@ public:
   QMap<qint32, bool> LoadState() const;
   void SaveState(const QMap<qint32, bool>& state) const;
 
-private:
+  void LoadSettings(class Game* game) const;
+  void SaveSettings(class Game* game) const;
+
+protected:
   struct BoundingBox {
     b2Vec2 top_left;
     b2Vec2 bottom_right;

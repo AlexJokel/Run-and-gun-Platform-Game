@@ -18,6 +18,7 @@
     <qresource prefix="/styles">
         <file>styles/locked_button_style.css</file>
         <file>styles/main_menu_button.css</file>
+        <file>styles/settings_slider.css</file>
     </qresource>
     <qresource prefix="/levels">
         <file>levels/level0.dat</file>

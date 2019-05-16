@@ -3,6 +3,7 @@
 
 #include <QGraphicsRectItem>
 #include <QMap>
+#include <QMouseEvent>
 #include <QMediaPlayer>
 
 #include <Box2D/Box2D.h>
@@ -19,6 +20,8 @@ public:
   void advance(int) override;
 
   void Collide(ObjectType, const b2Contact*) override;
+
+  static QMap<QString, Qt::Key> controls_map_;
 
 protected:
   // if exactly 3 then the player collides with the exact corner

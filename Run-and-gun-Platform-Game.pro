@@ -47,10 +47,13 @@ SOURCES += \
     src/levelstorage.cpp \
     src/fileinitializationhelper.cpp \
     src/enemy.cpp \
+    src/settingsloader.cpp \
     src/soundeffectstorage.cpp \
     src/staticenemy.cpp \
     src/roamingenemy.cpp \
     src/bullet.cpp \
+    src/settings.cpp \
+    src/settings_button.cpp \
     src/finishpoint.cpp \
     src/levelgenerator.cpp
 
@@ -67,6 +70,7 @@ HEADERS += \
     src/game.h \
     src/button.h \
     src/menu.h \
+    src/settings.h \
     src/main_menu.h \
     src/picklevelmenu.h \
     src/cssstylestorage.h \
@@ -74,9 +78,12 @@ HEADERS += \
     src/levelstorage.h \
     src/fileinitializationhelper.h \
     src/enemy.h \
+    src/settingsloader.h \
     src/soundeffectstorage.h \
     src/staticenemy.h \
     src/roamingenemy.h \
+    src/settings_button.h \
+    src/bullet.h \
     src/bullet.h \
     src/finishpoint.h \
     src/levelgenerator.h
