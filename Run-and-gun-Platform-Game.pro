@@ -51,7 +51,8 @@ SOURCES += \
     src/staticenemy.cpp \
     src/roamingenemy.cpp \
     src/bullet.cpp \
-    src/finishpoint.cpp
+    src/finishpoint.cpp \
+    src/levelgenerator.cpp
 
 HEADERS += \
 #    Box2D/Box2D.h
@@ -77,7 +78,8 @@ HEADERS += \
     src/staticenemy.h \
     src/roamingenemy.h \
     src/bullet.h \
-    src/finishpoint.h
+    src/finishpoint.h \
+    src/levelgenerator.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
