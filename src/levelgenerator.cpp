@@ -1,7 +1,10 @@
 #include <random>
+#include <vector>
+#include <algorithm>
 #include <QtGlobal>
 
 #include "levelgenerator.h"
+#include "staticenemy.h"
 
 LevelGenerator::LevelGenerator(float width, float height)
       : width_(width), height_(height) {}
@@ -36,16 +39,30 @@ Level* LevelGenerator::GenerateRandomLevel(Game* game, qint32 arrows_count) {
   std::mt19937 generator(seed);
   std::uniform_real_distribution<float> distribution(-2.9f, 2.9f);
 
+  /// Create columns
   auto current_height = height_ / 2;
   for (float column = 0.0; column < width_; column += 0.8f) {
     level->AppendGround(new Ground(level,
-        {column, height_ - current_height}, {1, current_height}));
+        {column, height_ - current_height}, {1.5f, current_height}));
     auto jump = distribution(generator);
     current_height += jump;
-    qDebug() << current_height << "\n";
     current_height = qMin(current_height, height_ * 0.7f);
     current_height = qMax(current_height, 1.0f);
   }
+
+  /// Add enemies
+  std::vector<int> permutation(static_cast<uint>(width_) / 2 - 1);
+  std::iota(permutation.begin(), permutation.end(), 2);
+  std::random_shuffle(permutation.begin(), permutation.end());
+
+  uint enemy_cnt = static_cast<uint>(0.2f * width_ + 0.5f);
+  for (size_t i = 0; i < enemy_cnt; ++i) {
+    if (qAbs(width_ / 2 - static_cast<float>(2 * permutation[i])) >= 3.0f) {
+     level->AppendEnemy(new StaticEnemy(level,
+            {static_cast<float>(2 * permutation[i]), -5}));
+    }
+  }
+
   level->setSceneRect({level->MetersToPixels({0, 0}),
                       level->MetersToPixels({static_cast<float>(width_),
                                              static_cast<float>(height_)})});

@@ -6,7 +6,7 @@
 
 class LevelGenerator {
 public:
-  LevelGenerator(float width = 30.0, float height = 20.0);
+  LevelGenerator(float width = 40.0f, float height = 20.0f);
 
   void SetWidth(float width);
   void SetHeigth(float height);
