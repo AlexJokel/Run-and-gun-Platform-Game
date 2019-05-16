@@ -15,7 +15,8 @@ PickLevelMenu::PickLevelMenu(class Game* game, qreal width, qreal height,
     : Menu(game, width, height, color),
       column_count_(column_count),
       row_count_(row_count),
-      storage_(new LevelStorage(column_count * row_count)) {
+      storage_(new LevelStorage(column_count * row_count)),
+      level_generator_(new LevelGenerator()) {
   /// writing hint
   title_text_ = new QGraphicsTextItem("Pick a level");
   title_text_->setFont(QFont("Times", 50));
@@ -24,13 +25,22 @@ PickLevelMenu::PickLevelMenu(class Game* game, qreal width, qreal height,
   addItem(title_text_);
 
   Draw();
-  back_button = new Button("Back to main menu", 400, 100);
-  back_button->move(450, 500);
-  addWidget(back_button);
-  back_button->setStyleSheet
+
+  play_random_button_ = new Button("Generate random level", 400, 100);
+  play_random_button_->move(450, 430);
+  addWidget(play_random_button_);
+  play_random_button_->setStyleSheet
       (CssStyleStorage::GetInstance().GetMenuButtonStyle());
-  back_button->setAttribute(Qt::WA_DeleteOnClose);
-  QObject::connect(back_button, &Button::clicked, Game(),
+  QObject::connect(play_random_button_, &Button::clicked, this, [&] {
+    Game()->PushScene(level_generator_->GenerateRandomLevel(Game(), 30));
+  });
+
+  back_button_ = new Button("Back to main menu", 400, 100);
+  back_button_->move(450, 550);
+  addWidget(back_button_);
+  back_button_->setStyleSheet
+      (CssStyleStorage::GetInstance().GetMenuButtonStyle());
+  QObject::connect(back_button_, &Button::clicked, Game(),
                   &Game::PopScene);
   QObject::connect(storage_, &LevelStorage::Changed,
                    this, &PickLevelMenu::Draw);

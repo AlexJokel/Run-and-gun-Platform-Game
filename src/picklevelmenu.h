@@ -4,6 +4,7 @@
 #include "menu.h"
 #include "level.h"
 #include "levelstorage.h"
+#include "levelgenerator.h"
 
 class PickLevelMenu : public Menu {
   Q_OBJECT
@@ -19,8 +20,10 @@ protected:
   int column_count_;
   int row_count_;
 
-  QPushButton* back_button;
+  QPushButton* back_button_;
+  QPushButton* play_random_button_;
   LevelStorage* storage_;
+  LevelGenerator* level_generator_;
 };
 
 #endif // PICKLEVELMENU_H

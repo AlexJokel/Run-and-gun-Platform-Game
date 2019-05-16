@@ -1,32 +1,50 @@
+#include <random>
+#include <QtGlobal>
+
 #include "levelgenerator.h"
 
-LevelGenerator::LevelGenerator(qint32 width, qint32 height)
+LevelGenerator::LevelGenerator(float width, float height)
       : width_(width), height_(height) {}
 
-void LevelGenerator::SetWidth(qint32 width) {
+void LevelGenerator::SetWidth(float width) {
   width_ = width;
 }
 
-void LevelGenerator::SetHeigth(qint32 height) {
+void LevelGenerator::SetHeigth(float height) {
   height_ = height;
 }
 
-qint32 LevelGenerator::GetWidth() const {
+float LevelGenerator::GetWidth() const {
   return width_;
 }
 
-qint32 LevelGenerator::GetHeight() const {
+float LevelGenerator::GetHeight() const {
   return height_;
 }
 
 Level* LevelGenerator::GenerateRandomLevel(Game* game, qint32 arrows_count) {
   auto level = new Level(game, arrows_count);
+  level->SetPlayer(new Player(level, {width_ / 2, 0}));
 
-  qint32 current_height = height_ / 2;
-  for (qint32 column_index = 0; column_index < width_; ++column_index) {
+  /// Create walls
+  level->AppendGround(new Ground(level, {0, 0}, {1.0, height_}));
+  level->AppendGround(new Ground(level, {width_ - 1.0f, 0}, {1.0, height_}));
+
+  const long long seed =
+        std::chrono::duration_cast<std::chrono::microseconds>
+            (std::chrono::system_clock::now().time_since_epoch()).count();
+  std::mt19937 generator(seed);
+  std::uniform_real_distribution<float> distribution(-2.9f, 2.9f);
+
+  auto current_height = height_ / 2;
+  for (float column = 0.0; column < width_; column += 0.8f) {
     level->AppendGround(new Ground(level,
-        {static_cast<float>(column_index), static_cast<float>(height_ - current_height)},
-        {1, static_cast<float>(current_height)}));
+        {column, height_ - current_height}, {1, current_height}));
+    auto jump = distribution(generator);
+    current_height += jump;
+    qDebug() << current_height << "\n";
+    current_height = qMin(current_height, height_ * 0.7f);
+    current_height = qMax(current_height, 1.0f);
   }
   level->setSceneRect({level->MetersToPixels({0, 0}),
                       level->MetersToPixels({static_cast<float>(width_),
