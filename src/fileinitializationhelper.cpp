@@ -102,7 +102,7 @@ void FileInitializationHelper::SaveSettings(const QString &file_name) {
   QFile file(file_name);
   file.open(QIODevice::WriteOnly);
   QDataStream output(&file);
-  output << "Jump" << static_cast<int>(Qt::Key_W);
+  output << "Jump" << static_cast<int>(Qt::Key_Space);
   output << "Left" << static_cast<int>(Qt::Key_A);
   output << "Right" << static_cast<int>(Qt::Key_D);
   output << "Screen" << 0;

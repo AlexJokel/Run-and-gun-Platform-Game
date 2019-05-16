@@ -80,7 +80,7 @@ Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
     SettingsLoader(game, "settings_state.dat").SaveSettings();
   });
   music_slider->setMaximum(100);
-  music_slider->setValue(Game()->default_volume_);
+  music_slider->setValue(Game()->GetMusicVolume());
   music_slider->move(712, 650);
   music_slider->setStyleSheet(
       CssStyleStorage::GetInstance().GetSettingsSliderStyle());
@@ -94,7 +94,7 @@ Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
    });
 
   effects_slider->setMaximum(100);
-  effects_slider->setValue(effects_slider->maximum());
+  effects_slider->setValue(SoundEffectStorage::GetSoundVolume());
   effects_slider->move(712, 715);
   effects_slider->setStyleSheet(
       CssStyleStorage::GetInstance().GetSettingsSliderStyle());

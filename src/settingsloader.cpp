@@ -26,17 +26,13 @@ void SettingsLoader::LoadSettings() const {
     } else if (field == "Screen") {
       if(par) {
       game_->SetFullScreenMode();
-      qDebug() << "was in screen";
       };
     } else if (field == "Music") {
-      qDebug() << "was in music";
       game_->SetMusicVolume(par);
     } else if (field == "Effect") {
-      qDebug() << "was in effect";
       SoundEffectStorage::SetSoundVolume(par);
     }
   }
-  game_->SetFullScreenMode();
   file.close();
 }
 
