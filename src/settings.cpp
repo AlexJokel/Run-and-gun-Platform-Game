@@ -1,6 +1,5 @@
 #include "settings.h"
 #include "main_menu.h"
-#include "game.h"
 #include "player.h"
 #include "level.h"
 #include "scene.h"
@@ -32,8 +31,9 @@ const QMap<int, QString> Settings::code_to_key = {
 
 Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
   : Menu(game, width, height, color) {
+  LevelLoader level_loader_("settings_state.dat");
   auto layout = new QVBoxLayout();
-  //Game()->RemoveScrollDisabler();
+  Game()->RemoveScrollDisabler();
 
   // creating a title
   title_text_ = new QGraphicsTextItem("SETTINGS");
@@ -43,9 +43,9 @@ Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
   addItem(title_text_);
 
   // creating controls buttons
-  AddButtonToLayout(layout, 200, 100, "Left");
-  AddButtonToLayout(layout, 200, 100, "Right");
-  AddButtonToLayout(layout, 200, 100, "Jump");
+  AddButtonToLayout(layout, 200, 100, "Left", game);
+  AddButtonToLayout(layout, 200, 100, "Right", game);
+  AddButtonToLayout(layout, 200, 100, "Jump", game);
 
   // creating screen button
   auto screen_button = new Button((Game()->IsFullScreen()) ? "YES" : "NO", 200, 100);
@@ -55,16 +55,17 @@ Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
   QObject::connect(screen_button, &Button::clicked, this, [=]() {
     if (Game()->IsFullScreen()) {
       screen_button->setText("NO");
-      game->showNormal();
-      game->scale(0.6666,0.6666);
+      game->RemoveFullScreenMode();
     } else {
       screen_button->setText("YES");
-      game->showFullScreen();
-      game->scale(1.5,1.5);
+      game->SetFullScreenMode();
     }
-    game->ChangeScreenState();
+    screen_button->Changed();
   });
 
+  QObject::connect(screen_button, &Button::Changed, this, [=]() {
+    SettingsLoader(game, "settings_state.dat").SaveSettings();
+  });
   menu_button_block_->setLayout(layout);
   MoveMenuBlock(700, 110);
   addWidget(menu_button_block_);
@@ -72,7 +73,10 @@ Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
   // creating sliders
   auto music_slider = new QSlider(Qt::Horizontal);
   QObject::connect(music_slider, &QSlider::valueChanged,
-                   Game(), &Game::SetMusicVolume);
+                   this, [=]() {
+    Game()->SetMusicVolume(music_slider->value());
+    SettingsLoader(game, "settings_state.dat").SaveSettings();
+  });
   music_slider->setMaximum(100);
   music_slider->setValue(Game()->default_volume_);
   music_slider->move(712, 580);
@@ -80,21 +84,27 @@ Settings::Settings(class Game* game, qreal width, qreal height, QColor color)
 
   auto effects_slider = new QSlider(Qt::Horizontal);
   QObject::connect(effects_slider, &QSlider::valueChanged,
-                   &SoundEffectStorage::SetSoundVolume);
+                   [=]() {
+    SoundEffectStorage::SetSoundVolume(effects_slider->value());
+    SettingsLoader(game, "settings_state.dat").SaveSettings();
+   });
+
   effects_slider->setMaximum(100);
   effects_slider->setValue(effects_slider->maximum());
   effects_slider->move(712, 650);
   addWidget(effects_slider);
 
   // creating exit button
-  auto exit_button = new Button("EXIT", 100, 100);
-  exit_button->move(50,40);
+  auto exit_button = new Button("EXIT", 300, 100);
+  exit_button->move(500,700);
   exit_button->setStyleSheet
       (CssStyleStorage::GetInstance().GetMenuButtonStyle());
   addWidget(exit_button);
   QObject::connect(exit_button, &Button::clicked, this, [&]() {
     Game()->PopScene();
   });
+
+
 
   // creating text for controls
   AddText("Left", 380, 125, {"comic", 30});
@@ -114,7 +124,7 @@ void Settings::AddText(QString text, qreal width, qreal height, QFont font) {
 }
 
 void Settings::AddButtonToLayout(QVBoxLayout* layout, qint32 width,
-                                 qint32 height, QString key) {
+                                 qint32 height, QString key, class Game* game) {
   auto button = new SettingsButton(
       (code_to_key.count(static_cast<int>(Player::controls_map_[key])) == 0)
       ? static_cast<QString>(Player::controls_map_[key])
@@ -122,6 +132,9 @@ void Settings::AddButtonToLayout(QVBoxLayout* layout, qint32 width,
                                  width, height, key);
   button->setStyleSheet
       (CssStyleStorage::GetInstance().GetMenuButtonStyle());
+  QObject::connect(button, &Button::Changed, this, [=]() {
+    SettingsLoader(game, "settings_state.dat").SaveSettings();
+  });
   layout->addWidget(button);
 }
 

@@ -23,8 +23,10 @@ public slots:
   void InstallScrollDisabler();
   void RemoveScrollDisabler();
 
-  bool IsFullScreen();
   void ChangeScreenState();
+  bool IsFullScreen();
+  void SetFullScreenMode();
+  void RemoveFullScreenMode();
 
   void SetMusicVolume(int new_volume);
   int GetMusicVolume();
@@ -34,12 +36,13 @@ protected:
 
   QStack<Scene*> scenes_;
 
+  bool full_screen_;
+
   class ScrollDisabler : public QObject {
   protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
   };
 
-  bool full_screen_;
   ScrollDisabler* scroll_disabler_;
 
   struct BackgroundMusic {

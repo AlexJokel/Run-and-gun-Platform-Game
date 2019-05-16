@@ -1,5 +1,5 @@
 #include "settings_button.h"
-
+#include "levelloader.h"
 #include <QDebug>
 
 SettingsButton::SettingsButton(const QString& title, qint32 width, qint32 height,  QString key,
@@ -13,19 +13,15 @@ void SettingsButton::ChangeControl(Qt::Key new_key) {
   Player::controls_map_[key_] = new_key;
 }
 
-void SettingsButton::mousePressEvent(QMouseEvent*) {
-  qDebug() << "Mouse works";
+void SettingsButton::mousePressEvent(QMouseEvent* event) {
+  Button::mousePressEvent(event);
   setFocus();
-  this->setText(" ");
 }
 
 void SettingsButton::keyReleaseEvent(QKeyEvent* event) {
-  qDebug("Release");
-  QString text = event->text();
   Qt::Key key = static_cast<Qt::Key>(event->key());
   int a = static_cast<int>(key);
 
-  qDebug() << key_ << " catches key" << text << " " << a;
   switch(a) {             // without "ESC", "Num Lock", "PrtScr"
     case (32): {
       setText("Space");
@@ -152,9 +148,8 @@ void SettingsButton::keyReleaseEvent(QKeyEvent* event) {
       setText(event->text().toUpper());
     }
   }
+
   ChangeControl(key);
-  for (const auto& elem : Player::controls_map_.keys()) {
-    qDebug() << "Key: " << elem << " Value: " << Player::controls_map_[elem];
-  }
   this->clearFocus();
+  emit Changed();
 }

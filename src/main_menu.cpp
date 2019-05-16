@@ -5,6 +5,9 @@
 #include "scene.h"
 #include "cssstylestorage.h"
 #include "settings.h"
+#include "fileinitializationhelper.h"
+
+#include "QDebug"
 
 MainMenu::MainMenu(class Game* game, qreal width, qreal height, QColor color)
     : Menu(game, width, height, color) {
@@ -32,7 +35,7 @@ MainMenu::MainMenu(class Game* game, qreal width, qreal height, QColor color)
   settings_button->setStyleSheet
       (CssStyleStorage::GetInstance().GetMenuButtonStyle());
   QObject::connect(settings_button, &Button::clicked, this, [&] {
-      Game()->PushScene(new Settings(Game(), 1280, 720,
+      Game()->PushScene(new Settings(Game(), 1280, 850,
                                      kOrangeDefaultBackground_));
   });
   layout->addWidget(settings_button);
@@ -48,4 +51,12 @@ MainMenu::MainMenu(class Game* game, qreal width, qreal height, QColor color)
   menu_button_block_->setLayout(layout);
   MoveMenuBlock(430, 300);
   addWidget(menu_button_block_);
+
+  /// Check for settings_state file
+  QFile file("settings_state.dat");
+  if (!file.exists()) {
+    qCritical() << "Initial settings state file was created!\n";
+    FileInitializationHelper::SaveSettings("settings_state.dat");
+  }
+  LevelLoader("settings_state.dat").LoadSettings(game);
 }

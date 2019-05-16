@@ -23,6 +23,7 @@ int main(int argc, char *argv[]) {
   auto game = new Game(&application);
   game->x(); // to suppress 'unused variable' warning
 
+//  FileInitializationHelper::SaveSettings();
 //  FileInitializationHelper::CreateFirstLevel(game,
 //      "../Run-and-gun-Platform-Game/res/levels/level0.dat");
 //  FileInitializationHelper::CreateSecondLevel(game,

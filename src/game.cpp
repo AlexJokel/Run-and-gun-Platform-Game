@@ -61,14 +61,24 @@ void Game::RemoveScrollDisabler() {
   horizontalScrollBar()->removeEventFilter(scroll_disabler_);
 }
 
-bool Game::IsFullScreen()
-{
+void Game::ChangeScreenState() {
+  full_screen_ = !full_screen_;
+}
+
+bool Game::IsFullScreen() {
   return full_screen_;
 }
 
-void Game::ChangeScreenState()
-{
-  full_screen_ = !full_screen_;
+void Game::SetFullScreenMode() {
+  showFullScreen();
+  scale(1.5,1.5);
+  ChangeScreenState();
+}
+
+void Game::RemoveFullScreenMode() {
+  showNormal();
+  scale(0.6666,0.6666);
+  ChangeScreenState();
 }
 
 void Game::SetMusicVolume(int new_volume) {

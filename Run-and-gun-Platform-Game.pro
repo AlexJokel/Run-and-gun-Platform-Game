@@ -47,6 +47,7 @@ SOURCES += \
     src/levelstorage.cpp \
     src/fileinitializationhelper.cpp \
     src/enemy.cpp \
+    src/settingsloader.cpp \
     src/soundeffectstorage.cpp \
     src/staticenemy.cpp \
     src/roamingenemy.cpp \
@@ -76,6 +77,7 @@ HEADERS += \
     src/levelstorage.h \
     src/fileinitializationhelper.h \
     src/enemy.h \
+    src/settingsloader.h \
     src/soundeffectstorage.h \
     src/staticenemy.h \
     src/roamingenemy.h \

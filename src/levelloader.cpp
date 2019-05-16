@@ -5,6 +5,7 @@
 #include "staticenemy.h"
 #include "roamingenemy.h"
 #include "finishpoint.h"
+#include "soundeffectstorage.h"
 
 QDataStream& operator<<(QDataStream& out, const b2Vec2& pair) {
   return out << pair.x << pair.y;
@@ -163,6 +164,54 @@ void LevelLoader::SaveState(const QMap<qint32, bool>& state) const {
   }
   QDataStream output(&file);
   output << state;
+  file.close();
+}
+
+void LevelLoader::LoadSettings(class Game* game) const {
+  qDebug() << "Load was called" << endl;
+  QFile file(file_name_);
+  if(!file.open(QIODevice::ReadOnly)) {
+    qCritical() << "LevelLoader::LoadSettings: File " << file_name_
+                << " can't be opened for reading!\n";
+    return;
+  }
+
+  QDataStream input(&file);
+  QString field;
+  qint32 par;
+  while(!input.atEnd()) {
+    input >> field;
+    input >> par;
+    if (field == "Left" || field == "Right" || field == "Jump") {
+      Player::controls_map_[field] = static_cast<Qt::Key>(par);
+    } else if (field == "Screen") {
+      if(par) {
+      game->SetFullScreenMode();
+      };
+    } else if (field == "Music") {
+      game->SetMusicVolume(par);
+    } else if (field == "Effect") {
+      SoundEffectStorage::SetSoundVolume(par);
+    }
+  }
+  file.close();
+}
+
+void LevelLoader::SaveSettings(class Game* game) const {
+  qDebug() << "Save was called!";
+  QFile file(file_name_);
+  QDataStream output(&file);
+  if(!file.open(QIODevice::WriteOnly)) {
+    qCritical() << "LevelLoader::SaveSettings: File " << file_name_
+                << " can't be opened for writing!\n";
+    return;
+  }
+  for(const auto& key : Player::controls_map_.keys()) {
+    output << key << static_cast<qint32>(Player::controls_map_[key]);
+  }
+  output << "Screen" << static_cast<qint32>(game->IsFullScreen());
+  output << "Music" << game->GetMusicVolume();
+  output << "Effect" << SoundEffectStorage::GetSoundVolume();
   file.close();
 }
 
